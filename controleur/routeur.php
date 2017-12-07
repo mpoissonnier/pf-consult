@@ -2,24 +2,17 @@
   session_start();
 
 // REQUIRE TOUS LES CONTROLEURS
-  require_once 'ctrl/ctrlAccueil.php';
+  require_once 'ctrl/ctrlAuthentification.php';
   require_once 'ctrl/ctrlDomaine.php';
-  require_once 'ctrl/ctrlConnexion.php';
-  require_once 'ctrl/ctrlInscription.php';
 
   class Routeur {
-    private $ctrlAccueil;
+    private $ctrlAuthentification;
     private $ctrlDomaine;
-    private $ctrlConnexion;
-    private $ctrlInscription;
-
 
 /** CONSTRUCTEUR DU ROUTEUR **/
     public function __construct() {
-      $this->ctrlAccueil = new ControleurAccueil();
+      $this->ctrlAuthentification = new ControleurAuthentification();
       $this->ctrlDomaine = new ControleurDomaine();
-      $this->ctrlConnexion = new ControleurConnexion();
-      $this->ctrlInscription = new ControleurInscription();
     }
 
   // Traite une requête entrante
@@ -40,20 +33,20 @@
       }
 
 // CHARGER PAGE INSCRIPTION
-      if (isset($_GET['inscription']) && $_GET['inscription'] == "ok") {
-        if ($_GET['type'] == "user" || $_GET['type'] == "pro") {
-          $this->ctrlInscription->inscription();
+      if (isset($_GET['inscription'])) {
+        if ($_GET['inscription'] == "user" || $_GET['inscription'] == "pro") {
+          $this->ctrlAuthentification->inscription();
           return;
         }
       }
-// CHARGE PAGE CONNEXION  
-      if (isset($_GET['connexion']) && $_GET['connexion'] == "ok") {
-        $this->ctrlConnexion->connexion();
+// CHARGE PAGE CONNEXION
+      if (isset($_GET['connexion'])) {
+        $this->ctrlAuthentification->connexion();
         return;
       }
 
       // DEFAULT
-      $this->ctrlAccueil->accueil();
+      $this->ctrlAuthentification->accueil();
       return;
     }
 

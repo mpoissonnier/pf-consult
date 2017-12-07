@@ -17,8 +17,6 @@ class vueInscription {
 	<title>Inscription</title>
 	<link rel="shortcut icon" href="vue/img/favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-	<script type="text/javascript" src="vue/scripts/jsSimpleDatePickr.js"></script>
-	<script type="text/javascript" src="vue/scripts/jsSimpleDatePickrInit.js"></script>
 </head>
 <body>
 <!--  HEADER-->
@@ -70,7 +68,7 @@ class vueInscription {
 						<input class="full" type="email" name="Adresse_mail" value="<?php if(isset($_POST['Adresse_mail'])) {echo $_POST['Adresse_mail'];}?>" placeholder="Adresse mail" required="required"  />
 					</div>
 					<?php
-					if (isset($_POST['Adresse']) AND ($existMail)) {
+					if (isset($_POST['Adresse_mail']) AND ($existMail)) {
 						echo "<p><i style=\"color:red; font-size:12px;\">Mail déjà existant</i></p>";
 					}
 					?>

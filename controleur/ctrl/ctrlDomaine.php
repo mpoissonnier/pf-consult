@@ -1,24 +1,17 @@
 <?php
-require_once PATH_VUE."/vueDomaine.php";
+  require_once PATH_VUE."/vueDomaine.php";
 
-/**
-* Controleur de la page d'accueil
-*/
-class ControleurDomaine {
-  private $vue;
+  class ControleurDomaine {
+    private $vue;
 
-  /**
-  * Constructeur de la classe initialisant la vue de la page d'accueil.
-  */
-  public function __construct(){
-    $this->vue = new vueDomaine();
-  }
+    /* Constructeur de la classe. */
+    public function __construct(){
+      $this->vue = new vueDomaine();
+    }
 
-  /**
-  * Fonction permettant l'affichage de la vue d'accueil.
-  */
-  public function domaine($domaine) {
-    $this->vue->genereVueDomaine($domaine);
-  }
+    /* Fonction permettant l'affichage de la vue domaine. */
+    public function domaine($domaine) {
+      $this->vue->genereVueDomaine($domaine);
+    }
 
 }

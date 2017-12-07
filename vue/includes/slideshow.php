@@ -1,9 +1,9 @@
 <div class="slideshow" >
 	<ul>
-		<li><img src="vue/includes/slide1.jpeg" alt="" width="640" height="310" /></li>
-		<li><img src="vue/includes/slide2.jpeg" alt="" width="640" height="310" /></li>
-		<li><img src="vue/includes/slide3.jpeg" alt="" width="640" height="310" /></li>
-		<li><img src="vue/includes/slide4.jpeg" alt="" width="640" height="310" /></li>
+		<li><img src="vue/img/slide1.jpeg" alt="" width="640" height="310" /></li>
+		<li><img src="vue/img/slide2.jpeg" alt="" width="640" height="310" /></li>
+		<li><img src="vue/img/slide3.jpeg" alt="" width="640" height="310" /></li>
+		<li><img src="vue/img/slide4.jpeg" alt="" width="640" height="310" /></li>
 	</ul>
 </div>
 
