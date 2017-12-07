@@ -5,14 +5,13 @@
 	/* Fonction permettant de générer la vue d'accueil du site. */
 	public function genereVueAccueil(){
 ?>
-  <!DOCTYPE html>
-  <html lang="fr">
-  <head>
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
     <meta charset="utf-8">
     <title>Accueil</title>
     <link rel="shortcut icon" href="vue/img/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-    <script src="vue/js/messages.js" type="text/javascript"></script>
   </head>
   <body>
   <!--  HEADER-->
@@ -33,24 +32,18 @@
 		<?php  include 'includes/slideshow.php' ?>
 
 	<!--  FOOTER -->
-    <?php  include 'includes/footer.php' ?>
+  	<?php  include 'includes/footer.php' ?>
 
   <!--  FUNCTION -->
-  <?php
-    if (isset($_SESSION['inscription']) AND $_SESSION['inscription'] == true) {
-      echo "<script>inscriptionOk()</script>";
-      $_SESSION['inscription'] = false;
-    }
-  ?>
-  </body>
-  </html>
+	</body>
+</html>
 
 <?php
   }
 	public function genereVueConnexion(){
 ?>
-  <!DOCTYPE html>
-  <html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
   <head>
     <meta charset="utf-8">
 		<title>Connexion</title>
@@ -80,7 +73,7 @@
           </div>
         </form>
         <div class="formline">
-          <p>Pas encore membre ? <a class="lien_visible" href="index.php?inscription=ok&type=user">Inscrivez-vous</a> gratuitement. </p>
+          <p>Pas encore membre ? <a class="lien_visible" href="index.php?inscription=user">Inscrivez-vous</a> gratuitement. </p>
         </div>
       </div>
     </div>
@@ -92,13 +85,13 @@
     <?php  include 'includes/footer.php' ?>
 
   </body>
-  </html>
+</html>
 <?php
   	}
 		public function genereVueInscription(){
 	?>
-	<!DOCTYPE html>
-	<html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
 	<head>
 		<meta charset="utf-8">
 		<title>Inscription</title>
@@ -112,22 +105,24 @@
 	<!--  CONTENT -->
 		<div id="content">
 			<div class="container_form">
-				<div class="cutcenter">
+				<div >
 					<p>Je suis :</p>
 					<?php
-					if (isset($_GET['type'])) {
-						if ($_GET['type'] == "user") {
+					if (isset($_GET['inscription'])) {
+						if ($_GET['inscription'] == "user") {
 							$onglet1 = "onglet_on" ;
 							$onglet2 = "";
 						}
-						if ($_GET['type'] == "pro") {
+						if ($_GET['inscription'] == "pro") {
 							$onglet1 = "";
 							$onglet2 = "onglet_on";
 						}
 					}
 					?>
-					<a id="onglet1" class="onglet <?php echo $onglet1;?>" href="index.php?inscription=ok&type=user">Utilisateur</a>
-					<a id="onglet2" class="onglet <?php echo $onglet2;?>" href="index.php?inscription=ok&type=pro">Professionnel</a>
+					<div class="onglet">
+						<a id="onglet1" class="onglet <?php echo $onglet1;?>" href="index.php?inscription=user">Utilisateur</a>
+						<a id="onglet2" class="onglet <?php echo $onglet2;?>" href="index.php?inscription=pro">Professionnel</a>
+					</div>
 				</div>
 				<hr>
 				<form action="" method="post">
@@ -231,7 +226,7 @@
 		<?php  include 'includes/footer.php' ?>
 
 	</body>
-	</html>
+</html>
 	<?php
 	  }
 	}
