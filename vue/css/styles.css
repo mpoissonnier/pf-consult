@@ -1,0 +1,73 @@
+/* ==========================================================================
+FONT
+========================================================================== */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+/* ==========================================================================
+RESET
+========================================================================== */
+* { padding: 0;  margin: 0;  text-decoration: none;  color: black;  font-family: 'Lato', sans-serif; list-style: none;}
+html, body { height: 100%; width: 100%;}
+body {display : table; }
+#content { margin-top: 25px; margin-bottom: 25px;}
+/* ==========================================================================
+HEADER
+========================================================================== */
+header { display: flex; justify-content: center; align-items: center; background-color: #f4f5fc; height: 85px;}
+header ul { display: flex; }
+header ul li { text-transform: uppercase; }
+header ul li a { margin: 0 30px; color: #4d4959; }
+header li a:hover { opacity: 0.5; border-bottom: 2px #4d4959 solid; }
+.dot { margin-top: 8px; justify-content: center; width: 4px; height: 4px; background: black;}
+.logo-nav { width: 94px; height:85px;}
+#divmsg {visibility: hidden; width: 25%; position: absolute; left: 50%; transform: translate(-50%, 100%); text-align: center; background-color: #50A587; padding: 5px; color:white; box-shadow: 2px 2px 0px #4d4959; }
+
+/* ==========================================================================
+FOOTER
+========================================================================== */
+footer { height: 85px; padding-top: 5px; display: table-row; width: 100%;  background-color: #f4f5fc; }
+footer p { font-size: 13px; }
+footer li { display: inline-block; margin-right: 15px; }
+footer li a:hover { opacity: 0.5; }
+.container_footer { display: flex; justify-content: space-around; align-items: center; padding-top: 5px;}
+.twitter-icon { background: url(../img/twitter-icon.png); height: 34px; width: 35px; display: block; }
+.facebook-icon { background: url(../img/facebook-icon.png); height: 34px; width: 35px; display: block; }
+.pintrest-icon { background: url(../img/pintrest-icon.png); height: 34px; width: 35px; display: block; }
+
+/* ==========================================================================
+INDEX
+========================================================================== */
+/* BUTTON */
+.submit-btn-med { background-color: #00A7E3; color: #fff; font-weight: bold; padding: 25px 50px; margin: 10px;}
+.submit-btn-jur { background-color: #7A1000; color: #fff; font-weight: bold; padding: 25px 50px; margin: 10px;}
+.submit-btn-med:hover { background-color: #f4f5fc; color: #00A7E3;}
+.submit-btn-jur:hover { background-color: #f4f5fc; color: #7A1000;}
+
+/* CONTAINER */
+h2.logo-header { text-align: center;  color: #848789;  font-size: 24px;  font-weight: bold; padding-top: 60px;  margin: 70px 0 40px 0;  font-style: italic;}
+.flex-container { display: flex;  flex-wrap: wrap;  justify-content:center; }
+.container-index { height: 100%;}
+
+/* ==========================================================================
+INSCRIPTION // CONNEXION
+========================================================================== */
+.container_form { width: 35%; margin:auto; padding: 25px; box-shadow: 5px 5px 5px 5px #9b9b9b; border-radius: 10px; }
+.formbloc { margin: 10px; display: flex; justify-content: center; flex-direction: column;}
+.formline { margin: 10px; display: flex; justify-content: center; flex-direction:row; }
+.cutcenter { margin: 10px; display: flex; justify-content: space-between;}
+form .full { width:100%;}
+hr { width: 50%; margin: auto; border-bottom: 2px solid #f4f5fc; color: #f4f5fc; }
+.onglet_on { border-bottom: solid 2px #00A5E2;}
+.onglet:hover { opacity: 0.5; text-decoration: none;}
+
+/* ==========================================================================
+SLIDESHOW
+========================================================================== */
+.slideshow { width: 640px; height: 310px; overflow: hidden; border: 10px solid #FBFDFF; margin: auto;}
+.slideshow ul { width: 400%; height: 200px; padding:0; margin:0; list-style: none;}
+.slideshow li { float: left;}
+/* ==========================================================================
+DOMAINE
+========================================================================== */
+.searchbar_med { width: 100%; background: url(../img/fond_medical.jpg) no-repeat center; height: 500px;}
+.searchbar_jur { width: 100%; background: url(../img/fond_juridique.jpg) no-repeat center; height: 500px;}
