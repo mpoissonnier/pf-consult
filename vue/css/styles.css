@@ -25,7 +25,6 @@ header li a:hover { opacity: 0.5; border-bottom: 2px #4d4959 solid; }
   .dot { margin-top: 8px; justify-content: center; width: 4px; height: 4px; background: black;}
   .icon {display: none;}
 }
-
 /* ==========================================================================
 FOOTER
 ========================================================================== */
@@ -87,7 +86,7 @@ SLIDESHOW
 ========================================================================== */
 .slideshow {display: none;}
 @media screen and (min-width: 900px) {
-  .slideshow {display: inherit;}  
+  .slideshow {display: inherit;}
   .slideshow { width: 640px; height: 310px; overflow: hidden; border: 10px solid #FBFDFF; margin: auto;}
   .slideshow ul { width: 400%; height: 200px; padding:0; margin:0; list-style: none;}
   .slideshow li { float: left;}
