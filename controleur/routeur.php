@@ -1,5 +1,4 @@
 <?php
-  session_start();
 
 // REQUIRE TOUS LES CONTROLEURS
   require_once 'ctrl/ctrlAuthentification.php';
