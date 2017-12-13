@@ -22,7 +22,7 @@
       <div class="container-index">
         <h2 class="logo-header">Je recherche un professionnel dans le domaine : </h2>
         <div class="flex-container">
-          <a href="index.php?domaine=medical" class="submit-btn-med"> MEDICAL </a>
+          <a href="index.php?domaine=medical" class="submit-btn-med">MEDICAL</a>
           <a href="index.php?domaine=juridique" class="submit-btn-jur">JURIDIQUE</a>
         </div>
       </div>
@@ -60,10 +60,10 @@
         <form action="" method="post">
           <!--  BLOC IDENTIFIANT -->
           <div class="formline">
-            <input type="text" name="Id" value="<?php if(isset($_POST['Id'])) {echo $_POST['Id'];}?>" placeholder="Identifiant" required="required" size="25" />
+            <input type="text" name="Id" placeholder="Identifiant" required size="25" />
           </div>
           <div class="formline">
-            <input type="text" name="Mdp" placeholder="Mot de passe" required="required" size="25" />
+            <input type="text" name="Mdp" placeholder="Mot de passe" required size="25" />
           </div>
           <hr>
 
@@ -97,6 +97,7 @@
 		<title>Inscription</title>
 		<link rel="shortcut icon" href="vue/img/favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
+		<script src="vue/scripts/inscription.js"></script>
 	</head>
 	<body>
 	<!--  HEADER-->
@@ -112,10 +113,12 @@
 						if ($_GET['inscription'] == "user") {
 							$onglet1 = "onglet_on" ;
 							$onglet2 = "";
+							$type = 1;
 						}
 						if ($_GET['inscription'] == "pro") {
 							$onglet1 = "";
 							$onglet2 = "onglet_on";
+							$type = 2;
 						}
 					}
 					?>
@@ -125,92 +128,58 @@
 					</div>
 				</div>
 				<hr>
-				<form action="" method="post">
+				<form action="index.php?inscription=<?php echo $type ?>" method="post" onSubmit="return VerifSubmit();">
 					<!--  BLOC CIVILITE-->
 					<div class="formbloc">
 
 						<div class="cutcenter">
-							<?php
-							$mr = ""; $mme = "";
-							if (isset($_POST['Civilite']) AND $_POST['Civilite'] == "M.") {
-								$mr = "selected=\"selected\"";
-							} elseif (isset($_POST['Civilite']) AND $_POST['Civilite'] == "Mme") {
-								$mme = "selected=\"selected\"";
-							}
-							?>
 							<select name="Civilite" >
-								<option name="Civilite" <?php echo $mr; ?> value="M.">M.</option>
-								<option name="Civilite" <?php echo $mme; ?> value="Mme">Mme</option>
+								<option name="Civilite" value="M.">M.</option>
+								<option name="Civilite" value="Mme">Mme</option>
 							</select>
-							<input type="text" name="Prenom" value="<?php if(isset($_POST['Prenom'])) {echo $_POST['Prenom'];}?>" placeholder="Prénom" required="required" size="15" />
-							<input type="text" name="Nom" value="<?php if(isset($_POST['Nom'])) {echo $_POST['Nom'];}?>" placeholder="Nom" required="required" size="15" />
+							<input type="text" name="Prenom" placeholder="Prénom" size="15" onblur="verifString(this,'messageContact','20')" required />
+							<input type="text" name="Nom" placeholder="Nom" size="15" onblur="verifString(this,'messageContact','20')" required />
 						</div>
+						<p id="messageContact" style="color:red"></p>
 
 						<div class="formline">
-							<input class="full" type="email" name="Adresse_mail" value="<?php if(isset($_POST['Adresse_mail'])) {echo $_POST['Adresse_mail'];}?>" placeholder="Adresse mail" required="required"  />
+							<input id="mail" class="full" type="email" name="Adresse_mail" placeholder="Adresse mail" onblur="verifEmail(this, 'messageEmail')" required />
 						</div>
-						<?php
-						if (isset($_POST['Adresse_mail']) AND ($existMail)) {
-							echo "<p><i style=\"color:red; font-size:12px;\">Mail déjà existant</i></p>";
-						}
-						?>
+						<p id="messageEmail" style="color:red"></p>
 
 						<div class="formline cutcenter">
-							<input type="password" name="Mdp" placeholder="Mot de passe" required="required"  />
-							<input type="password" name="MdpConfirm" placeholder="Confirmer Mot de passe" required="required"  />
+							<input id="mdp" type="password" name="Mdp" placeholder="Mot de passe" required  />
+							<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer Mot de passe" onblur="verifMdp('messageMdp')" required />
 						</div>
-						<?php
-						if (isset($_POST['Mdp']) AND isset($_POST['MdpConfirm'])) {
-							if ($_POST['Mdp'] != $_POST['MdpConfirm'] ) {
-								echo "<p><i style=\"color:red; font-size:12px;\">Les mots de passe ne correspondent pas.</i></p>";
-							} else {
-								if (strlen($_POST['Mdp']) < 8 ) {
-									echo "<p><i style=\"color:red; font-size:12px;\">Le mot de passe doit contenir au moins 8 caractères;</i></p>";
-								}
-							}
-						}
-						?>
+						<p id="messageMdp" style="color:red"></p>
+
 					</div>
 					<hr>
 
 					<!--  BLOC ADRESSE -->
 					<div class="formbloc">
-
 						<div class="cutcenter">
 							<label name="Birth">Date de Naissance : </label>
-							<input type="date" id="DateBirth" name="DateBirth" value="<?php if (isset($_POST['DateBirth'])) {echo $_POST['DateBirth'];}?>" placeholder="DD/MM/YYYY"  maxlength="10"  />
+							<input type="date" id="DateBirth" name="DateBirth" placeholder="DD/MM/YYYY"  maxlength="10"  />
 						</div>
 						<?php
-						if (isset($_POST['DateBirth'])) {
-							list($year,$month,$day) = explode("-",$_POST['DateBirth']);
-							if ((date('Y') - $year > 18) OR ((date('Y') - $year == 18) AND (date(n) - $month > 0)) OR ((date('Y') - $year == 18) AND (date(n) - $month == 0) AND (date(j) - $day >= 0))) {
-							} else {
-								echo "<p><i style=\"color:red; font-size:12px;\">Il faut être majeur pour s'inscrire</i></p>";
-							}
-						}
-						if (isset($_GET['type']) AND $_GET['type'] == "pro") {
+						if (isset($_GET['inscription']) AND $_GET['inscription'] == "pro") {
 							?>
 							<div class="formline">
-								<input type="text" placeholder="Spécialité" required="required" />
+								<input class="full" type="text" placeholder="Spécialité" required />
 							</div>
 							<?php
 						}
 						?>
 						<div class="formline">
-							<input class="full" type="text" name="Adresse" value="<?php if (isset($_POST['Adresse'])) {echo $_POST['Adresse'];}?>" placeholder="Adresse" required="required" />
+							<input class="full" type="text" name="Adresse" placeholder="Adresse" required />
 						</div>
 
 						<div class="formline cutcenter">
-							<input type="text" name="CP" value="<?php if (isset($_POST['CP'])) {echo $_POST['CP'];}?>" placeholder="Code Postal" required="required" maxlength="5" />
-							<input type="text" name="Ville" value="<?php if (isset($_POST['Ville'])) {echo $_POST['Ville'];}?>" placeholder="Ville" required="required" />
+							<input type="text" name="CP" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this,'messageCP')" />
+							<input type="text" name="Ville" placeholder="Ville" required />
 						</div>
-						<?php
-						if (isset($_POST['CP'])) {
-							if (!preg_match("#^[0-9]{5,5}$#", $_POST['CP'])) {
-								echo "<p><i style=\"color:red; font-size:12px;\">Merci d'entrer un code postal valide</i></p>";
-							}
-						}
-						?>
+						<p id="messageCP" style="color:red"></p>
 					</div>
 					<hr>
 
