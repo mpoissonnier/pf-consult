@@ -23,11 +23,11 @@ function verifEmail(champ, txt){
   if(!reg.test(champ.value)) {
     surligne(champ, true);
     document.getElementById(txt).innerHTML = "L'e-mail n'est pas valide.";
-    return true;
+    return false;
   } else {
     surligne(champ, false);
     document.getElementById(txt).innerHTML = "";
-    return false;
+    return true;
   }
 }
 
@@ -38,17 +38,17 @@ function verifMdp(txt){
     surligne(passw, true);
     surligne(passwBis, true);
     document.getElementById(txt).innerHTML = "Les mots de passe ne coïncident pas.";
-    return true;
+    return false;
   } else if (passw.value.length > 20 || passw.value.length < 5) {
     surligne(passw, true);
     surligne(passwBis, true);
     document.getElementById(txt).innerHTML = "Le mot de passe doit faire 5 à 20 caractères";
-    return true;
+    return false;
   } else {
     surligne(passw, false);
     surligne(passwBis, false);
     document.getElementById(txt).innerHTML = "";
-    return false;
+    return true;
   }
 }
 

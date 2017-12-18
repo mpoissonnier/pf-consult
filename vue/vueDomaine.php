@@ -17,7 +17,6 @@ class vueDomaine {
 			<title>Recherche</title>
 	    <link rel="shortcut icon" href="vue/img/favicon.ico" />
 	    <link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-			<!-- <link rel="stylesheet" type="text/css" href="vue/css/slideshow.css" /> -->
 	  </head>
 	  <body>
 	<!--  HEADER-->

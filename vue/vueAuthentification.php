@@ -57,13 +57,13 @@
   <!--  CONTENT -->
     <div id="content">
       <div class="container_form">
-        <form action="" method="post">
+        <form action="index.php?connexion=1" method="post">
           <!--  BLOC IDENTIFIANT -->
           <div class="formline">
-            <input type="text" name="Id" placeholder="Identifiant" required size="25" />
+            <input type="text" name="login" placeholder="Identifiant" required size="25" />
           </div>
           <div class="formline">
-            <input type="text" name="Mdp" placeholder="Mot de passe" required size="25" />
+            <input type="password" name="mdp" placeholder="Mot de passe" required size="25" />
           </div>
           <hr>
 
@@ -133,22 +133,22 @@
 					<div class="formbloc">
 
 						<div class="cutcenter">
-							<select name="Civilite" >
-								<option name="Civilite" value="M.">M.</option>
-								<option name="Civilite" value="Mme">Mme</option>
+							<select name="civilite" >
+								<option name="civilite" value="M.">M.</option>
+								<option name="civilite" value="Mme">Mme</option>
 							</select>
-							<input type="text" name="Prenom" placeholder="Prénom" size="15" onblur="verifString(this,'messageContact','20')" required />
-							<input type="text" name="Nom" placeholder="Nom" size="15" onblur="verifString(this,'messageContact','20')" required />
+							<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,'messageContact','20')" required />
+							<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,'messageContact','20')" required />
 						</div>
 						<p id="messageContact" style="color:red"></p>
 
 						<div class="formline">
-							<input id="mail" class="full" type="email" name="Adresse_mail" placeholder="Adresse mail" onblur="verifEmail(this, 'messageEmail')" required />
+							<input id="mail" class="full" type="email" name="mail" placeholder="Adresse mail" onblur="verifEmail(this, 'messageEmail')" required />
 						</div>
 						<p id="messageEmail" style="color:red"></p>
 
 						<div class="formline cutcenter">
-							<input id="mdp" type="password" name="Mdp" placeholder="Mot de passe" required  />
+							<input id="mdp" type="password" name="mdp" placeholder="Mot de passe" required  />
 							<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer Mot de passe" onblur="verifMdp('messageMdp')" required />
 						</div>
 						<p id="messageMdp" style="color:red"></p>
@@ -160,24 +160,24 @@
 					<div class="formbloc">
 						<div class="cutcenter">
 							<label name="Birth">Date de Naissance : </label>
-							<input type="date" id="DateBirth" name="DateBirth" placeholder="DD/MM/YYYY"  maxlength="10"  />
+							<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10"  />
 						</div>
 						<?php
 						if (isset($_GET['inscription']) AND $_GET['inscription'] == "pro") {
 							?>
 							<div class="formline">
-								<input class="full" type="text" placeholder="Spécialité" required />
+								<input class="full" type="text" placeholder="specialite" required />
 							</div>
 							<?php
 						}
 						?>
 						<div class="formline">
-							<input class="full" type="text" name="Adresse" placeholder="Adresse" required />
+							<input class="full" type="text" name="adresse" placeholder="Adresse" required />
 						</div>
 
 						<div class="formline cutcenter">
-							<input type="text" name="CP" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this,'messageCP')" />
-							<input type="text" name="Ville" placeholder="Ville" required />
+							<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this,'messageCP')" />
+							<input type="text" name="ville" placeholder="Ville" required />
 						</div>
 						<p id="messageCP" style="color:red"></p>
 					</div>

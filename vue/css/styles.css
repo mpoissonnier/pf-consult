@@ -92,6 +92,12 @@ SLIDESHOW
   .slideshow li { float: left;}
 }
 /* ==========================================================================
+PROFIL
+========================================================================== */
+#profil th{ border-top: dotted #f4f5fc 2px; }
+#profil { border: solid #f4f5fc 2px; margin: auto; margin-top: 20px; border-collapse: collapse; text-align: center;}
+
+/* ==========================================================================
 DOMAINE
 ========================================================================== */
 .searchbar_med { width: 100%; background: url(../img/fond_medical.jpg) no-repeat center; height: 500px;}
