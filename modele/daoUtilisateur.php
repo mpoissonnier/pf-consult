@@ -17,7 +17,7 @@
 
     /* Methode qui permet de se deconnecter de la base */
     public function destroy(){
-      $this->connexion=null;
+      $this->connexion = null;
     }
 /////////
 ///////// CHECK
