@@ -1,6 +1,6 @@
 <?php
   require_once PATH_VUE."/vueAuthentification.php";
-  require_once PATH_MODELE."/daoUtilisateur.php";
+  require_once PATH_MODELE."/dao/daoUtilisateur.php";
 
   class ControleurAuthentification {
     private $vue;
@@ -41,6 +41,7 @@
     /* Fonction permettant la connexion d'un utilisateur. */
     public function connexionUser() {
       $_SESSION['user'] = $this->modele->connexion();
+      $_SESSION['id'] = $_POST['login'];
       $this->vue->genereVueAccueil();
     }
 

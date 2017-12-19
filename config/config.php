@@ -10,7 +10,7 @@
 
 // DONNEES BASE DE DONNEE
   define("HOST","localhost");
-  define("BD","");
-  define("LOGIN","");
-  define("PASSWORD","");
+  define("BD","PFCONSULT");
+  define("LOGIN","root");
+  define("PASSWORD","8mjywHNO!");
 ?>
