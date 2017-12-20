@@ -84,6 +84,28 @@
       }
     }
 
+    /** Méthode qui permet d'ajouter un specialiste */
+    public function addSpecialiste() {
+      try {
+        if (!$this->estInscrit($_POST['mail'])) {
+          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,1,NULL);');
+          $stmt->bindParam(1,strtoupper($_POST['civilite']));
+          $stmt->bindParam(2,strtoupper($_POST['prenom']));
+          $stmt->bindParam(3,strtoupper($_POST['nom']));
+          $stmt->bindParam(4,$_POST['mail']);
+          $stmt->bindParam(5,crypt($_POST['mdp']));
+          $stmt->bindParam(6,$_POST['ddn']);
+          $stmt->bindParam(7,strtoupper($_POST['adresse']));
+          $stmt->bindParam(8,$_POST['cp']);
+          $stmt->bindParam(9,strtoupper($_POST['ville']));
+          $stmt->execute();
+        }
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Utilisateurs");
+      }
+    }
+
     /** Méthode qui permet de supprimer un utilisateur lambda */
     public function delUser() {
       try {
