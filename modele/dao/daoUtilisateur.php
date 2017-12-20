@@ -107,7 +107,7 @@
     public function addSpecialiste() {
       try {
         if (!$this->estInscrit($_POST['mail'])) {
-          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,1,NULL);');
+          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,2,?);');
           $stmt->bindParam(1,strtoupper($_POST['civilite']));
           $stmt->bindParam(2,strtoupper($_POST['prenom']));
           $stmt->bindParam(3,strtoupper($_POST['nom']));
@@ -117,6 +117,7 @@
           $stmt->bindParam(7,strtoupper($_POST['adresse']));
           $stmt->bindParam(8,$_POST['cp']);
           $stmt->bindParam(9,strtoupper($_POST['ville']));
+          $stmt->bindParam(10,$_POST['specialite']);
           $stmt->execute();
         }
       } catch (PDOException $e) {
@@ -208,6 +209,32 @@
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
       }
     }
+
+///////// GETTER SPECIALITE-SOUS-DOMAINE
+    public function getDomaine(){
+      try {
+        $stmt = $this->connexion->query('select nom from Domaine');
+        return $stmt->fetch();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Domaine");
+      }
+
+    }
+
+    // public function getSpecialite() {
+    //   try {
+    //     if ($this->estInscrit($_SESSION['id'])) {
+    //       $stmt = $this->connexion->prepare('select * from Utilisateurs where mail = ?;');
+    //       $stmt->bindParam(1,$_SESSION['id']);
+    //       $stmt->execute();
+    //       return $stmt->fetchAll(PDO::FETCH_CLASS, "Utilisateur");
+    //     }
+    //   } catch (PDOException $e) {
+    //     $this->destroy();
+    //     throw new PDOException("Erreur d'accès à la table Utilisateurs");
+    //   }
+    // }
 
   }
 ?>

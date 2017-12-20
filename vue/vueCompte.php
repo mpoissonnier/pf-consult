@@ -17,7 +17,7 @@ class vueCompte {
 			<title>Mon compte</title>
 	    <link rel="shortcut icon" href="vue/img/favicon.ico" />
 	    <link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-			<script src="vue/scripts/inscription.js"></script>
+			<script src="vue/scripts/checkForm.js"></script>
 	  </head>
 	  <body>
 	<!--  HEADER-->
@@ -26,7 +26,7 @@ class vueCompte {
 	<!--  CONTENT -->
 	    <div class="content">
 				<h3>Bienvenue sur votre compte <?php echo $_SESSION['user']; ?></h3>
-        <form action="index.php?monCompte=1" method="post" onSubmit="return VerifSubmit();">
+        <form action="index.php?monCompte=1" method="post" onSubmit="return verifFormModifInfos(this);">
           <table id="profil">
             <!--  Modification de l'adresse mail -->
             <tr>
@@ -34,7 +34,7 @@ class vueCompte {
             </tr>
             <tr>
               <td colspan="2">
-                <input id="mail" type="mail" name="mail" value="<?php echo $user->getMail(); ?>" >
+                <input type="mail" name="mail" value="<?php echo $user->getMail(); ?>" >
 							</td>
             </tr>
             <!--  Modification du mot de passe -->
@@ -60,7 +60,7 @@ class vueCompte {
                 <label>Adresse :</label>
                 <input type="text" name="adresse" value="<?php echo $user->getAdresse(); ?>" >
                 <label>Code postal :</label>
-                <input type="text" name="cp" value="<?php echo $user->getCp(); ?>" >
+                <input type="text" name="cp" maxlength="5" value="<?php echo $user->getCp(); ?>" >
                 <label>Ville :</label>
                 <input type="text" name="ville" value="<?php echo $user->getVille(); ?>" >
               </td>

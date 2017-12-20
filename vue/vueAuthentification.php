@@ -88,7 +88,8 @@
 </html>
 <?php
   	}
-		public function genereVueInscription(){
+		// , $listeSpecialite, $listeSousSpecialite
+		public function genereVueInscription($listeDomaine){
 	?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -97,7 +98,7 @@
 		<title>Inscription</title>
 		<link rel="shortcut icon" href="vue/img/favicon.ico" />
 		<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-		<script src="vue/scripts/inscription.js"></script>
+		<script src="vue/scripts/checkForm.js"></script>
 	</head>
 	<body>
 	<!--  HEADER-->
@@ -140,19 +141,13 @@
 							<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,'messageContact','20')" required />
 							<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,'messageContact','20')" required />
 						</div>
-						<p id="messageContact" style="color:red"></p>
-
 						<div class="formline">
 							<input id="mail" class="full" type="email" name="mail" placeholder="Adresse mail" onblur="verifEmail(this, 'messageEmail')" required />
 						</div>
-						<p id="messageEmail" style="color:red"></p>
-
 						<div class="formline cutcenter">
 							<input id="mdp" type="password" name="mdp" placeholder="Mot de passe" required  />
 							<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer Mot de passe" onblur="verifMdp('messageMdp')" required />
 						</div>
-						<p id="messageMdp" style="color:red"></p>
-
 					</div>
 					<hr>
 
@@ -164,10 +159,26 @@
 						</div>
 						<?php
 						if (isset($_GET['inscription']) AND $_GET['inscription'] == "pro") {
-							?>
-							<div class="formline">
-								<input class="full" type="text" placeholder="specialite" required />
-							</div>
+						?>
+						<FORM>
+							<SELECT name="domaine" size="1">
+							<?php
+								foreach ($listeDomaine as $value) {
+								?>
+									<OPTION><?php echo $value; ?>
+								<?php
+								}
+								?>
+							</SELECT>
+						</FORM>
+
+
+
+
+
+
+
+
 							<?php
 						}
 						?>
@@ -179,7 +190,6 @@
 							<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this,'messageCP')" />
 							<input type="text" name="ville" placeholder="Ville" required />
 						</div>
-						<p id="messageCP" style="color:red"></p>
 					</div>
 					<hr>
 
