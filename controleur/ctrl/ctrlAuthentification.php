@@ -19,7 +19,7 @@
 
     /* Fonction permettant l'affichage de la vue de la page d'inscription. */
     public function inscription() {
-      $this->vue->genereVueInscription($this->modele->getDomaine());
+      $this->vue->genereVueInscription($this->modele->getDomaine(), $this->modele->getSpecialite(), $this->modele->getSousSpecialite());
     }
 
     /* Fonction permettant l'inscription d'un utilisateur. */

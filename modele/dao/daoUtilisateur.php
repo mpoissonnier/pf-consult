@@ -117,7 +117,7 @@
           $stmt->bindParam(7,strtoupper($_POST['adresse']));
           $stmt->bindParam(8,$_POST['cp']);
           $stmt->bindParam(9,strtoupper($_POST['ville']));
-          $stmt->bindParam(10,$_POST['specialite']);
+          $stmt->bindParam(10,$_POST['sous_specialite']);
           $stmt->execute();
         }
       } catch (PDOException $e) {
@@ -213,8 +213,8 @@
 ///////// GETTER SPECIALITE-SOUS-DOMAINE
     public function getDomaine(){
       try {
-        $stmt = $this->connexion->query('select nom from Domaine');
-        return $stmt->fetch();
+        $stmt = $this->connexion->query('select * from Domaine');
+        return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Domaine");
@@ -222,19 +222,39 @@
 
     }
 
-    // public function getSpecialite() {
-    //   try {
-    //     if ($this->estInscrit($_SESSION['id'])) {
-    //       $stmt = $this->connexion->prepare('select * from Utilisateurs where mail = ?;');
-    //       $stmt->bindParam(1,$_SESSION['id']);
-    //       $stmt->execute();
-    //       return $stmt->fetchAll(PDO::FETCH_CLASS, "Utilisateur");
-    //     }
-    //   } catch (PDOException $e) {
-    //     $this->destroy();
-    //     throw new PDOException("Erreur d'accès à la table Utilisateurs");
-    //   }
-    // }
+    public function getNumDomaine($nomDomaine){
+      try {
+        $stmt = $this->connexion->prepare('select id from Domaine where nom = ?');
+        $stmt->bindParam(1,$nomDomaine);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Domaine");
+      }
+
+    }
+
+    public function getSpecialite() {
+      try {
+        $stmt = $this->connexion->query('select * from Specialite');
+          return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Specialite");
+      }
+    }
+
+    public function getSousSpecialite() {
+      try {
+        $stmt = $this->connexion->query('select * from Sous_Specialite');
+          return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Sous_Specialite");
+      }
+    }
 
   }
 ?>

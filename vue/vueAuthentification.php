@@ -89,7 +89,7 @@
 <?php
   	}
 		// , $listeSpecialite, $listeSousSpecialite
-		public function genereVueInscription($listeDomaine){
+		public function genereVueInscription($listeDomaine, $listeSpecialite, $listeSousSpecialite){
 	?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -160,24 +160,42 @@
 						<?php
 						if (isset($_GET['inscription']) AND $_GET['inscription'] == "pro") {
 						?>
-						<FORM>
-							<SELECT name="domaine" size="1">
+						<form>
+							<select name="domaine" size="1">
 							<?php
-								foreach ($listeDomaine as $value) {
+								foreach ($listeDomaine as $row) {
 								?>
-									<OPTION><?php echo $value; ?>
+									<option value="<?php echo $row['nom']; ?>"><?php echo $row['nom']; ?></option>
 								<?php
 								}
 								?>
-							</SELECT>
-						</FORM>
+							</select>
+						</form>
 
+						<form>
+							<select name="specialite" size="1">
+							<?php
+								foreach ($listeSpecialite as $row) {
+								?>
+									<option value="<?php echo $row['nom']; ?>"><?php echo $row['nom']; ?></option>
+								<?php
+								}
+								?>
+							</select>
+						</form>
 
-
-
-
-
-
+						<form>
+							<select name="sous_specialite" size="1">
+							<?php
+								foreach ($listeSousSpecialite as $row) {
+								?>
+									<option value="<?php echo $row['nom']; ?>"><?php echo $row['nom']; ?></option>
+								<?php
+								}
+								?>
+								<option value="autre">autre...</option>
+							</select>
+						</form>
 
 							<?php
 						}

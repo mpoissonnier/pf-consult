@@ -7,8 +7,8 @@ function surligne(champ, erreur) {
 }
 
 // Vérifier la longueurs d'un champ
-function verifString(champ) {
-  if(champ.value.length < 2 || champ.value.length > 25) {
+function verifString(champ, tailleMin, tailleMax) {
+  if(champ.value.length < tailleMin || champ.value.length > tailleMax) {
     surligne(champ, true);
     return false;
   } else {
@@ -19,14 +19,14 @@ function verifString(champ) {
 
  // Verifie le format de l'adresse mail
 function verifMail(champ) {
-   var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
-   if(!regex.test(champ.value)) {
-      surligne(champ, true);
-      return false;
-   } else {
-      surligne(champ, false);
-      return true;
-   }
+  var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+  if(!regex.test(champ.value)) {
+    surligne(champ, true);
+    return false;
+  } else {
+    surligne(champ, false);
+    return true;
+  }
 }
 
 // Verifie la taille du mot de passe et que ce soient les memes
@@ -62,33 +62,41 @@ function verifCodePostal(champ, sortie) {
 
 // Verifier le formulaire d'inscription
 function verifFormInscription(f) {
-   var prenomOK = verifString(f.prenom);
-   var nomOK = verifString(f.nom);
-   var villeOK = verifString(f.ville);
-   var mailOk = verifMail(f.mail);
-   var mdpOk = verifMdp();
-   var cpOk = verifCodePostal(f.cp);
+  var prenomOK = verifString(f.prenom,2,25);
+  var nomOK = verifString(f.nom,2,25);
+  var adresseOK = verifString(f.adresse,2,25);
+  var villeOK = verifString(f.ville,2,25);
+  var mailOk = verifMail(f.mail);
+  var mdpOk = verifMdp();
+  var cpOk = verifCodePostal(f.cp);
 
-   if(prenomOK && nomOK && villeOK && mailOk && mdpOk && cpOk)
-      return true;
-   else {
-      alert("Veuillez remplir correctement tous les champs");
-      return false;
-   }
+  if(prenomOK && nomOK && villeOK && mailOk && mdpOk && cpOk)
+    return true;
+  else {
+    var msg = document.createElement('p');
+    msg.id = "msg"
+    document.getElementById('').appendChild(msg);
+    document.getElementById(msg).innerHTML = "Veuillez remplir correctement tous les champs"
+    return false;
+  }
 }
 
 function verifFormModifInfos(f) {
-   var check = verifString(f.pseudo);
-   var mailOk = verifMail(f.email);
-   var ageOk = verifAge(f.age);
+  var adresseOK = verifString(f.adresse,2,25);
+  var villeOK = verifString(f.ville,2,25);
+  var mailOk = verifMail(f.mail);
+  var cpOk = verifCodePostal(f.cp);
 
-   if(pseudoOk && mailOk && ageOk)
-      return true;
-   else {
-      var msg = document.createElement('p');
-      msg.id = "msg"
-      document.getElementById('').appendChild(msg);
-      document.getElementById(msg).innerHTML = "Veuillez remplir correctement tous les champs"
-      return false;
-   }
+  // TODO verifier si il a changer
+  var mdpOk = verifMdp();
+
+  if(adresseOK && villeOK && mailOk && mdpOk && cpOk) {
+    return true;
+  } else {
+    var msg = document.createElement('p');
+    msg.id = "msg"
+    document.getElementById('').appendChild(msg);
+    document.getElementById(msg).innerHTML = "Veuillez remplir correctement tous les champs";
+    return false;
+  }
 }
