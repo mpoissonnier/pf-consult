@@ -14,9 +14,10 @@ class vueCompte {
 	<html lang="fr">
 	  <head>
 	    <meta charset="utf-8">
-			<title>Recherche</title>
+			<title>Mon compte</title>
 	    <link rel="shortcut icon" href="vue/img/favicon.ico" />
 	    <link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
+			<script src="vue/scripts/inscription.js"></script>
 	  </head>
 	  <body>
 	<!--  HEADER-->
@@ -24,21 +25,17 @@ class vueCompte {
 
 	<!--  CONTENT -->
 	    <div class="content">
-        <form action="" method="post">
+				<h3>Bienvenue sur votre compte <?php echo $_SESSION['user']; ?></h3>
+        <form action="index.php?monCompte=1" method="post" onSubmit="return VerifSubmit();">
           <table id="profil">
             <!--  Modification de l'adresse mail -->
             <tr>
               <th colspan="2">Modifier votre adresse mail :</th>
             </tr>
             <tr>
-              <td>
-                <label>Votre adresse mail :</label>
-                <input type="text" name="mail" value="" >
-              </td>
-              <td>
-                <label>Nouvelle adresse mail :</label>
-                <input type="text" name="newMail" >
-              </td>
+              <td colspan="2">
+                <input id="mail" type="mail" name="mail" value="<?php echo $user->getMail(); ?>" >
+							</td>
             </tr>
             <!--  Modification du mot de passe -->
             <tr>
@@ -47,11 +44,11 @@ class vueCompte {
             <tr>
               <td>
                 <label>Nouveau mot de passe :</label>
-                <input type="password" name="newMdp" >
+                <input id="mdp" type="password" name="mdp" >
               </td>
               <td>
-                <label>Confirmer le mot de passe:</label>
-                <input type="password" name="newMdpConfirm" >
+                <label>Confirmer le mot de passe :</label>
+                <input id="mdpConfirm" type="password" name="mdpConfirm" >
               </td>
             </tr>
             <!--  Modification de l'adresse -->
@@ -59,34 +56,25 @@ class vueCompte {
               <th colspan="2">Modifier votre adresse :</th>
             </tr>
             <tr>
-              <td>
+              <td colspan="2">
                 <label>Adresse :</label>
-                <input type="text" name="adresse" value="" >
+                <input type="text" name="adresse" value="<?php echo $user->getAdresse(); ?>" >
                 <label>Code postal :</label>
-                <input type="text" name="cp" value="" >
+                <input type="text" name="cp" value="<?php echo $user->getCp(); ?>" >
                 <label>Ville :</label>
-                <input type="text" name="ville" value="" >
-              </td>
-              <td>
-
-                <label>Nouvelle adresse :</label>
-                <input type="text" name="newAdresse" >
-                <label>Nouveau code postal :</label>
-                <input type="text" name="newCp" >
-                <label>Nouvelle ville :</label>
-                <input type="text" name="newVille" >
+                <input type="text" name="ville" value="<?php echo $user->getVille(); ?>" >
               </td>
             </tr>
             <!--  Confirmation -->
             <tr>
-              <td colspan="2">
+              <th colspan="2">
                 <label>Veuillez entrer votre mot de passe :</label>
-                <input type="password" name="" value="">
-              </td>
+                <input type="password" name="mdpUser" >
+              </th>
             </tr>
             <tr>
               <td colspan="2">
-                <input type="submit" name="" value="Enregistrer">
+                <input type="submit" value="Enregistrer">
               </td>
             </tr>
           </table>

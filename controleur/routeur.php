@@ -67,6 +67,10 @@
 
 // GESTION COMPTE UTILISATEUR
       if (isset($_GET['monCompte'])) {
+        if ($_GET['monCompte'] == 1) {
+          $this->ctrlCompte->modifCompte();
+          return;
+        }
         $this->ctrlCompte->pageMonCompte();
         return;
       }
