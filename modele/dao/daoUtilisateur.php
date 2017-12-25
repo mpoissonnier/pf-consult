@@ -10,7 +10,7 @@
     /* Constucteur de la classe, se connecte à la base de données */
     public function __construct(){
       try {
-        $chaine = "mysql:host=".HOST.";dbname=".BD;
+        $chaine = "mysql:host=".HOST.";dbname=".BD.";charset=UTF8";
         $this->connexion = new PDO($chaine,LOGIN,PASSWORD);
         $this->connexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
       } catch (PDOException $e) {
@@ -65,7 +65,7 @@
 
     public function connexion() {
       try {
-        if ($this->estInscrit($_POST['login']) && $this->checkMdp($_POST['login'],$_POST['mdp'])) {
+        if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {
           $stmt = $this->connexion->prepare('select * from Utilisateurs where mail = ?;');
           $stmt->bindParam(1,$_POST['login']);
           $stmt->execute();
@@ -74,6 +74,7 @@
             return (ucfirst(strtolower($tabResult['prenom'])) . " " . $tabResult['nom']);
           }
         }
+          return "ko";
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
@@ -96,7 +97,9 @@
           $stmt->bindParam(8,$_POST['cp']);
           $stmt->bindParam(9,strtoupper($_POST['ville']));
           $stmt->execute();
+          return "ok";
         }
+        return "ko";
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
@@ -126,7 +129,7 @@
       }
     }
 
-    /** Méthode qui permet de supprimer un utilisateur lambda */
+    /** Méthode qui permet de supprimer un utilisateur  */
     public function delUser() {
       try {
         if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {

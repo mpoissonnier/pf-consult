@@ -25,8 +25,17 @@
     /* Fonction permettant l'inscription d'un utilisateur. */
     public function inscriptionUser($categorie) {
       if ($categorie == 1 ) {
-        $this->modele->addUser();
-        $this->vue->genereVueAccueil();
+        $_SESSION['inscription'] = $this->modele->addUser();
+        if ($_SESSION['inscription'] == "ko") {
+          $_SESSION['validite'] = "ko";
+          $_SESSION['message'] = "Mail existant";
+          $_GET['inscription'] = "user";
+          $this->inscription();
+        } else {
+          $_SESSION['validite'] = "ok";
+          $_SESSION['message'] = "Vous êtes bien inscrit";
+          $this->vue->genereVueAccueil();
+        }
       } else if ($categorie == 2) {
         $this->modele->addSpecialiste();
         $this->vue->genereVueAccueil();
@@ -41,8 +50,16 @@
     /* Fonction permettant la connexion d'un utilisateur. */
     public function connexionUser() {
       $_SESSION['user'] = $this->modele->connexion();
-      $_SESSION['id'] = $_POST['login'];
-      $this->vue->genereVueAccueil();
+      if ($_SESSION['user'] != "ko") { // connexion réussi
+        $_SESSION['id'] = $_POST['login'];
+        $_SESSION['validite'] = "ok";
+        $_SESSION['message'] = "Bienvenue " . $_SESSION['user'];
+        $this->vue->genereVueAccueil();
+      } else { // echec connexion
+        $_SESSION['validite'] = "ko";
+        $_SESSION['message'] = "Combinaison utilisateur/mot de passe incorect";
+        $this->connexion();
+      }
     }
 
     /* Fonction permettant la deconnexion d'un utilisateur. */

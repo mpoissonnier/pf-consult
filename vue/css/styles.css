@@ -16,6 +16,10 @@ header ul li { text-transform: uppercase; }
 header ul li a { margin: 0 30px; color: #4d4959;}
 header li a:hover { opacity: 0.5; border-bottom: 2px #4d4959 solid; }
 .icon { position: absolute; right: 2%; top: 30px; font-size: 30px; }
+#msg { width: 50%; margin: auto; height: 25px; box-shadow: 2px 2px 5px 1px #656565; border-radius: 5px; }
+#msg p { color: white; font-weight: bold; font-variant: small-caps; }
+.ok {background: green;}
+.ko {background: red;}
 /*Responsive*/
 @media screen and (min-width: 700px) {
   header { flex-direction: row; justify-content: center; height: 84px; padding: 0;}
@@ -57,7 +61,7 @@ h2.logo-header { text-align: center;  color: #848789;  font-size: 24px;  font-we
 .container-index { height: 100%;}
 /*Responsive*/
 @media screen and (min-width: 700px) {
-  h2.logo-header { padding-top: 60px;  margin: 70px 0 40px 0; }
+  h2.logo-header { margin: 40px 0 40px 0; }
 }
 /* ==========================================================================
 INSCRIPTION // CONNEXION

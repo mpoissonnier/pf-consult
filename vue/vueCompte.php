@@ -58,11 +58,11 @@ class vueCompte {
             <tr>
               <td colspan="2">
                 <label>Adresse :</label>
-                <input type="text" name="adresse" value="<?php echo $user->getAdresse(); ?>" >
+                <input type="text" name="adresse" value="<?php echo ucwords(strtolower($user->getAdresse())); ?>" >
                 <label>Code postal :</label>
                 <input type="text" name="cp" maxlength="5" value="<?php echo $user->getCp(); ?>" >
                 <label>Ville :</label>
-                <input type="text" name="ville" value="<?php echo $user->getVille(); ?>" >
+                <input type="text" name="ville" value="<?php echo ucwords(strtolower($user->getVille())); ?>" >
               </td>
             </tr>
             <!--  Confirmation -->

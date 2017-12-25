@@ -1,9 +1,9 @@
 // Surligner les cases non valides
 function surligne(champ, erreur) {
   if(erreur)
-    champ.style.backgroundColor = "#fba";
+  champ.style.backgroundColor = "#fba";
   else
-    champ.style.backgroundColor = "";
+  champ.style.backgroundColor = "";
 }
 
 // Vérifier la longueurs d'un champ
@@ -17,7 +17,7 @@ function verifString(champ, tailleMin, tailleMax) {
   }
 }
 
- // Verifie le format de l'adresse mail
+// Verifie le format de l'adresse mail
 function verifMail(champ) {
   var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
   if(!regex.test(champ.value)) {
@@ -49,7 +49,7 @@ function verifMdp(){
 }
 
 // Verifie le format du code postal
-function verifCodePostal(champ, sortie) {
+function verifCodePostal(champ) {
   if(champ.value.length != 5 || !/^\d+$/.test(champ.value)) {
     surligne(champ, true);
     champ.value = "";
@@ -70,17 +70,14 @@ function verifFormInscription(f) {
   var mdpOk = verifMdp();
   var cpOk = verifCodePostal(f.cp);
 
-  if(prenomOK && nomOK && villeOK && mailOk && mdpOk && cpOk)
+  if(prenomOK && nomOK && adresseOK && villeOK && mailOk && mdpOk && cpOk) {
     return true;
-  else {
-    var msg = document.createElement('p');
-    msg.id = "msg"
-    document.getElementById('').appendChild(msg);
-    document.getElementById(msg).innerHTML = "Veuillez remplir correctement tous les champs"
+  } else {
     return false;
   }
 }
 
+// Verifier le formulaire de modification des infos
 function verifFormModifInfos(f) {
   var adresseOK = verifString(f.adresse,2,25);
   var villeOK = verifString(f.ville,2,25);
@@ -93,10 +90,6 @@ function verifFormModifInfos(f) {
   if(adresseOK && villeOK && mailOk && mdpOk && cpOk) {
     return true;
   } else {
-    var msg = document.createElement('p');
-    msg.id = "msg"
-    document.getElementById('').appendChild(msg);
-    document.getElementById(msg).innerHTML = "Veuillez remplir correctement tous les champs";
     return false;
   }
 }

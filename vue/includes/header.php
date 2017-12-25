@@ -1,20 +1,20 @@
 <script>
 function setResponsive() {
-    var x = document.getElementsByClassName("nav");
-    for (var i = 0; i < x.length; i++) {
-      if (x[i].className == "nav") {
-        x[i].className += " responsive";
-      } else {
-        x[i].className = "nav";
-      }
+  var x = document.getElementsByClassName("nav");
+  for (var i = 0; i < x.length; i++) {
+    if (x[i].className == "nav") {
+      x[i].className += " responsive";
+    } else {
+      x[i].className = "nav";
     }
+  }
 }
 </script>
 
 <!--  HEADER AVANT CONNEXION -->
 <?php
-  if (!isset($_SESSION['user'])) {
-?>
+if (!isset($_SESSION['user']) || $_SESSION['user'] == 'ko') {
+  ?>
   <header>
     <div class="nav">
       <ul>
@@ -33,9 +33,10 @@ function setResponsive() {
     </div>
     <a href="javascript:void(0);" class="icon" onclick="setResponsive()">&#9776;</a>
   </header>
-<?php
-  } else {
-?>
+  <?php
+} else {
+  ?>
+  <!--  HEADER APRES CONNEXION -->
   <header>
     <div class="nav">
       <ul>
@@ -54,6 +55,14 @@ function setResponsive() {
     </div>
     <a href="javascript:void(0);" class="icon" onclick="setResponsive()">&#9776;</a>
   </header>
-<?php
-  }
+  <?php
+}
+if (isset($_SESSION['message'])) {
+  ?>
+  <div id="msg" class="<?php echo $_SESSION['validite']; ?>">
+    <p><?php echo $_SESSION['message']; ?></p>
+  </div>
+  <?php
+  unset($_SESSION['message']);
+}
 ?>
