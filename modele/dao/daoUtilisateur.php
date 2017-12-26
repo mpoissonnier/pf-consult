@@ -2,7 +2,6 @@
 
   require_once PATH_MODELE."/bean/Utilisateur.php";
 
-
    class daoUtilisateur {
     private $connexion;
 
@@ -87,7 +86,7 @@
       try {
         if (!$this->estInscrit($_POST['mail'])) {
           $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,?,?);');
-          $stmt->bindParam(1,strtoupper($_POST['civilite']));
+          $stmt->bindParam(1,$_POST['civilite']);
           $stmt->bindParam(2,strtoupper($_POST['prenom']));
           $stmt->bindParam(3,strtoupper($_POST['nom']));
           $stmt->bindParam(4,$_POST['mail']);
@@ -97,8 +96,8 @@
           $stmt->bindParam(8,$_POST['cp']);
           $stmt->bindParam(9,strtoupper($_POST['ville']));
           if ($categorie == 1) {
-            $stmt->bindParam(10,1);
-            $stmt->bindParam(11,NULL);
+            $stmt->bindValue(10,1);
+            $stmt->bindValue(11,NULL);
           } else {
             $stmt->bindParam(10,1);
             // TODO specialite
@@ -146,10 +145,10 @@
     /* Méthode permettant de modifier les informations d'un compte utilisateur*/
     public function modifInfosCompte($mdp) {
       try {
-        if ($this->checkMdp($_SESSION['id'], $_POST['mdpUser'])) {
+        if ($this->estInscrit($_SESSION['id'])) {
           // modif civilite
           $stmt = $this->connexion->prepare('update Utilisateurs SET civilite = ? where mail = ?');
-          $stmt->bindParam(1,strtoupper($_POST['civilite']));
+          $stmt->bindParam(1,$_POST['civilite']);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
@@ -211,11 +210,12 @@
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
       }
     }
-
-///////// GETTER SPECIALITE-SOUS-DOMAINE
+/////////
+///////// GESTION DOMAINE // SPECIALITE
     public function getDomaine(){
       try {
-        $stmt = $this->connexion->query('select * from Domaine');
+        $stmt = $this->connexion->prepare('select * from Domaine');
+        $stmt->execute();
         return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
@@ -240,8 +240,9 @@
 
     public function getSpecialite() {
       try {
-        $stmt = $this->connexion->query('select * from Specialite');
-          return $stmt->fetchAll();
+        $stmt = $this->connexion->prepare('select * from Specialite');
+        $stmt->execute();
+        return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Specialite");
@@ -250,8 +251,9 @@
 
     public function getSousSpecialite() {
       try {
-        $stmt = $this->connexion->query('select * from Sous_Specialite');
-          return $stmt->fetchAll();
+        $stmt = $this->connexion->prepare('select * from Sous_Specialite');
+        $stmt->execute();
+        return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Sous_Specialite");

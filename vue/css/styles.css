@@ -67,12 +67,14 @@ h2.logo-header { text-align: center;  color: #848789;  font-size: 24px;  font-we
 INSCRIPTION // CONNEXION
 ========================================================================== */
 p, input, select, label { margin: 10px; width: 90%; display: flex; justify-content: center; flex-direction: column;}
+input { text-align: center;}
 p { text-align: center;}
 .onglet { display: flex; justify-content: space-around; margin-bottom: 5px;}
 .onglet_on { border-bottom: solid 2px #00A5E2;}
 .onglet a:hover { opacity: 0.5; text-decoration: none;}
 .lien_visible { text-decoration: underline #00A5E2; }
 hr { width: 50%; margin: auto; border-bottom: 2px solid #f4f5fc; color: #f4f5fc; }
+.container_form { background: #f4f5fc;}
 /* Responsive */
 @media screen and (min-width: 700px) {
   .container_form { width: 50%; margin: auto;}
