@@ -19,7 +19,13 @@
     }
 
     public function modifCompte() {
-      $rep = $this->modele->modifInfosCompte();
+      if (empty($_POST['mdp']) || empty($_POST['mdpConfirm'])) {
+        $rep = $this->modele->modifInfosCompte(0);
+      } else {
+        $rep = $this->modele->modifInfosCompte(1);
+      }
+      $_SESSION['validite'] = "ok";
+      $_SESSION['message'] = "Les modifications ont bien été enregistrées";
       $_SESSION['id'] = $_POST['mail'];
       $this->pageMonCompte();
     }

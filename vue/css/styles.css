@@ -40,7 +40,7 @@ footer li { display: inline-block; }
 footer li a:hover { opacity: 0.5; }
 .container_footer { display: flex; flex-direction: column; align-items: center; padding-top: 5px;}
 .container_footer div { padding-top: 5px;}
-footer p { font-size: 13px; }
+footer p { font-size: 13px; text-align: justify;}
 /*Responsive*/
 @media screen and (min-width: 700px) {
   footer { height: 85px; padding-top: 5px; }

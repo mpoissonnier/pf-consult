@@ -58,7 +58,7 @@ class vueAuthentification {
 			<!--  CONTENT -->
 			<div id="content">
 				<div class="container_form">
-					<form action="index.php?connexion=1" method="post">
+					<form action="index.php?connexion=1" method="post" onsubmit="return verifFormModifInfos(this)">
 						<!--  BLOC IDENTIFIANT -->
 						<div class="formline">
 							<input type="text" name="login" placeholder="Identifiant" required size="25" />
@@ -191,6 +191,7 @@ class vueAuthentification {
 										?>
 										<option value="autre">autre...</option>
 									</select>
+								</div>
 									<?php
 								}
 								?>
@@ -213,13 +214,14 @@ class vueAuthentification {
 					</form>
 				</div>
 			</div>
+		</div>
 
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>
 
-		</body>
-		</html>
-		<?php
-	}
+	</body>
+	</html>
+	<?php
+}
 }
 ?>

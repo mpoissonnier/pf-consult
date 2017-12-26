@@ -20,7 +20,7 @@
 
     /* Methode qui permet de se deconnecter de la base */
     public function destroy(){
-      $this->connexion = null;
+      $this->connexion = NULL;
     }
 /////////
 ///////// CHECK
@@ -83,10 +83,10 @@
 /////////
 ///////// AJOUT / SUPPRESSION
     /** Méthode qui permet d'ajouter un utilisateur lambda */
-    public function addUser() {
+    public function addUser($categorie) {
       try {
         if (!$this->estInscrit($_POST['mail'])) {
-          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,1,NULL);');
+          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,?,?);');
           $stmt->bindParam(1,strtoupper($_POST['civilite']));
           $stmt->bindParam(2,strtoupper($_POST['prenom']));
           $stmt->bindParam(3,strtoupper($_POST['nom']));
@@ -96,33 +96,17 @@
           $stmt->bindParam(7,strtoupper($_POST['adresse']));
           $stmt->bindParam(8,$_POST['cp']);
           $stmt->bindParam(9,strtoupper($_POST['ville']));
+          if ($categorie == 1) {
+            $stmt->bindParam(10,1);
+            $stmt->bindParam(11,NULL);
+          } else {
+            $stmt->bindParam(10,1);
+            // TODO specialite
+          }
           $stmt->execute();
           return "ok";
         }
         return "ko";
-      } catch (PDOException $e) {
-        $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Utilisateurs");
-      }
-    }
-
-    /** Méthode qui permet d'ajouter un specialiste */
-    public function addSpecialiste() {
-      try {
-        if (!$this->estInscrit($_POST['mail'])) {
-          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,2,?);');
-          $stmt->bindParam(1,strtoupper($_POST['civilite']));
-          $stmt->bindParam(2,strtoupper($_POST['prenom']));
-          $stmt->bindParam(3,strtoupper($_POST['nom']));
-          $stmt->bindParam(4,$_POST['mail']);
-          $stmt->bindParam(5,crypt($_POST['mdp']));
-          $stmt->bindParam(6,$_POST['ddn']);
-          $stmt->bindParam(7,strtoupper($_POST['adresse']));
-          $stmt->bindParam(8,$_POST['cp']);
-          $stmt->bindParam(9,strtoupper($_POST['ville']));
-          $stmt->bindParam(10,$_POST['sous_specialite']);
-          $stmt->execute();
-        }
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
@@ -143,23 +127,8 @@
       }
     }
 /////////
-///////// UPDATE INFOS USER
-// TODO
-    // /** Méthode qui permet de modifier le mail d'un utilisateur */
-    // public function updateMail() {
-    //   try {
-    //     if ($this->checkMdp($_POST['mail'],$_POST['mdp'])) {
-    //       $stmt = $this->connexion->prepare('update from Utilisateurs sets mail where mail = ?;');
-    //       $stmt->bindParam(1,$_POST['newMail']);
-    //       $stmt->execute();
-    //     }
-    //   } catch (PDOException $e) {
-    //     $this->destroy();
-    //     throw new PDOException("Erreur d'accès à la table Utilisateurs");
-    //   }
-    // }
-/////////
-///////// GETTER
+///////// GESTION COMPTE
+    /* Méthode permettant de récuperer les informations d'un utilisateur */
     public function getInfosUser() {
       try {
         if ($this->estInscrit($_SESSION['id'])) {
@@ -174,9 +143,34 @@
       }
     }
 
-    public function modifInfosCompte() {
+    /* Méthode permettant de modifier les informations d'un compte utilisateur*/
+    public function modifInfosCompte($mdp) {
       try {
         if ($this->checkMdp($_SESSION['id'], $_POST['mdpUser'])) {
+          // modif civilite
+          $stmt = $this->connexion->prepare('update Utilisateurs SET civilite = ? where mail = ?');
+          $stmt->bindParam(1,strtoupper($_POST['civilite']));
+          $stmt->bindParam(2,$_SESSION['id']);
+          $stmt->execute();
+
+          // modif nom
+          $stmt = $this->connexion->prepare('update Utilisateurs SET nom = ? where mail = ?');
+          $stmt->bindParam(1,strtoupper($_POST['nom']));
+          $stmt->bindParam(2,$_SESSION['id']);
+          $stmt->execute();
+
+          // nom prenom
+          $stmt = $this->connexion->prepare('update Utilisateurs SET prenom = ? where mail = ?');
+          $stmt->bindParam(1,strtoupper($_POST['prenom']));
+          $stmt->bindParam(2,$_SESSION['id']);
+          $stmt->execute();
+
+          // modif ddn
+          $stmt = $this->connexion->prepare('update Utilisateurs SET ddn = ? where mail = ?');
+          $stmt->bindParam(1,strtoupper($_POST['ddn']));
+          $stmt->bindParam(2,$_SESSION['id']);
+          $stmt->execute();
+
           // modif adresse
           $stmt = $this->connexion->prepare('update Utilisateurs SET adresse = ? where mail = ?');
           $stmt->bindParam(1,strtoupper($_POST['adresse']));
@@ -196,17 +190,22 @@
           $stmt->execute();
 
           // modif mdp
-          $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
-          $stmt->bindParam(1,crypt($_POST['mdp']));
-          $stmt->bindParam(2,$_SESSION['id']);
-          $stmt->execute();
+          if ($mdp == 1) {
+            $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
+            $stmt->bindParam(1,crypt($_POST['mdp']));
+            $stmt->bindParam(2,$_SESSION['id']);
+            $stmt->execute();
+          }
 
           // modif mail
           $stmt = $this->connexion->prepare('update Utilisateurs SET mail = ? where mail = ?');
           $stmt->bindParam(1,$_POST['mail']);
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
+
+          return "ok";
         }
+        return "ko";
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Utilisateurs");

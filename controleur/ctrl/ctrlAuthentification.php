@@ -24,20 +24,15 @@
 
     /* Fonction permettant l'inscription d'un utilisateur. */
     public function inscriptionUser($categorie) {
-      if ($categorie == 1 ) {
-        $_SESSION['inscription'] = $this->modele->addUser();
-        if ($_SESSION['inscription'] == "ko") {
-          $_SESSION['validite'] = "ko";
-          $_SESSION['message'] = "Mail existant";
-          $_GET['inscription'] = "user";
-          $this->inscription();
-        } else {
-          $_SESSION['validite'] = "ok";
-          $_SESSION['message'] = "Vous êtes bien inscrit";
-          $this->vue->genereVueAccueil();
-        }
-      } else if ($categorie == 2) {
-        $this->modele->addSpecialiste();
+      $_SESSION['inscription'] = $this->modele->addUser($categorie);
+      if ($_SESSION['inscription'] == "ko") {
+        $_SESSION['validite'] = "ko";
+        $_SESSION['message'] = "Mail existant";
+        $_GET['inscription'] = "user";
+        $this->inscription();
+      } else {
+        $_SESSION['validite'] = "ok";
+        $_SESSION['message'] = "Vous êtes bien inscrit";
         $this->vue->genereVueAccueil();
       }
     }
