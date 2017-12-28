@@ -40,11 +40,12 @@ footer li { display: inline-block; }
 footer li a:hover { opacity: 0.5; }
 .container_footer { display: flex; flex-direction: column; align-items: center; padding-top: 5px;}
 .container_footer div { padding-top: 5px;}
-footer p { font-size: 13px; text-align: justify;}
+footer p { font-size: 13px; }
 /*Responsive*/
 @media screen and (min-width: 700px) {
   footer { height: 85px; padding-top: 5px; }
   footer li { margin-right: 15px; }
+  footer p { text-align: justify;}
   .container_footer { display: flex; flex-direction: row; justify-content: space-around; }
 }
 /* ==========================================================================
@@ -74,14 +75,14 @@ p { text-align: center;}
 .onglet a:hover { opacity: 0.5; text-decoration: none;}
 .lien_visible { text-decoration: underline #00A5E2; }
 hr { width: 50%; margin: auto; border-bottom: 2px solid #f4f5fc; color: #f4f5fc; }
-.container_form { background: #f4f5fc;}
+.container_form { background: #f4f5fc; padding: 25px;}
 /* Responsive */
 @media screen and (min-width: 700px) {
   .container_form { width: 50%; margin: auto;}
 }
 @media screen and (min-width: 1300px) {
   p { display: block;}
-  .container_form { width: 35%; padding: 25px; box-shadow: 5px 5px 5px 5px #9b9b9b; border-radius: 10px; }
+  .container_form { width: 35%; box-shadow: 5px 5px 5px 5px #9b9b9b; border-radius: 10px; }
   .formbloc { margin: 10px; display: flex; justify-content: center; flex-direction: column;}
   .formline { margin: 10px; display: flex; justify-content: center; flex-direction:row; }
   .cutcenter { margin: 10px; display: flex; justify-content: space-between;}
@@ -98,13 +99,23 @@ SLIDESHOW
   .slideshow li { float: left;}
 }
 /* ==========================================================================
-PROFIL
-========================================================================== */
-#profil th{ border-top: dotted #f4f5fc 2px; }
-#profil { border: solid #f4f5fc 2px; margin: auto; margin-top: 20px; border-collapse: collapse; text-align: center;}
-
-/* ==========================================================================
 DOMAINE
 ========================================================================== */
-.searchbar_med { width: 100%; background: url(../img/fond_medical.jpg) no-repeat center; height: 500px;}
-.searchbar_jur { width: 100%; background: url(../img/fond_juridique.jpg) no-repeat center; height: 500px;}
+.searchbar { margin: 0; padding: 0; height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;}
+.searchbar_med { background: url(../img/fond_medical.jpg) no-repeat center; }
+.searchbar_jur { background: url(../img/fond_juridique.jpg) no-repeat center; }
+.search_dom { padding: 2px; background: white; width: 75%; height: 50px; display: flex; align-items: center;}
+.search_dom:first-child { border-top-left-radius: 10px; border-top-right-radius: 10px;}
+.search_dom svg { padding: 2px; opacity: 0.2; }
+.search_dom input { margin: 0; margin-left: 5px; border: none; padding: 0; text-align: left; height: 100%; }
+.valid_dom { background: orange; display: flex; align-items: center; height: 54px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; width: 75%; padding: 2px;}
+.valid_dom input { background: none; border: none; color: white; font-weight: bold; text-transform: uppercase; height: 56px; width: 100%; padding: 5px; margin: 0; cursor: pointer; }
+.focused_search { border-bottom: solid 1px black;}
+.focused_search svg {opacity: 0.7;}
+/* Responsive */
+@media screen and (min-width: 700px) {
+  .searchbar { flex-direction: row;}
+  .search_dom { width: 300px; }
+  .search_dom:first-child { border-top-right-radius: 0px; border-bottom-left-radius: 10px;}
+  .valid_dom { border-top-right-radius: 10px; border-bottom-left-radius: 0px;  padding: 0; width: auto;}
+}
