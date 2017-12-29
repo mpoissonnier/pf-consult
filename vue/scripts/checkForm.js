@@ -100,3 +100,24 @@ function verifFormModifInfos(f) {
     return false;
   }
 }
+
+// Afficher ou non le champ sous specialité
+function change() {
+  var x = document.getElementById("specialite").value;
+  if (x == "autre") {
+    var newDiv = document.createElement('div');
+    newDiv.className = "formline";
+    newDiv.id = "newDiv";
+    var newInput = document.createElement('input');
+    newInput.name = "newSpe";
+    newInput.className = "full";
+    newInput.id ="newSpe"
+    newInput.type = "text";
+    newInput.placeholder = "Votre spécialité";
+    document.getElementById("blocSpecialite").appendChild(newDiv);
+    document.getElementById("newDiv").appendChild(newInput);
+  } else {
+    var x = document.getElementById("newDiv");
+    x.remove(1);
+  }
+}

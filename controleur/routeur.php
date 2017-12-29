@@ -25,13 +25,26 @@
           $this->ctrlDomaine->domaine(1);
           return;
         }
-
     // DOMAINE JURIDIQUE
         if ($_GET['domaine'] == "juridique") {
           $this->ctrlDomaine->domaine(2);
           return;
         }
       }
+// RECHERCHE
+      if (isset($_GET['search'])) {
+    // DOMAINE MEDICAL
+        if ($_GET['search'] == 1) {
+          $this->ctrlDomaine->rechercheSpe(1);
+          return;
+        }
+    // DOMAINE JURIDIQUE
+        if ($_GET['search'] == 2) {
+          $this->ctrlDomaine->rechercheSpe(2);
+          return;
+        }
+      }
+
 // GESTION INSCRIPTION
       if (isset($_GET['inscription'])) {
     // CHARGER PAGE INSCRIPTION

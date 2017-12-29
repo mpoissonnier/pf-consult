@@ -152,7 +152,7 @@ class vueAuthentification {
 						<hr>
 
 						<!--  BLOC ADRESSE -->
-						<div class="formbloc">
+						<div class="formbloc" id="blocSpecialite">
 							<div class="cutcenter">
 								<label name="Birth">Date de Naissance : </label>
 								<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10"  />
@@ -165,7 +165,7 @@ class vueAuthentification {
 										<?php
 										foreach ($listeDomaine as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo $row['nom']; ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
 											<?php
 										}
 										?>
@@ -174,28 +174,31 @@ class vueAuthentification {
 										<?php
 										foreach ($listeSpecialite as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo $row['nom']; ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
 											<?php
 										}
 										?>
 									</select>
 								</div>
 								<div class="formline">
-									<select class="full" name="sous_specialite">
+									<select id="specialite" class="full" name="sous_specialite" onchange="change()">
 										<?php
 										foreach ($listeSousSpecialite as $row) {
 											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo $row['nom']; ?></option>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
 											<?php
 										}
 										?>
-										<option value="autre">autre...</option>
+										<option value="autre">Autre ...</option>
 									</select>
 								</div>
 									<?php
 								}
 								?>
+							</div>
+							<hr>
 
+							<div>
 							<div class="formline">
 								<input class="full" type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required />
 							</div>

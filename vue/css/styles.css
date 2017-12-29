@@ -104,18 +104,27 @@ DOMAINE
 .searchbar { margin: 0; padding: 0; height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%;}
 .searchbar_med { background: url(../img/fond_medical.jpg) no-repeat center; }
 .searchbar_jur { background: url(../img/fond_juridique.jpg) no-repeat center; }
-.search_dom { padding: 2px; background: white; width: 75%; height: 50px; display: flex; align-items: center;}
-.search_dom:first-child { border-top-left-radius: 10px; border-top-right-radius: 10px;}
+.search_dom { padding: 2px; background: white; width: 75%; height: 50px; display: flex; align-items: center; }
+.search_dom:first-child { border-top-left-radius: 10px; border-top-right-radius: 10px; }
 .search_dom svg { padding: 2px; opacity: 0.2; }
 .search_dom input { margin: 0; margin-left: 5px; border: none; padding: 0; text-align: left; height: 100%; }
-.valid_dom { background: orange; display: flex; align-items: center; height: 54px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; width: 75%; padding: 2px;}
+.valid_dom { background: orange; display: flex; align-items: center; height: 54px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; width: 75%; padding: 2px; }
 .valid_dom input { background: none; border: none; color: white; font-weight: bold; text-transform: uppercase; height: 56px; width: 100%; padding: 5px; margin: 0; cursor: pointer; }
-.focused_search { border-bottom: solid 1px black;}
-.focused_search svg {opacity: 0.7;}
+.focused_search { border-bottom: solid 1px black; }
+.focused_search svg { opacity: 0.7; }
+.mini { height: 200px; background: grey; }
 /* Responsive */
 @media screen and (min-width: 700px) {
+  .mini { height: 100px; position: }
   .searchbar { flex-direction: row;}
   .search_dom { width: 300px; }
   .search_dom:first-child { border-top-right-radius: 0px; border-bottom-left-radius: 10px;}
   .valid_dom { border-top-right-radius: 10px; border-bottom-left-radius: 0px;  padding: 0; width: auto;}
 }
+/* ==========================================================================
+AFFICHAGE DES SPECIALISTES
+========================================================================== */
+.pro { border: solid 1px black; width: 45%; margin: 2% 0 2% 5%; display: flex;}
+.coordonnes { border: solid 1px red; width: 50%; }
+.coordonnes p { text-align: left;}
+.dispo { border: solid 1px blue; width: 50%; }

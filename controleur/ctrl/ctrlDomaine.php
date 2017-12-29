@@ -14,4 +14,10 @@
       $this->vue->genereVueDomaine($domaine);
     }
 
+    /* Fonction permettant l'affichage des specialistes demandes */
+    public function rechercheSpe($domaine) {
+      // TODO Faire la recherche
+      $this->vue->genereVueRecherche($domaine);
+    }
+
 }
