@@ -9,8 +9,8 @@
   define("PATH_MODELE",HOME_SITE."/modele");
 
 // DONNEES BASE DE DONNEE
-  define("HOST","localhost");
-  define("BD","PFCONSULT");
-  define("LOGIN","root");
-  define("PASSWORD","8mjywHNO!");
+  define("HOST","");
+  define("BD","");
+  define("LOGIN","");
+  define("PASSWORD","");
 ?>

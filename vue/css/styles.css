@@ -33,9 +33,8 @@ header li a:hover { opacity: 0.5; border-bottom: 2px #4d4959 solid; }
 FOOTER
 ========================================================================== */
 footer { display: table-row; width: 100%;  background-color: #f4f5fc; }
-.twitter-icon { background: url(../img/twitter-icon.png); height: 34px; width: 35px; display: block; }
-.pintrest-icon { background: url(../img/pintrest-icon.png); height: 34px; width: 35px; display: block; }
-.facebook-icon { background: url(../img/facebook-icon.png); height: 34px; width: 35px; display: block; }
+.iutnantes-icon { background: url(../img/iutnantes-icon.png) center no-repeat; height: 53px; width: 99px; display: block; }
+.univnantes-icon { background: url(../img/univnantes-icon.png) center no-repeat; height: 53px; width: 99px; display: block; }
 footer li { display: inline-block; }
 footer li a:hover { opacity: 0.5; }
 .container_footer { display: flex; flex-direction: column; align-items: center; padding-top: 5px;}
@@ -67,15 +66,18 @@ h2.logo-header { text-align: center;  color: #848789;  font-size: 24px;  font-we
 /* ==========================================================================
 INSCRIPTION // CONNEXION
 ========================================================================== */
-p, input, select, label { margin: 10px; width: 90%; display: flex; justify-content: center; flex-direction: column;}
-input { text-align: center;}
+input, select, label { margin: 10px; width: 100%; display: flex; justify-content: center; flex-direction: column;}
+input { text-align: center; height: 25px;}
 p { text-align: center;}
-.onglet { display: flex; justify-content: space-around; margin-bottom: 5px;}
+input[type="submit"] { height: 35px; cursor: ppi}
+.container_form { background: #f4f5fc; padding: 25px;}
+.block { margin: 10px 0 10px 0;}
+.block div { display: flex; justify-content: center; }
+.block .onglet { display: flex; justify-content: space-around; }
 .onglet_on { border-bottom: solid 2px #00A5E2;}
 .onglet a:hover { opacity: 0.5; text-decoration: none;}
 .lien_visible { text-decoration: underline #00A5E2; }
 hr { width: 50%; margin: auto; border-bottom: 2px solid #f4f5fc; color: #f4f5fc; }
-.container_form { background: #f4f5fc; padding: 25px;}
 /* Responsive */
 @media screen and (min-width: 700px) {
   .container_form { width: 50%; margin: auto;}
@@ -83,10 +85,7 @@ hr { width: 50%; margin: auto; border-bottom: 2px solid #f4f5fc; color: #f4f5fc;
 @media screen and (min-width: 1300px) {
   p { display: block;}
   .container_form { width: 35%; box-shadow: 5px 5px 5px 5px #9b9b9b; border-radius: 10px; }
-  .formbloc { margin: 10px; display: flex; justify-content: center; flex-direction: column;}
-  .formline { margin: 10px; display: flex; justify-content: center; flex-direction:row; }
-  .cutcenter { margin: 10px; display: flex; justify-content: space-between;}
-  form .full { width:100%;}
+  .connexion_form div { margin: 10px; display: flex; justify-content: center; flex-direction:row; }
 }
 /* ==========================================================================
 SLIDESHOW
@@ -115,7 +114,7 @@ DOMAINE
 .mini { height: 200px; background: grey; }
 /* Responsive */
 @media screen and (min-width: 700px) {
-  .mini { height: 100px; position: }
+  .mini { height: 100px; }
   .searchbar { flex-direction: row;}
   .search_dom { width: 300px; }
   .search_dom:first-child { border-top-right-radius: 0px; border-bottom-left-radius: 10px;}

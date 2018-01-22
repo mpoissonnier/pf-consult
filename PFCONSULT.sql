@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.11.1
+-- version 4.5.4.1deb2ubuntu2
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Mer 20 Décembre 2017 à 14:16
--- Version du serveur :  5.5.50-0+deb7u2
--- Version de PHP :  5.4.45-1~dotdeb+7.1
+-- Généré le :  Mer 17 Janvier 2018 à 16:52
+-- Version du serveur :  5.7.20-0ubuntu0.16.04.1
+-- Version de PHP :  7.0.22-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,10 +14,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `info2-2017-pfcon-db`
+-- Base de données :  `PFCONSULT`
 --
 
 -- --------------------------------------------------------
@@ -26,10 +26,10 @@ SET time_zone = "+00:00";
 -- Structure de la table `Domaine`
 --
 
-CREATE TABLE IF NOT EXISTS `Domaine` (
+CREATE TABLE `Domaine` (
   `id` int(11) NOT NULL,
   `nom` varchar(25) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Contenu de la table `Domaine`
@@ -42,20 +42,20 @@ INSERT INTO `Domaine` (`id`, `nom`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Sous_Spécialité`
+-- Structure de la table `Sous_Specialite`
 --
 
-CREATE TABLE IF NOT EXISTS `Sous_Spécialité` (
+CREATE TABLE `Sous_Specialite` (
   `id` int(11) NOT NULL,
-  `nom` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `nom` varchar(100) COLLATE utf8_bin NOT NULL,
   `sousDomaine` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
--- Contenu de la table `Sous_Spécialité`
+-- Contenu de la table `Sous_Specialite`
 --
 
-INSERT INTO `Sous_Spécialité` (`id`, `nom`, `sousDomaine`) VALUES
+INSERT INTO `Sous_Specialite` (`id`, `nom`, `sousDomaine`) VALUES
 (1, 'chirurgie cardiaque', 1),
 (2, 'chirurgie esthétique', 1),
 (3, 'chirurgie générale', 1),
@@ -68,7 +68,7 @@ INSERT INTO `Sous_Spécialité` (`id`, `nom`, `sousDomaine`) VALUES
 (10, 'Droit pénal', 38),
 (11, 'Droit immobilier', 38),
 (12, 'Droit rural', 38),
-(13, 'Droit de l''environnement', 38),
+(13, 'Droit de l\'environnement', 38),
 (14, 'Droit public', 38),
 (15, 'Droit de la propriété intellectuelle', 38),
 (16, 'Droit commercial', 38),
@@ -76,27 +76,27 @@ INSERT INTO `Sous_Spécialité` (`id`, `nom`, `sousDomaine`) VALUES
 (18, 'Droit fiscal', 38),
 (19, 'Droit social', 38),
 (20, 'Droit économique', 38),
-(21, 'Droit des mesures d''exécution', 38),
+(21, 'Droit des mesures d\'exécution', 38),
 (22, 'Droit communautaire', 38),
 (23, 'Droit des relations internationales', 38);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `Spécialité`
+-- Structure de la table `Specialite`
 --
 
-CREATE TABLE IF NOT EXISTS `Spécialité` (
+CREATE TABLE `Specialite` (
   `id` int(11) NOT NULL,
-  `nom` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `nom` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `domaine` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `Spécialité`
+-- Contenu de la table `Specialite`
 --
 
-INSERT INTO `Spécialité` (`id`, `nom`, `domaine`) VALUES
+INSERT INTO `Specialite` (`id`, `nom`, `domaine`) VALUES
 (1, 'Chirurgie', 1),
 (2, 'Allergologie', 1),
 (3, 'Immunologie', 1),
@@ -140,9 +140,9 @@ INSERT INTO `Spécialité` (`id`, `nom`, `domaine`) VALUES
 (41, 'Assistant juridique', 2),
 (42, 'Clerc', 2),
 (43, 'Commissaire', 2),
-(44, 'Conseiller en propriété i', 2),
+(44, 'Conseiller en propriété intellectuelle', 2),
 (45, 'Détective privé', 2),
-(46, 'Éducateur de la protectio', 2),
+(46, 'Éducateur de la protection', 2),
 (47, 'Fiscaliste', 2),
 (48, 'Greffier', 2),
 (49, 'Huissier de justice', 2),
@@ -151,9 +151,9 @@ INSERT INTO `Spécialité` (`id`, `nom`, `domaine`) VALUES
 (52, 'Mandataire judiciaire', 2),
 (53, 'Médiateur pénal', 2),
 (54, 'Notaire', 2),
-(55, 'Procureur de la Républiqu', 2),
+(55, 'Procureur de la République', 2),
 (56, 'Substitut du procureur', 2),
-(57, 'Surveillant de l’administ', 2);
+(57, 'Surveillant de l’administration', 2);
 
 -- --------------------------------------------------------
 
@@ -161,8 +161,8 @@ INSERT INTO `Spécialité` (`id`, `nom`, `domaine`) VALUES
 -- Structure de la table `Utilisateurs`
 --
 
-CREATE TABLE IF NOT EXISTS `Utilisateurs` (
-  `id` int(10) unsigned NOT NULL,
+CREATE TABLE `Utilisateurs` (
+  `id` int(10) UNSIGNED NOT NULL,
   `civilite` varchar(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `prenom` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `nom` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -170,18 +170,11 @@ CREATE TABLE IF NOT EXISTS `Utilisateurs` (
   `mdp` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `ddn` date NOT NULL,
   `adresse` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `cp` int(5) unsigned NOT NULL,
+  `cp` int(5) UNSIGNED NOT NULL,
   `ville` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `type` int(1) unsigned NOT NULL,
-  `specialite` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Contenu de la table `Utilisateurs`
---
-
-INSERT INTO `Utilisateurs` (`id`, `civilite`, `prenom`, `nom`, `mail`, `mdp`, `ddn`, `adresse`, `cp`, `ville`, `type`, `specialite`) VALUES
-(5, 'MME', 'TEST1', 'TEST1', 'test1@test1.fr', '$1$ocu1eSpw$vI/DE6qaTYV4XP8990HS11', '2012-01-01', 'JE CHANGE', 44000, 'TEST', 1, NULL);
+  `type` int(1) UNSIGNED NOT NULL,
+  `specialite` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Index pour les tables exportées
@@ -194,15 +187,15 @@ ALTER TABLE `Domaine`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `Sous_Spécialité`
+-- Index pour la table `Sous_Specialite`
 --
-ALTER TABLE `Sous_Spécialité`
+ALTER TABLE `Sous_Specialite`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `Spécialité`
+-- Index pour la table `Specialite`
 --
-ALTER TABLE `Spécialité`
+ALTER TABLE `Specialite`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -219,22 +212,22 @@ ALTER TABLE `Utilisateurs`
 -- AUTO_INCREMENT pour la table `Domaine`
 --
 ALTER TABLE `Domaine`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT pour la table `Sous_Spécialité`
+-- AUTO_INCREMENT pour la table `Sous_Specialite`
 --
-ALTER TABLE `Sous_Spécialité`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+ALTER TABLE `Sous_Specialite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
--- AUTO_INCREMENT pour la table `Spécialité`
+-- AUTO_INCREMENT pour la table `Specialite`
 --
-ALTER TABLE `Spécialité`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
+ALTER TABLE `Specialite`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 --
 -- AUTO_INCREMENT pour la table `Utilisateurs`
 --
 ALTER TABLE `Utilisateurs`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

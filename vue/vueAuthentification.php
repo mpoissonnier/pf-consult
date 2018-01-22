@@ -57,19 +57,19 @@ class vueAuthentification {
 
 			<!--  CONTENT -->
 			<div id="content">
-				<div class="container_form">
+				<div class="container_form connexion_form">
 					<form action="index.php?connexion=1" method="post" onsubmit="return verifFormModifInfos(this)">
 						<!--  BLOC IDENTIFIANT -->
-						<div class="formline">
+						<div>
 							<input type="text" name="login" placeholder="Identifiant" required size="25" />
 						</div>
-						<div class="formline">
+						<div>
 							<input type="password" name="mdp" placeholder="Mot de passe" required size="25" />
 						</div>
 						<hr>
 
-						<!--  BLOC INSCRIPTION -->
-						<div class="formline">
+						<!--  BLOC VALIDATION -->
+						<div>
 							<input name="send" class="submit-btn" type="submit" value="Se connecter" />
 						</div>
 					</form>
@@ -108,7 +108,8 @@ class vueAuthentification {
 			<!--  CONTENT -->
 			<div id="content">
 				<div class="container_form">
-					<div>
+					<!--  BLOC ONGLET -->
+					<div class="block">
 						<p>Je suis :</p>
 						<?php
 						if (isset($_GET['inscription'])) {
@@ -130,37 +131,70 @@ class vueAuthentification {
 						</div>
 					</div>
 					<hr>
+
 					<form action="index.php?inscription=<?php echo $type ?>" method="post" onsubmit="return verifFormInscription(this)" >
 						<!--  BLOC CIVILITE-->
-						<div class="formbloc">
-							<div class="cutcenter">
+						<div class="block">
+							<label>Civilité :</label>
+							<div>
 								<select name="civilite" >
+									<option disabled selected>Je suis...</option>
 									<option name="civilite" value="M.">M.</option>
 									<option name="civilite" value="Mme">Mme</option>
 								</select>
 								<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,2,25)" required />
 								<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,2,25)" required />
 							</div>
-							<div class="formline">
-								<input id="mail" class="full" type="email" name="mail" placeholder="Adresse mail" onblur="verifMail(this)" required />
-							</div>
-							<div class="formline cutcenter">
-								<input id="mdp" type="password" name="mdp" placeholder="Mot de passe" required  />
-								<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer Mot de passe" onblur="verifMdp()" required />
+						</div>
+						<hr>
+
+						<!-- BLOC INFO DE CONNEXION -->
+						<div class="block">
+							<label>Informations de connexion :</label>
+								<div>
+									<input id="mail" type="email" name="mail" placeholder="Adresse mail" onblur="verifMail(this)" required />
+								</div>
+								<div>
+									<input id="mdp" type="password" name="mdp" placeholder="Mot de passe" required  />
+									<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer Mot de passe" onblur="verifMdp()" required />
 							</div>
 						</div>
 						<hr>
 
-						<!--  BLOC ADRESSE -->
-						<div class="formbloc" id="blocSpecialite">
-							<div class="cutcenter">
-								<label name="Birth">Date de Naissance : </label>
+						<!-- BLOC AUTRES INFOS -->
+						<div class="block">
+							<label name="Birth">Date de Naissance : </label>
+							<div>
 								<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10"  />
 							</div>
-							<?php
-							if (isset($_GET['inscription']) AND $_GET['inscription'] == "pro") {
-								?>
-								<div class="cutcenter">
+							<label>N° de téléphone mobile : </label>
+							<div>
+								<input type="tel" name="tel" placeholder="N° tel"  maxlength="10"  />
+							</div>
+						</div>
+						<hr>
+
+						<!-- BLOC ADRESSE -->
+						<div class="block">
+							<label>Adresse : </label>
+							<div>
+								<input type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required />
+							</div>
+
+							<div>
+								<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" />
+								<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required />
+							</div>
+						</div>
+						<hr>
+
+						<!-- BLOC SPECIALITE -->
+						<?php
+						if (isset($_GET['inscription']) AND $_GET['inscription'] == "pro") {
+							?>
+							<div id="blocSpecialite" class="block">
+								<label>Spécialité : </label>
+								<div>
 									<select name="domaine">
 										<?php
 										foreach ($listeDomaine as $row) {
@@ -180,8 +214,8 @@ class vueAuthentification {
 										?>
 									</select>
 								</div>
-								<div class="formline">
-									<select id="specialite" class="full" name="sous_specialite" onchange="change()">
+								<div>
+									<select id="specialite" name="sous_specialite" onchange="change()">
 										<?php
 										foreach ($listeSousSpecialite as $row) {
 											?>
@@ -192,35 +226,25 @@ class vueAuthentification {
 										<option value="autre">Autre ...</option>
 									</select>
 								</div>
-									<?php
-								}
-								?>
-							</div>
-							<hr>
-
-							<div>
-							<div class="formline">
-								<input class="full" type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required />
-							</div>
-
-							<div class="formline cutcenter">
-								<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" />
-								<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required />
-							</div>
 						</div>
 						<hr>
+						<?php
+					}
+					?>
 
-						<!--  BLOC INSCRIPTION -->
-						<div class="formline">
-							<input name="send" class="submit-btn" type="submit" value="S'inscrire" />
+						<!--  BLOC SUBMIT -->
+						<div class="block">
+							<div>
+								<input name="send" class="submit-btn" type="submit" value="S'inscrire" />
+							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 
-			<!--  FOOTER -->
-			<?php  include 'includes/footer.php' ?>
+		<!--  FOOTER -->
+		<?php  include 'includes/footer.php' ?>
 
 	</body>
 	</html>
