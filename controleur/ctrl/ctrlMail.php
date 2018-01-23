@@ -32,6 +32,27 @@
           <meta charset="utf-8">
           <title>Confirmation de votre inscription</title>
           <link rel="stylesheet" type="text/css" href="vue/css/mail.css" />
+          <style>
+          @import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+          * { padding: 0;  margin: 0;  text-decoration: none;  color: black;  font-family: \'Lato\', sans-serif; list-style: none;}
+          html, body { height: 100%; width: 100%;}
+          body {display : table; }
+
+          header { display: flex; align-items: center; background-color: #f4f5fc; }
+          h1 { color: #4d4959; font-variant: small-caps;}
+          #content { width: 50%; margin:auto;}
+          #content div { margin: 25px;}
+          #signature { padding-top: 30px; font-weight: bold;}
+
+          footer { display: table-row; width: 100%;  background-color: #f4f5fc; }
+          .iutnantes-icon { background: url(../img/iutnantes-icon.png) center no-repeat; height: 53px; width: 99px; display: block; }
+          .univnantes-icon { background: url(../img/univnantes-icon.png) center no-repeat; height: 53px; width: 99px; display: block; }
+          footer li { display: inline-block; }
+          footer li a:hover { opacity: 0.5; }
+          .container_footer { display: flex; flex-direction: column; align-items: center; padding-top: 5px;}
+          .container_footer div { padding-top: 5px;}
+          footer p { font-size: 13px; }
+          </style>
         </head>
         <body>
           <!-- HEADER -->
