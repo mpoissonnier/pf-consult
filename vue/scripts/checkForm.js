@@ -29,6 +29,18 @@ function verifMail(champ) {
   }
 }
 
+// Verifie le format du numéro de telephone
+function verifTel(champ) {
+  var regex = /^0[6-7]([-. ]?[0-9]{2}){4}$/;
+  if(!regex.test(champ.value)) {
+    surligne(champ, true);
+    return false;
+  } else {
+    surligne(champ, false);
+    return true;
+  }
+}
+
 // Verifie la taille du mot de passe et que ce soient les memes
 function verifMdp(){
   var passw = document.getElementById("mdp");
@@ -37,7 +49,7 @@ function verifMdp(){
     surligne(passw, true);
     surligne(passwBis, true);
     return false;
-  } else if (passw.value.length > 20 || passw.value.length < 5) {
+  } else if (passw.value.length > 25 || passw.value.length < 5) {
     surligne(passw, true);
     surligne(passwBis, true);
     return false;
@@ -64,14 +76,18 @@ function verifCodePostal(champ) {
 function verifFormInscription(f) {
   var prenomOK = verifString(f.prenom,2,25);
   var nomOK = verifString(f.nom,2,25);
-  var adresseOK = verifString(f.adresse,2,25);
-  var villeOK = verifString(f.ville,2,25);
+  var adresseOK = verifString(f.adresse,2,50);
+  var villeOK = verifString(f.ville,2,50);
   var mailOk = verifMail(f.mail);
   var mdpOk = verifMdp();
   var cpOk = verifCodePostal(f.cp);
+  var telOK = verifTel(f.tel);
 
-  if(prenomOK && nomOK && adresseOK && villeOK && mailOk && mdpOk && cpOk) {
-    return true;
+  var adresse = f.adresse.value + " " + f.cp.value + " " + f.ville.value;
+  geolocaliseAdresse(adresse);
+
+  if(prenomOK && nomOK && adresseOK && villeOK && mailOk && mdpOk && cpOk && telOK) {
+    return false;
   } else {
     return false;
   }
@@ -85,6 +101,7 @@ function verifFormModifInfos(f) {
   var villeOK = verifString(f.ville,2,25);
   var mailOk = verifMail(f.mail);
   var cpOk = verifCodePostal(f.cp);
+  var telOK = verifTel(f.tel);
 
   var mdp = document.getElementById("mdp");
   var mdpConfirm = document.getElementById("mdpConfirm");
@@ -94,7 +111,7 @@ function verifFormModifInfos(f) {
     var mdpOk = verifMdp();
   }
 
-  if(prenomOK && nomOK && adresseOK && villeOK && mailOk && mdpOk && cpOk) {
+  if(prenomOK && nomOK && adresseOK && villeOK && mailOk && mdpOk && cpOk && telOK) {
     return true;
   } else {
     return false;
@@ -110,7 +127,6 @@ function change() {
     newDiv.id = "newDiv";
     var newInput = document.createElement('input');
     newInput.name = "newSpe";
-    newInput.className = "full";
     newInput.id ="newSpe"
     newInput.type = "text";
     newInput.placeholder = "Votre spécialité";

@@ -2,17 +2,21 @@
 
 // REQUIRE TOUS LES CONTROLEURS
   require_once 'ctrl/ctrlAuthentification.php';
+  require_once 'ctrl/ctrlMail.php';
   require_once 'ctrl/ctrlCompte.php';
   require_once 'ctrl/ctrlDomaine.php';
 
+
   class Routeur {
     private $ctrlAuthentification;
+    private $ctrlMail;
     private $ctrlCompte;
     private $ctrlDomaine;
 
 /** CONSTRUCTEUR DU ROUTEUR **/
     public function __construct() {
       $this->ctrlAuthentification = new ControleurAuthentification();
+      $this->ctrlMail = new ControleurMail();
       $this->ctrlCompte = new ControleurCompte();
       $this->ctrlDomaine = new ControleurDomaine();
     }
@@ -50,6 +54,12 @@
     // CHARGER PAGE INSCRIPTION
         if ($_GET['inscription'] == "user" || $_GET['inscription'] == "pro") {
           $this->ctrlAuthentification->inscription();
+          return;
+        }
+    // ENVOI MAIL CONFIRMATION
+        if ($_SESSION['validite'] = "ok" && $_SESSION['message'] = "Vous êtes bien inscrit") {
+          $this->ctrlMail->envoiMailInscription();
+          // $this->ctrlAuthentification->accueil();
           return;
         }
     // INSCRIPTION UTILISATEUR

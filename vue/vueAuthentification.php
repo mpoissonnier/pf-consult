@@ -99,6 +99,7 @@ class vueAuthentification {
 			<title>Inscription</title>
 			<link rel="shortcut icon" href="vue/img/favicon.ico" />
 			<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
+			<script src="vue/scripts/maps.js"></script>
 			<script src="vue/scripts/checkForm.js"></script>
 		</head>
 		<body>
@@ -139,11 +140,12 @@ class vueAuthentification {
 							<div>
 								<select name="civilite" >
 									<option disabled selected>Je suis...</option>
-									<option name="civilite" value="M.">M.</option>
-									<option name="civilite" value="Mme">Mme</option>
+									<option name="civilite" value="M." <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "M.") { echo "selected";}?>>Un homme</option>
+									<option name="civilite" value="Mme" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Mme") { echo "selected";}?>>Une femme</option>
+									<option name="civilite" value="Autre" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Autre") { echo "selected";}?>>Autre</option>
 								</select>
-								<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,2,25)" required />
-								<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,2,25)" required />
+								<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,2,25)" required value="<?php if(isset($_POST['prenom'])) { echo htmlspecialchars($_POST['prenom']);}?>"/>
+								<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,2,25)" required value="<?php if(isset($_POST['nom'])) { echo htmlspecialchars($_POST['nom']);}?>"/>
 							</div>
 						</div>
 						<hr>
@@ -152,11 +154,11 @@ class vueAuthentification {
 						<div class="block">
 							<label>Informations de connexion :</label>
 								<div>
-									<input id="mail" type="email" name="mail" placeholder="Adresse mail" onblur="verifMail(this)" required />
+									<input id="mail" type="email" name="mail" placeholder="Adresse mail" onblur="verifMail(this)" required  value="<?php if(isset($_POST['mail'])) { echo htmlspecialchars($_POST['mail']);}?>"/>
 								</div>
 								<div>
 									<input id="mdp" type="password" name="mdp" placeholder="Mot de passe" required  />
-									<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer Mot de passe" onblur="verifMdp()" required />
+									<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer mot de passe" onblur="verifMdp()" required />
 							</div>
 						</div>
 						<hr>
@@ -165,11 +167,11 @@ class vueAuthentification {
 						<div class="block">
 							<label name="Birth">Date de Naissance : </label>
 							<div>
-								<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10"  />
+								<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
 							</div>
 							<label>N° de téléphone mobile : </label>
 							<div>
-								<input type="tel" name="tel" placeholder="N° tel"  maxlength="10"  />
+								<input type="tel" name="tel" placeholder="N° tel" onblur="verifTel(this)" maxlength="10" value="<?php if(isset($_POST['tel'])) { echo htmlspecialchars($_POST['tel']);}?>" />
 							</div>
 						</div>
 						<hr>
@@ -178,12 +180,12 @@ class vueAuthentification {
 						<div class="block">
 							<label>Adresse : </label>
 							<div>
-								<input type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required />
+								<input type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required value="<?php if(isset($_POST['adresse'])) { echo htmlspecialchars($_POST['adresse']);}?>"/>
 							</div>
 
 							<div>
-								<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" />
-								<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required />
+								<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
+								<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required value="<?php if(isset($_POST['ville'])) { echo htmlspecialchars($_POST['ville']);}?>"/>
 							</div>
 						</div>
 						<hr>

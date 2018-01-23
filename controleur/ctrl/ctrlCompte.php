@@ -1,6 +1,6 @@
 <?php
   require_once PATH_VUE."/vueCompte.php";
-  require_once PATH_MODELE."/dao/daoUtilisateur.php";
+  require_once PATH_MODELE."/dao/dao.php";
 
   class ControleurCompte   {
     private $vue;
@@ -9,7 +9,7 @@
     /* Constructeur de la classe. */
     public function __construct(){
       $this->vue = new vueCompte();
-      $this->modele = new daoUtilisateur();
+      $this->modele = new dao();
     }
 
     /* Genere la vue d'accueil de la page du compte */

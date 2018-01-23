@@ -67,6 +67,7 @@ h2.logo-header { text-align: center;  color: #848789;  font-size: 24px;  font-we
 INSCRIPTION // CONNEXION
 ========================================================================== */
 input, select, label { margin: 10px; width: 100%; display: flex; justify-content: center; flex-direction: column;}
+label { font-weight: bold;}
 input { text-align: center; height: 25px;}
 p { text-align: center;}
 input[type="submit"] { height: 35px; cursor: ppi}

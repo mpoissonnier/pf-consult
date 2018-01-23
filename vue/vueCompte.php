@@ -35,12 +35,15 @@ class vueCompte {
 									<?php
 									if ($user->getCivilite() == "M.") {
 										$mr = "selected";
-									} else {
+									} else if ($user->getCivilite() == "Mme") {
 										$mme = "selected";
+									} else {
+										$other = "selected";
 									}
 									?>
 									<option name="civilite" <?php if (isset($mr)) echo $mr; ?> value="M.">M.</option>
 									<option name="civilite" <?php if (isset($mme)) echo $mme; ?> value="Mme">Mme</option>
+									<option name="civilite" <?php if (isset($other)) echo $other; ?> value="Autre">Autre</option>
 								</select>
 								<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getPrenom()))?>" />
 								<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getNom()))?>" />

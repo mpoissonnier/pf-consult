@@ -1,6 +1,6 @@
 <?php
   require_once PATH_VUE."/vueAuthentification.php";
-  require_once PATH_MODELE."/dao/daoUtilisateur.php";
+  require_once PATH_MODELE."/dao/dao.php";
 
   class ControleurAuthentification {
     private $vue;
@@ -9,7 +9,7 @@
     /* Constructeur de la classe. */
     public function __construct(){
       $this->vue = new vueAuthentification();
-      $this->modele = new daoUtilisateur();
+      $this->modele = new dao();
     }
 
     /* Fonction permettant l'affichage de la vue d'accueil. */
@@ -24,17 +24,32 @@
 
     /* Fonction permettant l'inscription d'un utilisateur. */
     public function inscriptionUser($categorie) {
-      $_SESSION['inscription'] = $this->modele->addUser($categorie);
-      if ($_SESSION['inscription'] == "ko") {
-        $_SESSION['validite'] = "ko";
-        $_SESSION['message'] = "Mail existant";
-        $_GET['inscription'] = "user";
-        $this->inscription();
-      } else {
-        $_SESSION['validite'] = "ok";
-        $_SESSION['message'] = "Vous êtes bien inscrit";
-        $this->vue->genereVueAccueil();
+      // Verification des infos envoyées
+      if ($this->modele->checkFormInscription()) {
+        $_SESSION['inscription'] = $this->modele->addUser($categorie);
+        if ($_SESSION['inscription'] == "ko") {
+          $_SESSION['validite'] = "ko";
+          $_SESSION['message'] = "Mail existant";
+          if ($categorie == 1) {
+            $_GET['inscription'] = "user";
+          } else {
+            $_GET['inscription'] = "pro";
+          }
+          $this->inscription();
+        } else {
+          $_SESSION['validite'] = "ok";
+          $_SESSION['message'] = "Vous êtes bien inscrit";
+          $this->vue->genereVueAccueil();
+        }
       }
+      // Verification incorrecte
+      $_SESSION['validite'] = "ko";
+      if ($categorie == 1) {
+        $_GET['inscription'] = "user";
+      } else {
+        $_GET['inscription'] = "pro";
+      }
+      $this-> inscription();
     }
 
     /* Fonction permettant l'affichage de la vue de connexion. */
