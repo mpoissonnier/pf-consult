@@ -19,7 +19,7 @@
     }
 
     public function modifCompte() {
-      if (empty($_POST['mdp']) && empty($_POST['mdpConfirm'])) {
+      if (empty($_POST['mdp']) || empty($_POST['mdpConfirm'])) {
         $rep = $this->modele->modifInfosCompte(0);
       } else {
         $rep = $this->modele->modifInfosCompte(1);

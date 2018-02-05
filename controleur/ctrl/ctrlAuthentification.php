@@ -39,7 +39,7 @@
         } else {
           $_SESSION['validite'] = "ok";
           $_SESSION['message'] = "Vous êtes bien inscrit";
-          $this->vue->genereVueAccueil();
+          return true;
         }
       }
       // Verification incorrecte

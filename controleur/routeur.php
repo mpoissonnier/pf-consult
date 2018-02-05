@@ -56,15 +56,12 @@
           $this->ctrlAuthentification->inscription();
           return;
         }
-    // ENVOI MAIL CONFIRMATION
-        if ($_SESSION['validite'] = "ok" && $_SESSION['message'] = "Vous êtes bien inscrit") {
-          $this->ctrlMail->envoiMailInscription();
-          // $this->ctrlAuthentification->accueil();
-          return;
-        }
     // INSCRIPTION UTILISATEUR
         if ($_GET['inscription'] == "1" || $_GET['inscription'] == "2") {
-          $this->ctrlAuthentification->inscriptionUser($_GET['inscription']);
+          if ($this->ctrlAuthentification->inscriptionUser($_GET['inscription'])) {
+            $this->ctrlMail->envoiMailInscription();
+            $this->ctrlAuthentification->accueil();
+          }
           return;
         }
       }
@@ -89,6 +86,7 @@
       }
 
 // GESTION COMPTE UTILISATEUR
+    // MODIFICATION INFOS PERSONNELLES
       if (isset($_GET['monCompte'])) {
         if ($_GET['monCompte'] == 1) {
           $this->ctrlCompte->modifCompte();
@@ -97,6 +95,9 @@
         $this->ctrlCompte->pageMonCompte();
         return;
       }
+
+    // MOT DE PASSE OUBLIE
+    
 
 
 // DEFAULT

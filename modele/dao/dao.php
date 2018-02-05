@@ -192,9 +192,8 @@
           $_SESSION['message'] = "Spécialité incorrect";
           return false;
         }
+        $_POST['newSpe'] = htmlspecialchars($_POST['newSpe']);
       }
-      $_POST['newSpe'] = htmlspecialchars($_POST['newSpe']);
-
       return true;
     }
 /////////

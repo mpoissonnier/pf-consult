@@ -76,6 +76,9 @@ class vueAuthentification {
 					<div class="formline">
 						<p>Pas encore membre ? <a class="lien_visible" href="index.php?inscription=user">Inscrivez-vous</a> gratuitement. </p>
 					</div>
+					<div class="formline">
+						<p><a class="lien_visible" href="index.php?reset">Mot de passe oublié ?</a></p>
+					</div>
 				</div>
 			</div>
 
