@@ -90,5 +90,46 @@ class vueCompte {
 		</html>
 		<?php
 	}
+	public function afficherPageReset() {
+		?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Réinitialiser votre mot de passe</title>
+		<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
+	</head>
+	<body>
+		<!--  HEADER-->
+		<?php  include 'includes/header.php' ?>
+
+		<!--  CONTENT -->
+		<div id="content">
+			<div class="container_form connexion_form">
+				<div class="formline">
+					<h3>Récupération de votre mot de passe :</h3>
+				</div>
+				<form action="index.php?reset=1" method="post">
+					<!--  BLOC IDENTIFIANT -->
+					<div>
+						<input type="text" name="mail" placeholder="Adresse mail" required size="25" />
+					</div>
+					<hr>
+
+					<!--  BLOC VALIDATION -->
+					<div>
+						<input name="send" class="submit-btn" type="submit" value="Envoyer un mail de récupération" />
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!--  FOOTER -->
+		<?php  include 'includes/footer.php' ?>
+
+	</body>
+</html>
+		<?php
+	}
 }
 ?>

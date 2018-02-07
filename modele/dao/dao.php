@@ -336,6 +336,13 @@
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
       }
     }
+
+    public function modifierMdp($mdp) {
+      $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
+      $stmt->bindParam(1,crypt($mdp));
+      $stmt->bindParam(2,$_POST['mail']);
+      $stmt->execute();
+    }
 /////////
 ///////// GESTION DOMAINE // SPECIALITE
     public function getDomaine(){

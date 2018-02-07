@@ -97,8 +97,17 @@
       }
 
     // MOT DE PASSE OUBLIE
-    
-
+      if (isset($_GET['reset'])) {
+        if ($_GET['reset'] == 1) {
+          if ($this->ctrlCompte->checkUser()) {
+            $this->ctrlMail->envoiMailReset($_SESSION['mdpProv']);
+          }
+          $this->ctrlAuthentification->accueil();
+          return;
+        }
+        $this->ctrlCompte->afficherReset();
+        return;
+      }
 
 // DEFAULT
       $this->ctrlAuthentification->accueil();
