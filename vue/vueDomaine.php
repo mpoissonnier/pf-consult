@@ -11,11 +11,8 @@ class vueDomaine {
 		<!DOCTYPE html>
 		<html lang="fr">
 		<head>
-			<meta charset="utf-8">
 			<title>Recherche</title>
-			<link rel="shortcut icon" href="vue/img/favicon.ico" />
-			<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-			<script src="vue/scripts/search.js"></script>
+			<?php include 'includes/headHTML.php' ?>
 		</head>
 		<body>
 			<!--  HEADER-->
@@ -62,11 +59,8 @@ class vueDomaine {
 		<!DOCTYPE html>
 		<html lang="fr">
 		<head>
-			<meta charset="utf-8">
 			<title>Recherche</title>
-			<link rel="shortcut icon" href="vue/img/favicon.ico" />
-			<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-			<script src="vue/scripts/search.js"></script>
+			<?php include 'includes/headHTML.php' ?>
 		</head>
 		<body>
 			<!--  HEADER-->

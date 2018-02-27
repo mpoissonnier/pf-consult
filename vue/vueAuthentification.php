@@ -8,10 +8,8 @@ class vueAuthentification {
 		<!DOCTYPE html>
 		<html lang="fr">
 		<head>
-			<meta charset="utf-8">
 			<title>Accueil</title>
-			<link rel="shortcut icon" href="vue/img/favicon.ico" />
-			<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
+			<?php include 'includes/headHTML.php' ?>
 		</head>
 		<body>
 			<!--  HEADER-->
@@ -46,10 +44,8 @@ class vueAuthentification {
 		<!DOCTYPE html>
 		<html lang="fr">
 		<head>
-			<meta charset="utf-8">
 			<title>Connexion</title>
-			<link rel="shortcut icon" href="vue/img/favicon.ico" />
-			<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
+			<?php include 'includes/headHTML.php' ?>
 		</head>
 		<body>
 			<!--  HEADER-->
@@ -98,12 +94,8 @@ class vueAuthentification {
 		<!DOCTYPE html>
 		<html lang="fr">
 		<head>
-			<meta charset="utf-8">
 			<title>Inscription</title>
-			<link rel="shortcut icon" href="vue/img/favicon.ico" />
-			<link rel="stylesheet" type="text/css" href="vue/css/styles.css" />
-			<script src="vue/scripts/maps.js"></script>
-			<script src="vue/scripts/checkForm.js"></script>
+			<?php include 'includes/headHTML.php' ?>
 		</head>
 		<body>
 			<!--  HEADER-->
@@ -136,7 +128,7 @@ class vueAuthentification {
 					</div>
 					<hr>
 
-					<form action="index.php?inscription=<?php echo $type ?>" method="post" onsubmit="return verifFormInscription(this)" >
+					<form id="formInscription" action="index.php?inscription=<?php echo $type ?>" method="post" onsubmit="return verifFormInscription(this)" >
 						<!--  BLOC CIVILITE-->
 						<div class="block">
 							<label>Civilité :</label>
@@ -156,12 +148,12 @@ class vueAuthentification {
 						<!-- BLOC INFO DE CONNEXION -->
 						<div class="block">
 							<label>Informations de connexion :</label>
-								<div>
-									<input id="mail" type="email" name="mail" placeholder="Adresse mail" onblur="verifMail(this)" required  value="<?php if(isset($_POST['mail'])) { echo htmlspecialchars($_POST['mail']);}?>"/>
-								</div>
-								<div>
-									<input id="mdp" type="password" name="mdp" placeholder="Mot de passe" required  />
-									<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer mot de passe" onblur="verifMdp()" required />
+							<div>
+								<input id="mail" type="email" name="mail" placeholder="Adresse mail" onblur="verifMail(this)" required  value="<?php if(isset($_POST['mail'])) { echo htmlspecialchars($_POST['mail']);}?>"/>
+							</div>
+							<div>
+								<input id="mdp" type="password" name="mdp" placeholder="Mot de passe" required  />
+								<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer mot de passe" onblur="verifMdp()" required />
 							</div>
 						</div>
 						<hr>
@@ -189,6 +181,10 @@ class vueAuthentification {
 							<div>
 								<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
 								<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required value="<?php if(isset($_POST['ville'])) { echo htmlspecialchars($_POST['ville']);}?>"/>
+							</div>
+
+							<div>
+								<input id="location" type="text" name="location" value="" readonly="readonly">
 							</div>
 						</div>
 						<hr>
@@ -231,11 +227,11 @@ class vueAuthentification {
 										<option value="autre">Autre ...</option>
 									</select>
 								</div>
-						</div>
-						<hr>
-						<?php
-					}
-					?>
+							</div>
+							<hr>
+							<?php
+						}
+						?>
 
 						<!--  BLOC SUBMIT -->
 						<div class="block">
@@ -246,14 +242,13 @@ class vueAuthentification {
 					</form>
 				</div>
 			</div>
-		</div>
 
-		<!--  FOOTER -->
-		<?php  include 'includes/footer.php' ?>
+			<!--  FOOTER -->
+			<?php  include 'includes/footer.php' ?>
 
-	</body>
-	</html>
-	<?php
-}
+		</body>
+		</html>
+		<?php
+	}
 }
 ?>

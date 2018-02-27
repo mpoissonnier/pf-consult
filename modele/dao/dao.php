@@ -186,6 +186,13 @@
       }
       $_POST['cp'] = htmlspecialchars($_POST['cp']);
 
+      // Vérification complétion du champ coordonnées
+      if (!isset($_POST['location']) || $_POST['location'] == "") {
+        $_SESSION['message'] = "Votre adresse n'a pas pu être géolocalisée";
+        return false;
+      }
+      $_POST['location'] = htmlspecialchars(substr($_POST['location'], 1, -1));
+
       // Verification spécialité (si autre)
       if ($_GET['inscription'] == "2" && $_POST['sous_specialite'] == "autre") {
         if (!isset($_POST['newSpe'])) {
@@ -202,7 +209,7 @@
     public function addUser($categorie) {
       try {
         if (!$this->estInscrit($_POST['mail'])) {
-          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,?,?,?);');
+          $stmt = $this->connexion->prepare('insert into Utilisateurs values(NULL,?,?,?,?,?,?,?,?,?,?,?,?,?);');
           $stmt->bindParam(1,$_POST['civilite']);
           $stmt->bindParam(2,strtoupper($_POST['prenom']));
           $stmt->bindParam(3,strtoupper($_POST['nom']));
@@ -213,11 +220,12 @@
           $stmt->bindParam(8,strtoupper($_POST['adresse']));
           $stmt->bindParam(9,$_POST['cp']);
           $stmt->bindParam(10,strtoupper($_POST['ville']));
+          $stmt->bindParam(11,$_POST['location']);
           if ($categorie == 1) {
-            $stmt->bindValue(11,1);
-            $stmt->bindValue(12,NULL);
+            $stmt->bindValue(12,1);
+            $stmt->bindValue(13,NULL);
           } else {
-            $stmt->bindValue(11,2);
+            $stmt->bindValue(12,2);
             if ($_POST['sous_specialite'] == "autre") {
               $idSpe = $this->getIdSpecialite(ucfirst($_POST['specialite']));
               $this->insertSousSpecialite(ucfirst($_POST['newSpe']), $idSpe['id']);
@@ -226,7 +234,7 @@
               $spe = ucfirst($_POST['sous_specialite']);
             }
             $idSsSpe = $this->getIdSousSpecialite($spe);
-            $stmt->bindParam(12, $idSsSpe['id']);
+            $stmt->bindParam(13, $idSsSpe['id']);
           }
           $stmt->execute();
           return "ok";

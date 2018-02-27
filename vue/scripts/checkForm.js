@@ -84,10 +84,23 @@ function verifFormInscription(f) {
   var telOK = verifTel(f.tel);
 
   var adresse = f.adresse.value + " " + f.cp.value + " " + f.ville.value;
-  geolocaliseAdresse(adresse);
+  var geocoder = new google.maps.Geocoder();
+  var geoOptions = {
+      'address': adresse
+  };
+  geocoder.geocode(geoOptions, function(results, status) {
+  	if (status == google.maps.GeocoderStatus.OK) {
+    	var coords = results[0].geometry.location;
+      $('#location').val(coords);
+      return true;
+		} else {
+      alert("Erreur de géolocalisation");
+      return false;
+    }
+  });
 
   if(prenomOK && nomOK && adresseOK && villeOK && mailOk && mdpOk && cpOk && telOK) {
-    return false;
+    return true;
   } else {
     return false;
   }
