@@ -5,6 +5,7 @@
 
 <!-- Script JS -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXxaqcmz7T2A0VF3ti9j7fhtaXgTHAx7g"></script>
-<script src="vue/scripts/checkForm.js"></script>
+<script src="vue/scripts/verificationFormulaires.js"></script>
+<script type="text/javascript" src="vue/scripts/checkForm.js" ></script>
 <script type="text/javascript" src="vue/scripts/onglet.js" ></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrYTn9B2brDJ5EZCrwjvU3QgukcZrDyyM">

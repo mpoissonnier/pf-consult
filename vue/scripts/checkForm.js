@@ -72,40 +72,6 @@ function verifCodePostal(champ) {
   }
 }
 
-// Verifier le formulaire d'inscription
-function verifFormInscription(f) {
-  var prenomOK = verifString(f.prenom,2,25);
-  var nomOK = verifString(f.nom,2,25);
-  var adresseOK = verifString(f.adresse,2,50);
-  var villeOK = verifString(f.ville,2,50);
-  var mailOk = verifMail(f.mail);
-  var mdpOk = verifMdp();
-  var cpOk = verifCodePostal(f.cp);
-  var telOK = verifTel(f.tel);
-
-  var adresse = f.adresse.value + " " + f.cp.value + " " + f.ville.value;
-  var geocoder = new google.maps.Geocoder();
-  var geoOptions = {
-      'address': adresse
-  };
-  geocoder.geocode(geoOptions, function(results, status) {
-  	if (status == google.maps.GeocoderStatus.OK) {
-    	var coords = results[0].geometry.location;
-      $('#location').val(coords);
-      return true;
-		} else {
-      alert("Erreur de géolocalisation");
-      return false;
-    }
-  });
-
-  if(prenomOK && nomOK && adresseOK && villeOK && mailOk && mdpOk && cpOk && telOK) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 // Verifier le formulaire de modification des infos
 function verifFormModifInfos(f) {
   var prenomOK = verifString(f.prenom,2,25);
