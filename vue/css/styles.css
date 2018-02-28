@@ -136,4 +136,6 @@ div.container ul {list-style: none;display: flex;justify-content:center;}
 div.container ul li:nth-child(2n+1) {margin: 10px 15px 10px 15px;}
 div.container ul li:nth-child(2n) {margin-top: 18px;}
 div.container ul li a {color: #504C5C;text-transform: uppercase;}
-.maria {width: 95%}
+.maria {width: 95%;}
+#ajout {width: 100%; margin-top: 10px}
+.RDV {display: flex;}

@@ -173,7 +173,7 @@
       $_POST['ddn'] = htmlspecialchars($_POST['ddn']);
 
       // Verification n° de tel
-      if (!isset($_POST['tel']) || !preg_match("/^0[6-7]([-. ]?[0-9]{2}){4}$/", $_POST['tel'])) {
+      if (!isset($_POST['tel']) || !preg_match("/^0[1-9]([-. ]?[0-9]{2}){4}$/", $_POST['tel'])) {
         $_SESSION['message'] = "Numéro de téléphone incorrect";
         return false;
       }
@@ -227,11 +227,15 @@
           } else {
             $stmt->bindValue(12,2);
             if ($_POST['sous_specialite'] == "autre") {
-              $idSpe = $this->getIdSpecialite(ucfirst($_POST['specialite']));
-              $this->insertSousSpecialite(ucfirst($_POST['newSpe']), $idSpe['id']);
-              $spe = ucfirst($_POST['newSpe']);
+              if ($_POST['domaine'] == "MEDICAL") {
+                $idSpe = $this->getIdSpecialite(strtolower($_POST['speMedecine']));
+              } else if ($_POST['domaine'] == "JURIDIQUE") {
+                $idSpe = $this->getIdSpecialite(strtolower($_POST['speJuridique']));
+              }
+              $this->insertSousSpecialite(strtolower($_POST['newSpe']), $idSpe['id']);
+              $spe = strtolower($_POST['newSpe']);
             } else {
-              $spe = ucfirst($_POST['sous_specialite']);
+              $spe = strtolower($_POST['sous_specialite']);
             }
             $idSsSpe = $this->getIdSousSpecialite($spe);
             $stmt->bindParam(13, $idSsSpe['id']);
@@ -304,6 +308,12 @@
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
+          // modif tel
+          $stmt = $this->connexion->prepare('update Utilisateurs SET tel = ? where mail = ?');
+          $stmt->bindParam(1,strtoupper($_POST['tel']));
+          $stmt->bindParam(2,$_SESSION['id']);
+          $stmt->execute();
+
           // modif adresse
           $stmt = $this->connexion->prepare('update Utilisateurs SET adresse = ? where mail = ?');
           $stmt->bindParam(1,strtoupper($_POST['adresse']));
@@ -366,7 +376,7 @@
 
     public function getSpecialite() {
       try {
-        $stmt = $this->connexion->prepare('select * from Specialite');
+        $stmt = $this->connexion->prepare('select * from Specialite order by nom');
         $stmt->execute();
         return $stmt->fetchAll();
       } catch (PDOException $e) {
@@ -377,7 +387,7 @@
 
     public function getSousSpecialite() {
       try {
-        $stmt = $this->connexion->prepare('select * from Sous_Specialite');
+        $stmt = $this->connexion->prepare('select * from Sous_Specialite order by nom');
         $stmt->execute();
         return $stmt->fetchAll();
       } catch (PDOException $e) {
@@ -435,5 +445,18 @@
           throw new PDOException("Erreur d'accès à la table Sous_Specialite");
         }
     }
+
+    public function getRdv($idUser){
+      try {
+        $stmt = $this->connexion->prepare('SELECT nom, prenom, horaire, jour FROM Rdv as r, Utilisateurs as u WHERE idpracticien = u.id and idpatient = ?;');
+        $stmt->bindParam(1,$idUser);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+  }
+
   }
 ?>

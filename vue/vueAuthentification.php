@@ -196,27 +196,7 @@ class vueAuthentification {
 							<div id="blocSpecialite" class="block">
 								<label>Spécialité : </label>
 								<div>
-									<select name="domaine">
-										<?php
-										foreach ($listeDomaine as $row) {
-											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
-											<?php
-										}
-										?>
-									</select>
-									<select name="specialite">
-										<?php
-										foreach ($listeSpecialite as $row) {
-											?>
-											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
-											<?php
-										}
-										?>
-									</select>
-								</div>
-								<div>
-									<select id="specialite" name="sous_specialite" onchange="change()">
+									<select id="specialite" name="sous_specialite">
 										<?php
 										foreach ($listeSousSpecialite as $row) {
 											?>
@@ -226,6 +206,42 @@ class vueAuthentification {
 										?>
 										<option value="autre">Autre ...</option>
 									</select>
+								</div>
+								<div class="spe" style="display:none">
+									<select id="domaine" name="domaine">
+										<?php
+										foreach ($listeDomaine as $row) {
+											?>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<?php
+										}
+										?>
+									</select>
+									<select id="speMedecine" name="speMedecine">
+										<?php
+										foreach ($listeSpecialite as $row) {
+											if ($row['domaine'] == 1) {
+											?>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<?php
+											}
+										}
+										?>
+									</select>
+									<select  style="display:none" id="speJuridique" name="speJuridique">
+										<?php
+										foreach ($listeSpecialite as $row) {
+											if ($row['domaine'] == 2) {
+											?>
+											<option value="<?php echo $row['nom']; ?>"><?php echo ucwords(strtolower($row['nom'])); ?></option>
+											<?php
+											}
+										}
+										?>
+									</select>
+								</div>
+								<div class="spe" style="display:none">
+									<input type="text" name="newSpe" id="newSpe" placeholder="Votre spécialité">
 								</div>
 							</div>
 							<hr>

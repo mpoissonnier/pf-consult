@@ -15,7 +15,7 @@
     /* Genere la vue d'accueil de la page du compte */
     public function pageMonCompte() {
       $user = $this->modele->getInfosUser();
-      $this->vue->afficherProfil($user[0]);
+      $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()));
     }
 
     public function modifCompte() {

@@ -8,7 +8,7 @@ class vueCompte {
 	/**
 	* Fonction permettant de générer la vue d'accueil du site.
 	*/
-	public function afficherProfil($user){
+	public function afficherProfil($user, $listeRDV){
 		?>
 		<!DOCTYPE html>
 		<html lang="fr">
@@ -39,6 +39,17 @@ class vueCompte {
 						<hr>
 						<section id="MesRDV" >
 							<p>Mes rendez vous</p>
+							<?php
+							foreach ($listeRDV as $row) {
+								echo "<div class=\"RDV\">";
+								echo $row['nom']." ".$row['prenom']."<br>";
+								echo $row['horaire']."<br>";
+								echo $row['jour']."<br>";
+								echo "</div>";
+							}
+							?>
+
+
 						</section>
 
 						<section id="MonCompte">
@@ -123,12 +134,67 @@ class vueCompte {
 						</section>
 
 						<section id="MesProches">
-							<p>Mes proches</p>
-						</section>
+							<button id="ajout" onclick="afficher_cacher('ajouter')">Ajouter un proche</button>
+							<div id="ajouter" style="visibility:hidden;">
+								<div class="content">
+										<!--  BLOC CIVILITE-->
+										<div class="block">
+											<label>Civilité :</label>
+											<div>
+												<select name="civilite" >
+													<option disabled selected>C'est...</option>
+													<option name="civilite" value="M." <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "M.") { echo "selected";}?>>Un homme</option>
+													<option name="civilite" value="Mme" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Mme") { echo "selected";}?>>Une femme</option>
+													<option name="civilite" value="Autre" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Autre") { echo "selected";}?>>Autre</option>
+												</select>
+												<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required value="<?php if(isset($_POST['prenom'])) { echo htmlspecialchars($_POST['prenom']);}?>"/>
+												<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required value="<?php if(isset($_POST['nom'])) { echo htmlspecialchars($_POST['nom']);}?>"/>
+											</div>
+										</div>
+										<hr>
 
+										<!-- BLOC AUTRES INFOS -->
+										<div class="block">
+											<label name="Birth">Date de Naissance : </label>
+											<div>
+												<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
+											</div>
+											<label>N° de téléphone mobile : </label>
+											<div>
+												<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" value="<?php if(isset($_POST['tel'])) { echo htmlspecialchars($_POST['tel']);}?>" />
+											</div>
+										</div>
+										<hr>
+
+										<!-- BLOC ADRESSE -->
+										<div class="block">
+											<label>Adresse : </label>
+											<div>
+												<input id="adresse" type="text" name="adresse" placeholder="Adresse" required value="<?php if(isset($_POST['adresse'])) { echo htmlspecialchars($_POST['adresse']);}?>"/>
+											</div>
+
+											<div>
+												<input id="cp" type="text" name="cp" placeholder="Code Postal" required maxlength="5" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
+												<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php if(isset($_POST['ville'])) { echo htmlspecialchars($_POST['ville']);}?>"/>
+											</div>
+
+											<div style="display:none">
+												<input id="location" type="text" name="location" value="" readonly="readonly">
+											</div>
+										</div>
+										<hr>
+										<!--  BLOC SUBMIT -->
+										<div class="block">
+											<div>
+												<input name="send" class="submit-btn" type="submit" value="Ajouter le proche" />
+											</div>
+										</div>
+								</div>
+							</div>
+						</section>
 					</div>
-				</div>
-			</div>
+					</div>
+					</div>
 
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>
