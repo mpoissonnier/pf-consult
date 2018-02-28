@@ -183,7 +183,7 @@ class vueAuthentification {
 								<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php if(isset($_POST['ville'])) { echo htmlspecialchars($_POST['ville']);}?>"/>
 							</div>
 
-							<div>
+							<div style="display:none">
 								<input id="location" type="text" name="location" value="" readonly="readonly">
 							</div>
 						</div>

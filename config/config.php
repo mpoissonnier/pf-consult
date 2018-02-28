@@ -10,7 +10,7 @@
 
 // DONNEES BASE DE DONNEE
   define("HOST","localhost");
-  define("BD","PFCONSULT");
-  define("LOGIN","root");
-  define("PASSWORD","root");
+  define("BD","info2-2017-pfcon-db");
+  define("LOGIN","info2-2017-pc");
+  define("PASSWORD","pfconsult");
 ?>

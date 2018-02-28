@@ -16,6 +16,8 @@ class Utilisateur {
   private $ville;
   private $type;
   private $specialite;
+  private $location;
+  private $tel;
 
 	public function getId() {
 		return $this->id;
@@ -52,6 +54,12 @@ class Utilisateur {
   }
   public function getSpecialite() {
     return $this->specialite;
+  }
+  public function getLocation() {
+    return $this->location;
+  }
+  public function getTelephone() {
+    return $this->tel;
   }
 }
 

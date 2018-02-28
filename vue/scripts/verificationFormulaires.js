@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+
   // Verification du formulaire d'inscription
   var check = false;
   $("#formInscription").on('submit', function(event) {
@@ -56,17 +58,15 @@ $(document).ready(function() {
       check = false;
     }
 
-    var modeleTel = new RegExp(/^0[6-7]([-. ]?[0-9]{2}){4}$/);
+    var modeleTel = new RegExp(/^0[1-9]([-. ]?[0-9]{2}){4}$/);
     // Verification n° de tel
     if (!modeleTel.test($("#tel").val())) {
-      console.log("tel");
       check = false;
     }
 
     // Verification du code postal
     var modeleCp = new RegExp(/^[0-9]{5,5}$/)
     if (!modeleCp.test($("#cp").val())) {
-      console.log("cp");
       check = false;
     }
 

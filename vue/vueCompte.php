@@ -31,7 +31,9 @@ class vueCompte {
 					<div class="container">
 						<ul class="tabs">
 							<li><a href="#MesRDV">Mes rendez-vous</a></li>
+							<li class="dot"></li>
 							<li><a class="active" href="#MonCompte">Mon compte</a></li>
+							<li class="dot"></li>
 							<li><a href="#MesProches">Mes proches</a></li>
 						</ul>
 						<hr>
@@ -42,62 +44,80 @@ class vueCompte {
 						<section id="MonCompte">
 							<form action="index.php?monCompte=1" method="post" onsubmit="return verifFormInscription(this)" >
 								<div id="content">
-									<div class="container_form">
-										<form action="index.php?monCompte=1" method="post" onsubmit="return verifFormModifInfos(this)" >
-
-											<!--  BLOC CIVILITE-->
-											<div class="formbloc">
-												<div class="cutcenter">
-													<select name="civilite" >
-														<?php
-														if ($user->getCivilite() == "M.") {
-															$mr = "selected";
-														} else if ($user->getCivilite() == "Mme") {
-															$mme = "selected";
-														} else {
-															$other = "selected";
-														}
-														?>
-														<option name="civilite" <?php if (isset($mr)) echo $mr; ?> value="M.">M.</option>
-														<option name="civilite" <?php if (isset($mme)) echo $mme; ?> value="Mme">Mme</option>
-														<option name="civilite" <?php if (isset($other)) echo $other; ?> value="Autre">Autre</option>
-													</select>
-													<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getPrenom()))?>" />
-													<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getNom()))?>" />
-												</div>
-												<div class="formline">
-													<input id="mail" class="full" type="email" name="mail" placeholder="Adresse mail" required value="<?php echo $user->getMail()?>"/>
-												</div>
-												<div class="formline cutcenter">
-													<input id="mdp" type="password" name="mdp" placeholder="Nouveau mot de passe" />
-													<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer" />
-												</div>
+										<!--  BLOC CIVILITE-->
+										<div class="block">
+											<label>Civilité :</label>
+											<div>
+												<select name="civilite" >
+													<?php
+													if ($user->getCivilite() == "M.") {
+														$mr = "selected";
+													} else if ($user->getCivilite() == "Mme") {
+														$mme = "selected";
+													} else {
+														$other = "selected";
+													}
+													?>
+													<option name="civilite" <?php if (isset($mr)) echo $mr; ?> value="M.">M.</option>
+													<option name="civilite" <?php if (isset($mme)) echo $mme; ?> value="Mme">Mme</option>
+													<option name="civilite" <?php if (isset($other)) echo $other; ?> value="Autre">Autre</option>
+												</select>
+												<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getPrenom()))?>" />
+												<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getNom()))?>" />
 											</div>
-											<hr>
+										</div>
+										<hr>
 
-											<!--  BLOC ADRESSE -->
-											<div class="formbloc">
-												<div class="cutcenter">
-													<label name="Birth">Date de Naissance : </label>
-													<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php echo $user->getDdn()?>" />
-												</div>
-												<div class="formline">
-													<input class="full" type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required value="<?php echo ucwords(strtolower($user->getAdresse()))?>"/>
-												</div>
-
-												<div class="formline cutcenter">
-													<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" value="<?php echo $user->getCp()?>"/>
-													<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required value="<?php echo ucwords(strtolower($user->getVille()))?>"/>
-												</div>
+										<!-- BLOC INFO DE CONNEXION -->
+										<div class="block">
+											<label>Informations de connexion :</label>
+											<div>
+												<input id="mail" class="full" type="email" name="mail" placeholder="Adresse mail" required value="<?php echo $user->getMail()?>"/>
 											</div>
-											<hr>
-
-											<!--  BLOC CONFIRMATION -->
-											<div class="formline">
-												<input name="send" class="submit-btn" type="submit" value="Enregistrer" />
+											<div>
+												<input id="mdp" type="password" name="mdp" placeholder="Nouveau mot de passe" />
+												<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer" />
 											</div>
-										</form>
-									</div>
+										</div>
+										<hr>
+
+										<!-- BLOC AUTRES INFOS -->
+										<div class="block">
+											<label name="Birth">Date de Naissance : </label>
+											<div>
+												<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php echo $user->getDdn()?>" />
+											</div>
+											<label>N° de téléphone mobile : </label>
+											<div>
+												<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" value="<?php echo $user->getTelephone()?>" />
+											</div>
+										</div>
+										<hr>
+
+										<!-- BLOC ADRESSE -->
+										<div class="block">
+											<label>Adresse : </label>
+											<div>
+												<input class="full" type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required value="<?php echo ucwords(strtolower($user->getAdresse()))?>"/>
+											</div>
+
+											<div>
+												<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" value="<?php echo $user->getCp()?>"/>
+												<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required value="<?php echo ucwords(strtolower($user->getVille()))?>"/>
+											</div>
+
+											<div style="display:none">
+												<input id="location" type="text" name="location" value="<?php echo $user->getLocation()?>" readonly="readonly">
+											</div>
+										</div>
+										<hr>
+
+										<!--  BLOC SUBMIT -->
+										<div class="block">
+											<div>
+												<input name="send" class="submit-btn" type="submit" value="Modifier" />
+											</div>
+										</div>
 								</div>
 							</form>
 						</section>
