@@ -8,7 +8,7 @@ class vueCompte {
 	/**
 	* Fonction permettant de générer la vue d'accueil du site.
 	*/
-	public function afficherProfil($user, $listeRDV){
+	public function afficherProfil($user, $listeRDV, $listeProches){
 		?>
 		<!DOCTYPE html>
 		<html lang="fr">
@@ -29,22 +29,25 @@ class vueCompte {
 						<ul class="tabs">
 							<li><a href="#MesRDV">Mes rendez-vous</a></li>
 							<li class="dot"></li>
-							<li><a class="active" href="#MonCompte">Mon compte</a></li>
+							<li><a href="#MonCompte">Mon compte</a></li>
 							<li class="dot"></li>
 							<li><a href="#MesProches">Mes proches</a></li>
 						</ul>
 						<hr>
 						<section id="MesRDV" >
-							<p>Mes rendez vous</p>
-							<?php
-							foreach ($listeRDV as $row) {
-								echo "<div class=\"RDV\">";
-								echo $row['nom']." ".$row['prenom']."<br>";
-								echo $row['horaire']."<br>";
-								echo $row['jour']."<br>";
-								echo "</div>";
-							}
-							?>
+							<div class="element">
+								<?php
+								foreach ($listeRDV as $row) {
+									?>
+									<div>
+										<h3><?php echo ucwords(strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h3>
+										<p><?php echo $row['horaire'] ;?></p>
+										<p><?php echo $row['jour'] ;?></p>
+									</div>
+									<?php
+								}
+								?>
+							</div>
 						</section>
 
 						<section id="MonCompte">
@@ -129,34 +132,49 @@ class vueCompte {
 						</section>
 
 						<section id="MesProches">
-							<button id="ajout" onclick="afficher_cacher('ajouter')">Ajouter un proche</button>
-							<div id="ajouter" style="visibility:hidden;">
-								<form method="post" action="index.php?proche=1" class="content">
+							<div class="element">
+								<?php
+								foreach ($listeProches as $row) {
+									?>
+									<div>
+										<h3><?php echo ucwords(strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h3>
+										<p><?php echo $row['ddn'] ;?></p>
+										<p><?php echo $row['tel'] ;?></p>
+										<p><?php echo ucwords(strtolower($row['adresse'])) . " " . $row['cp'] . " " . $row['ville'] ;?></p>
+										<a href="index.php?monCompte=3&suppr=<?php echo $row['id']?>"><button class="suppression" type="button">Supprimer</button></a>
+									</div>
+									<?php
+								}
+								?>
+							</div>
+							<button id="ajout">Ajouter un proche</button>
+							<div id="ajouter" style="display:none">
+								<form id="formProche" method="post" action="index.php?monCompte=2" class="content">
 									<!--  BLOC CIVILITE-->
 									<div class="block">
 										<label>Civilité :</label>
 										<div>
-											<select name="civilite" >
+											<select name="civiliteP" >
 												<option disabled selected>C'est...</option>
-												<option name="civilite" value="M.">Un homme</option>
-												<option name="civilite" value="Mme">Une femme</option>
-												<option name="civilite" value="Autre">Autre</option>
+												<option name="civiliteP" value="M.">Un homme</option>
+												<option name="civiliteP" value="Mme">Une femme</option>
+												<option name="civiliteP" value="Autre">Autre</option>
 											</select>
-											<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required />
-											<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required />
+											<input id="prenomP" type="text" name="prenomP" placeholder="Prénom" size="15" required />
+											<input id="nomP" type="text" name="nomP" placeholder="Nom" size="15" required />
 										</div>
 									</div>
 									<hr>
 
 									<!-- BLOC AUTRES INFOS -->
 									<div class="block">
-										<label name="Birth">Date de Naissance : </label>
+										<label>Date de Naissance : </label>
 										<div>
-											<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" />
+											<input type="date" id="ddnP" name="ddnP" placeholder="DD/MM/YYYY"  maxlength="10" />
 										</div>
 										<label>N° de téléphone mobile : </label>
 										<div>
-											<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" />
+											<input id="telP" type="tel" name="telP" placeholder="N° tel" maxlength="10" value="<?php echo $user->getTelephone()?>" />
 										</div>
 									</div>
 									<hr>
@@ -165,23 +183,23 @@ class vueCompte {
 									<div class="block">
 										<label>Adresse : </label>
 										<div>
-											<input id="adresse" type="text" name="adresse" placeholder="Adresse" required />
+											<input id="adresseP" type="text" name="adresseP" placeholder="Adresse" required value="<?php echo $user->getAdresse()?>"/>
 										</div>
 
 										<div>
-											<input id="cp" type="text" name="cp" placeholder="Code Postal" required maxlength="5"/>
-											<input id="ville" type="text" name="ville" placeholder="Ville" required />
+											<input id="cpP" type="text" name="cpP" placeholder="Code Postal" required maxlength="5" value="<?php echo $user->getCp()?>"/>
+											<input id="villeP" type="text" name="villeP" placeholder="Ville" required value="<?php echo $user->getVille()?>" />
 										</div>
 
 										<div style="display:none">
-											<input id="location" type="text" name="location" value="" readonly="readonly">
+											<input id="locationP" type="text" name="locationP" value="" readonly="readonly">
 										</div>
 									</div>
 									<hr>
 									<!--  BLOC SUBMIT -->
 									<div class="block">
 										<div>
-											<input name="send" class="submit-btn" type="submit" value="Ajouter le proche" />
+											<input name="sendProche" class="submit-btn" type="submit" value="Ajouter le proche" />
 										</div>
 									</div>
 								</form>

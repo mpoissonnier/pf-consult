@@ -314,14 +314,97 @@
       }
       $_POST['location'] = htmlspecialchars(substr($_POST['location'], 1, -1));
 
-      // Verification spécialité (si autre)
-      if ($_GET['inscription'] == "2" && $_POST['sous_specialite'] == "autre") {
-        if (!isset($_POST['newSpe'])) {
-          $_SESSION['message'] = "Spécialité incorrect";
-          return false;
-        }
-        $_POST['newSpe'] = htmlspecialchars($_POST['newSpe']);
+      return true;
+    }
+
+    public function checkFormProche() {
+      // Verification civilite
+      if (!isset($_POST['civiliteP']) || ($_POST['civiliteP'] != "M." && $_POST['civiliteP'] != "Mme" && $_POST['civiliteP'] != "Autre")) {
+        $_SESSION['message'] = "Champ civilite incorrect";
+        return false;
       }
+
+      // Verification prenom
+      if (!isset($_POST['prenomP']) || strlen($_POST['prenomP']) < 2 || strlen($_POST['prenomP']) > 25 ) {
+        $_SESSION['message'] = "Champ prénom incorrect";
+        return false;
+      }
+      $_POST['prenomP'] = htmlspecialchars($_POST['prenomP']);
+
+      // Verification nom
+      if (!isset($_POST['nomP']) || strlen($_POST['nomP']) < 2 || strlen($_POST['nomP']) > 25 ) {
+        $_SESSION['message'] = "Champ nom incorrect";
+        return false;
+      }
+      $_POST['nom'] = htmlspecialchars($_POST['nom']);
+
+      // Verification adresse
+      if (!isset($_POST['adresseP']) || strlen($_POST['adresseP']) < 2 || strlen($_POST['adresseP']) > 50 ) {
+        $_SESSION['message'] = "Champ adresse incorrect";
+        return false;
+      }
+      $_POST['adresseP'] = htmlspecialchars($_POST['adresseP']);
+
+
+      // Verification ville
+      if (!isset($_POST['villeP']) || strlen($_POST['villeP']) < 2 || strlen($_POST['villeP']) > 50 ) {
+        $_SESSION['message'] = "Champ ville incorrect";
+        return false;
+      }
+      $_POST['villeP'] = htmlspecialchars($_POST['villeP']);
+
+      // Verification date de naissance
+      if (!isset($_POST['ddnP']) || $_POST['ddnP'] == "") {
+        // Champ sous la forme aaaa-mm-jj
+        if (preg_match("/^[0-9]{4}-[01-12]-[01-31]$/",$_POST['ddn'])) {
+          list($year, $month, $day) = split('[/.-]', $_POST['ddnP']);
+          if ($year < date(Y)-100) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+          if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+        } else
+        // Champ sous la forme jj/mm/aaaa
+        if (preg_match("/^[0-31][/|.|-][01-12][/|.|-][0-9]{4}$/",$_POST['ddn'])) {
+          list($day, $month, $year) = split('[/.-]', $_POST['ddnP']);
+          if ($year < date(Y)-100) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+          if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+        }
+        $_SESSION['message'] = "Veuillez completer votre date de naissance";
+        return false;
+      }
+      $_POST['ddnP'] = htmlspecialchars($_POST['ddnP']);
+
+      // Verification n° de tel
+      if (!isset($_POST['telP']) || !preg_match("/^0[1-9]([-. ]?[0-9]{2}){4}$/", $_POST['telP'])) {
+        $_SESSION['message'] = "Numéro de téléphone incorrect";
+        return false;
+      }
+      $_POST['telP'] = htmlspecialchars($_POST['telP']);
+
+      // Verification du code postal
+      if (!isset($_POST['cpP']) || !preg_match("/^[0-9]{5,5}$/", $_POST['cpP'])) {
+        $_SESSION['message'] = "Code Postal incorrect";
+        return false;
+      }
+      $_POST['cpP'] = htmlspecialchars($_POST['cpP']);
+
+      // Vérification complétion du champ coordonnées
+      if (!isset($_POST['locationP']) || $_POST['locationP'] == "") {
+        $_SESSION['message'] = "Votre adresse n'a pas pu être géolocalisée";
+        return false;
+      }
+      $_POST['locationP'] = htmlspecialchars(substr($_POST['locationP'], 1, -1));
+
       return true;
     }
 /////////
@@ -371,6 +454,33 @@
       }
     }
 
+    public function addProche() {
+      try {
+        if ($this->estInscrit($_SESSION['id'])) {
+          // Recupération de l'id de l'utilisateur
+          $user = $this->getIdUser($_SESSION['id']);
+          // Inscription du proche
+          $stmt = $this->connexion->prepare('insert into Proche values(NULL,?,?,?,?,?,?,?,?,?,?);');
+          $stmt->bindParam(1, $user['id']);
+          $stmt->bindParam(2,$_POST['civiliteP']);
+          $stmt->bindParam(3,strtoupper($_POST['prenomP']));
+          $stmt->bindParam(4,strtoupper($_POST['nomP']));
+          $stmt->bindParam(5,$_POST['ddnP']);
+          $stmt->bindParam(6,$_POST['telP']);
+          $stmt->bindParam(7,strtoupper($_POST['adresseP']));
+          $stmt->bindParam(8,$_POST['cpP']);
+          $stmt->bindParam(9,strtoupper($_POST['villeP']));
+          $stmt->bindParam(10,$_POST['locationP']);
+          $stmt->execute();
+          return "ok";
+        }
+        return "ko";
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Proche");
+      }
+    }
+
     /** Méthode qui permet de supprimer un utilisateur  */
     public function delUser() {
       try {
@@ -392,17 +502,18 @@
 
     public function delProche() {
       try {
-        if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {
+        if ($this->estInscrit($_SESSION['id'])) {
           // Suppression de ses rendez-vous
-
+          $user = $this->connexion->getInfosProche($_GET['suppr']);
+          $stmt = $this->connexion->delRdv($user['id'], $user['nom'], $user['prenom']);
           // Suppression du proche
-          $stmt = $this->connexion->prepare('');
-          $stmt->bindParam(1,$_POST['login']);
-          $stmt->execute();
+          // $stmt = $this->connexion->prepare('delete from Proche where id = ?');
+          // $stmt->bindParam(1,$_GET['suppr']);
+          // $stmt->execute();
         }
       } catch (PDOException $e) {
         $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Utilisateurs");
+        throw new PDOException("Erreur d'accès à la table Proche");
       }
     }
 /////////
@@ -419,6 +530,20 @@
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
+      }
+    }
+
+    public function getInfosProche($idProche) {
+      try {
+        if ($this->estInscrit($_SESSION['id'])) {
+          $stmt = $this->connexion->prepare('select * from Proche where id = ?;');
+          $stmt->bindParam(1,$idProche);
+          $stmt->execute();
+          return $stmt->fetch();
+        }
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Proche");
       }
     }
 
@@ -589,7 +714,7 @@
 
     public function getRdv($idUser){
       try {
-        $stmt = $this->connexion->prepare('SELECT nom, prenom, horaire, jour FROM Rdv as r, Utilisateurs as u WHERE idpracticien = u.id and idpatient = ?;');
+        $stmt = $this->connexion->prepare('select u.nom, u.prenom, horaire, jour from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
         $stmt->bindParam(1,$idUser);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -597,7 +722,46 @@
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Rdv");
       }
-  }
+    }
+
+    public function delRdv($idUser, $nomUser, $prenomUser) {
+      try {
+        $stmt = $this->connexion->prepare('update Utilisateurs SET idpatient = NULL, nom = NULL, prenom = NULL where idpatient= ? and nom=? and prenom=?');
+        $stmt->bindParam(1,$idUser);
+        $stmt->bindParam(1,$nomUser);
+        $stmt->bindParam(1,$prenomUser);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+
+    }
+
+    public function getIdUser($mail) {
+      try {
+        $stmt = $this->connexion->prepare('select * from Utilisateurs where mail = ?');
+        $stmt->bindParam(1, $mail);
+        $stmt->execute();
+        return $stmt->fetch();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Utilisateurs");
+      }
+    }
+
+    public function getProches($idUser){
+      try {
+        $stmt = $this->connexion->prepare('select * from Proche where idliaisut = ?');
+        $stmt->bindParam(1,$idUser);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+    }
 
   }
 ?>

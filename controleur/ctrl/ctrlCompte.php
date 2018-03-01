@@ -15,7 +15,7 @@
     /* Genere la vue d'accueil de la page du compte */
     public function pageMonCompte() {
       $user = $this->modele->getInfosUser();
-      $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()));
+      $this->vue->afficherProfil($user[0], $this->modele->getRdv($user[0]->getId()), $this->modele->getProches($user[0]->getId()));
     }
 
     public function modifCompte() {
@@ -65,11 +65,24 @@
     }
 
     public function ajoutProche() {
-      
+      if ($this->modele->checkFormProche()) {
+        $_SESSION['inscription'] = $this->modele->addProche();
+        if ($_SESSION['inscription'] == "ok") {
+          $_SESSION['validite'] = "ok";
+          $_SESSION['message'] = "Votre proche a bien été inscrit";
+        } else {
+          $_SESSION['validite'] = "ko";
+        }
+      } else {
+        // Verification incorrecte
+        $_SESSION['validite'] = "ko";
+      }
+      $this->pageMonCompte();
     }
 
     public function suppressionProche() {
-
+      $this->modele->delProche();
+      $this->pageMonCompte();
     }
   }
 ?>

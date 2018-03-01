@@ -2,7 +2,7 @@ $(document).ready(function(){
   // Gestion des onglets
   $('ul.tabs').each(function(){
     var $active, $content, $links = $(this).find('a');
-    $active = $($links.filter('[href="'+location.hash+'"]')[1] || $links[1]);
+    $active = $($links.filter('[href="'+location.hash+'"]')[2] || $links[2]);
     $active.addClass('active');
     $content = $($active[0].hash);
 
@@ -24,12 +24,16 @@ $(document).ready(function(){
     });
   });
 
-});
+  // Afficher ou non ajout de proche
+  i = 1;
+  $('#ajout').on('click', function() {
+    if (i == 1) {
+      $("#ajouter").show();
+      i = 0;
+    } else {
+      $("#ajouter").hide();
+      i = 1;
+    }
+  });
 
-function afficher_cacher(id) {
-  if(document.getElementById(id).style.visibility=="hidden") {
-    document.getElementById(id).style.visibility="visible";
-  } else {
-    document.getElementById(id).style.visibility="hidden";
-  }
-}
+});

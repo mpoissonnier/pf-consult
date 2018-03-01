@@ -138,8 +138,8 @@ $(document).ready(function() {
       check = false;
     }
 
-    var modeleTel = new RegExp(/^0[1-9]([-. ]?[0-9]{2}){4}$/);
     // Verification n° de tel
+    var modeleTel = new RegExp(/^0[1-9]([-. ]?[0-9]{2}){4}$/);
     if (!modeleTel.test($("#tel").val())) {
       $("#tel").css({
         border : "solid red 2px"
@@ -205,7 +205,7 @@ $(document).ready(function() {
   // }
 
   // if ($(location).attr('href') == "http://infoweb/~pf-consult/index.php?monCompte" || $(location).attr('href') == "http://infoweb/~pf-consult/index.php?monCompte=1") {
-  // Validation du formulaire d'inscription
+  // Validation du formulaire de modifications
   var validFormModif = false;
   $("#formModif").on('submit', function(event) {
     if (!validFormModif) {
@@ -307,8 +307,8 @@ $(document).ready(function() {
       }
     }
 
-    var modeleTel = new RegExp(/^0[1-9]([-. ]?[0-9]{2}){4}$/);
     // Verification n° de tel
+    var modeleTel = new RegExp(/^0[1-9]([-. ]?[0-9]{2}){4}$/);
     if (!modeleTel.test($("#tel").val())) {
       $("#tel").css({
         border : "solid red 2px"
@@ -351,6 +351,110 @@ $(document).ready(function() {
 
     if (check) {
       validFormModif = true;
+    }
+  });
+
+  // Validation du formulaire d'inscription de proche
+  var validFormProche = false;
+  $("#formProche").on('submit', function(event) {
+    if (!validFormProche) {
+      event.preventDefault();
+    }
+
+    check = true;
+
+    // Verification prenom
+    if ($("#prenomP").val().length < 2 || $("#prenomP").val().length > 25 ) {
+      $("#prenomP").css({
+        border : "solid red 2px"
+      });
+      check = false;
+    } else {
+      $("#prenomP").css({
+        border : "solid green 2px"
+      });
+    }
+
+    // Verification nom
+    if ($("#nomP").val().length < 2 || $("#nomP").val().length > 25 ) {
+      $("#nomP").css({
+        border : "solid red 2px"
+      });
+      check = false;
+    } else {
+      $("#nomP").css({
+        border : "solid green 2px"
+      });
+    }
+
+    // Verification adresse
+    if ($("#adresseP").val().length < 2 || $("#adresseP").val().length > 50 ) {
+      $("#adresseP").css({
+        border : "solid red 2px"
+      });
+      check = false;
+    } else {
+      $("#adresseP").css({
+        border : "solid green 2px"
+      });
+    }
+
+    // Verification ville
+    if ($("#villeP").val().length < 2 || $("#villeP").val().length > 50 ) {
+      $("#villeP").css({
+        border : "solid red 2px"
+      });
+      check = false;
+    } else {
+      $("#villeP").css({
+        border : "solid green 2px"
+      });
+    }
+
+    // Verification n° de tel
+    var modeleTel = new RegExp(/^0[1-9]([-. ]?[0-9]{2}){4}$/);
+    if (!modeleTel.test($("#telP").val())) {
+      $("#telP").css({
+        border : "solid red 2px"
+      });
+      check = false;
+    } else {
+      $("#telP").css({
+        border : "solid green 2px"
+      });
+    }
+
+    // Verification du code postal
+    var modeleCp = new RegExp(/^[0-9]{5,5}$/)
+    if (!modeleCp.test($("#cpP").val())) {
+      $("#cpP").css({
+        border : "solid red 2px"
+      });
+      check = false;
+    } else {
+      $("#cpP").css({
+        border : "solid green 2px"
+      });
+    }
+
+    // Complétion du champ coordonnées
+    var adresse = $("#adresseP").val() + " " + $("#cpP").val() + " " + $("#villeP").val();
+    var geocoder = new google.maps.Geocoder();
+    var geoOptions = {
+      'address': adresse
+    };
+    geocoder.geocode(geoOptions, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var coords = results[0].geometry.location;
+        $('#locationP').val(coords);
+      } else {
+        console.log('Geocode was not successful for the following reason: ' + status);
+        check = false;
+      }
+    });
+
+    if (check) {
+      validFormProche = true;
     }
   });
   // }

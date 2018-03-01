@@ -92,23 +92,20 @@
           $this->ctrlCompte->modifCompte();
           return;
         }
+    // GESTION DES PROCHES
+        // AJOUT D'UN PROCHE
+        if ($_GET['monCompte'] == 2) {
+          $this->ctrlCompte->ajoutProche();
+          return;
+        }
+        // SUPPRESSION D'UN PROCHE
+        if ($_GET['monCompte'] == 3) {
+          $this->ctrlCompte->suppressionProche();
+          return;
+        }
         $this->ctrlCompte->pageMonCompte();
         return;
       }
-
-    // GESTION DES PROCHES
-    if (isset($_GET['proche'])) {
-      // AJOUT D'UN PROCHE
-      if ($_GET['proche'] == 1) {
-        $this->ctrlCompte->ajoutProche();
-        return;
-      }
-      // SUPPRESSION D'UN PROCHE
-      if ($_GET['proche'] == 1) {
-        $this->ctrlCompte->suppressionProche();
-        return;
-      }
-    }
 
     // MOT DE PASSE OUBLIE
       if (isset($_GET['reset'])) {

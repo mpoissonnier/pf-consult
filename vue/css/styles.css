@@ -6,6 +6,7 @@ RESET
 html, body { height: 100%; width: 100%;}
 body {display : table; }
 #content { margin-top: 25px; margin-bottom: 25px;}
+h3 { font-size: 16px; color: #4d4959; }
 /* ==========================================================================
 HEADER
 ========================================================================== */
@@ -136,7 +137,8 @@ div.container ul {list-style: none;display: flex;justify-content:center;}
 div.container ul li:nth-child(2n+1) {margin: 10px 15px 10px 15px;}
 div.container ul li:nth-child(2n) {margin-top: 18px;}
 div.container ul li a {color: #504C5C;text-transform: uppercase;}
-.maria {width: 95%;}
-#ajout {width: 100%; margin-top: 10px}
-.RDV {display: flex;}
+#ajout {width: 100%; margin-top: 10px; }
 .active { border-bottom: 2px solid #504C5C; }
+.element { width: 75%; display: flex; flex-direction: column; margin: auto;}
+.element div {  background: white; border: solid #4d4959 1px; margin: 5px; padding: 5px;}
+.suppression { width: 100%; background: red; border: solid 1px black; padding: 2px; color: white; margin-top: 5px;}
