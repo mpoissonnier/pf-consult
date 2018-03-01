@@ -96,10 +96,24 @@
         return;
       }
 
+    // GESTION DES PROCHES
+    if (isset($_GET['proche'])) {
+      // AJOUT D'UN PROCHE
+      if ($_GET['proche'] == 1) {
+        $this->ctrlCompte->ajoutProche();
+        return;
+      }
+      // SUPPRESSION D'UN PROCHE
+      if ($_GET['proche'] == 1) {
+        $this->ctrlCompte->suppressionProche();
+        return;
+      }
+    }
+
     // MOT DE PASSE OUBLIE
       if (isset($_GET['reset'])) {
         if ($_GET['reset'] == 1) {
-          if ($this->ctrlCompte->checkUser()) {
+          if ($this->ctrlCompte->resetMdp()) {
             $this->ctrlMail->envoiMailReset($_SESSION['mdpProv']);
           }
           $this->ctrlAuthentification->accueil();

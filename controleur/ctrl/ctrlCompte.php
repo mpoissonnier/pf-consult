@@ -19,14 +19,19 @@
     }
 
     public function modifCompte() {
-      if (empty($_POST['mdp']) && empty($_POST['mdpConfirm'])) {
-        $rep = $this->modele->modifInfosCompte(0);
+      if ($this->modele->checkFormModifications()) {
+        if (empty($_POST['mdp']) && empty($_POST['mdpConfirm'])) {
+          $rep = $this->modele->modifInfosCompte(0);
+        } else {
+          $rep = $this->modele->modifInfosCompte(1);
+        }
+        $_SESSION['validite'] = "ok";
+        $_SESSION['message'] = "Les modifications ont bien été enregistrées";
+        $_SESSION['id'] = $_POST['mail'];
       } else {
-        $rep = $this->modele->modifInfosCompte(1);
+        // Verification incorrecte
+        $_SESSION['validite'] = "ko";
       }
-      $_SESSION['validite'] = "ok";
-      $_SESSION['message'] = "Les modifications ont bien été enregistrées";
-      $_SESSION['id'] = $_POST['mail'];
       $this->pageMonCompte();
     }
 
@@ -34,7 +39,7 @@
       $this->vue->afficherPageReset();
     }
 
-    public function checkUser() {
+    public function resetMdp() {
       if ($this->modele->estInscrit($_POST['mail'])) {
         // creer un mot de passe provisoire
         $mot_de_passe = "";
@@ -57,6 +62,14 @@
         $_SESSION['message'] = "L'adresse mail ". $_POST['mail'] . " est inconnue.";
         return false;
       }
+    }
+
+    public function ajoutProche() {
+      
+    }
+
+    public function suppressionProche() {
+
     }
   }
 ?>

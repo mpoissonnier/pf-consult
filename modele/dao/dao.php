@@ -203,6 +203,127 @@
       }
       return true;
     }
+
+    public function checkFormModifications() {
+      // Verification civilite
+      if (!isset($_POST['civilite']) || ($_POST['civilite'] != "M." && $_POST['civilite'] != "Mme" && $_POST['civilite'] != "Autre")) {
+        $_SESSION['message'] = "Champ civilite incorrect";
+        return false;
+      }
+
+      // Verification prenom
+      if (!isset($_POST['prenom']) || strlen($_POST['prenom']) < 2 || strlen($_POST['prenom']) > 25 ) {
+        $_SESSION['message'] = "Champ prénom incorrect";
+        return false;
+      }
+      $_POST['prenom'] = htmlspecialchars($_POST['prenom']);
+
+      // Verification nom
+      if (!isset($_POST['nom']) || strlen($_POST['nom']) < 2 || strlen($_POST['nom']) > 25 ) {
+        $_SESSION['message'] = "Champ nom incorrect";
+        return false;
+      }
+      $_POST['nom'] = htmlspecialchars($_POST['nom']);
+
+      // Verification adresse
+      if (!isset($_POST['adresse']) || strlen($_POST['adresse']) < 2 || strlen($_POST['adresse']) > 50 ) {
+        $_SESSION['message'] = "Champ adresse incorrect";
+        return false;
+      }
+      $_POST['adresse'] = htmlspecialchars($_POST['adresse']);
+
+
+      // Verification ville
+      if (!isset($_POST['ville']) || strlen($_POST['ville']) < 2 || strlen($_POST['ville']) > 50 ) {
+        $_SESSION['message'] = "Champ ville incorrect";
+        return false;
+      }
+      $_POST['ville'] = htmlspecialchars($_POST['ville']);
+
+      // Verification mail
+      if (!isset($_POST['mail']) || !preg_match("/^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/", $_POST['mail'])) {
+        $_SESSION['message'] = "Champ mail incorrect";
+        return false;
+      }
+      $_POST['mail'] = htmlspecialchars($_POST['mail']);
+
+      // Verification mot de passe
+      if (!isset($_POST['mdp']) && !isset($_POST['MdpConfirm'])) {
+        if ($_POST['mdp'] == $_POST['MdpConfirm']) {
+          if (strlen($_POST['mdp']) > 5 && strlen($_POST['mdp']) < 25) {
+            // mot de passe correct
+          } else {
+            $_SESSION['message'] = "Le mot de passe doit comporter entre 5 et 25 caractères";
+            return false;
+          }
+        } else {
+          $_SESSION['message'] = "Les mots de passe doivent être égaux";
+          return false;
+        }
+      }
+
+      // Verification date de naissance
+      if (!isset($_POST['ddn']) || $_POST['ddn'] == "") {
+        // Champ sous la forme aaaa-mm-jj
+        if (preg_match("/^[0-9]{4}-[01-12]-[01-31]$/",$_POST['ddn'])) {
+          list($year, $month, $day) = split('[/.-]', $_POST['ddn']);
+          if ($year < date(Y)-100) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+          if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+        } else
+        // Champ sous la forme jj/mm/aaaa
+        if (preg_match("/^[0-31][/|.|-][01-12][/|.|-][0-9]{4}$/",$_POST['ddn'])) {
+          list($day, $month, $year) = split('[/.-]', $_POST['ddn']);
+          if ($year < date(Y)-100) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+          if ($year >= date(Y) && $month >= date(m) && $day >= date(d)) {
+            $_SESSION['message'] = "Veuillez entre une date valide";
+            return false;
+          }
+        }
+        $_SESSION['message'] = "Veuillez completer votre date de naissance";
+        return false;
+      }
+      $_POST['ddn'] = htmlspecialchars($_POST['ddn']);
+
+      // Verification n° de tel
+      if (!isset($_POST['tel']) || !preg_match("/^0[1-9]([-. ]?[0-9]{2}){4}$/", $_POST['tel'])) {
+        $_SESSION['message'] = "Numéro de téléphone incorrect";
+        return false;
+      }
+      $_POST['tel'] = htmlspecialchars($_POST['tel']);
+
+      // Verification du code postal
+      if (!isset($_POST['cp']) || !preg_match("/^[0-9]{5,5}$/", $_POST['cp'])) {
+        $_SESSION['message'] = "Code Postal incorrect";
+        return false;
+      }
+      $_POST['cp'] = htmlspecialchars($_POST['cp']);
+
+      // Vérification complétion du champ coordonnées
+      if (!isset($_POST['location']) || $_POST['location'] == "") {
+        $_SESSION['message'] = "Votre adresse n'a pas pu être géolocalisée";
+        return false;
+      }
+      $_POST['location'] = htmlspecialchars(substr($_POST['location'], 1, -1));
+
+      // Verification spécialité (si autre)
+      if ($_GET['inscription'] == "2" && $_POST['sous_specialite'] == "autre") {
+        if (!isset($_POST['newSpe'])) {
+          $_SESSION['message'] = "Spécialité incorrect";
+          return false;
+        }
+        $_POST['newSpe'] = htmlspecialchars($_POST['newSpe']);
+      }
+      return true;
+    }
 /////////
 ///////// AJOUT / SUPPRESSION
     /** Méthode qui permet d'ajouter un utilisateur lambda */
@@ -254,7 +375,28 @@
     public function delUser() {
       try {
         if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {
+          // Suppression de ses proches
+
+          // Suppression de ses rendez-vous
+
+          // Suppression de son compte
           $stmt = $this->connexion->prepare('delete from Utilisateurs where mail = ?;');
+          $stmt->bindParam(1,$_POST['login']);
+          $stmt->execute();
+        }
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Utilisateurs");
+      }
+    }
+
+    public function delProche() {
+      try {
+        if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {
+          // Suppression de ses rendez-vous
+
+          // Suppression du proche
+          $stmt = $this->connexion->prepare('');
           $stmt->bindParam(1,$_POST['login']);
           $stmt->execute();
         }
@@ -332,6 +474,12 @@
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
+          // modif location
+          $stmt = $this->connexion->prepare('update Utilisateurs SET location = ? where mail = ?');
+          $stmt->bindParam(1,$_POST['location']);
+          $stmt->bindParam(2,$_SESSION['id']);
+          $stmt->execute();
+
           // modif mdp
           if ($mdp == 1) {
             $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
@@ -353,13 +501,6 @@
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
       }
-    }
-
-    public function modifierMdp($mdp) {
-      $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
-      $stmt->bindParam(1,crypt($mdp));
-      $stmt->bindParam(2,$_POST['mail']);
-      $stmt->execute();
     }
 /////////
 ///////// GESTION DOMAINE // SPECIALITE

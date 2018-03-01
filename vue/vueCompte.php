@@ -24,11 +24,8 @@ class vueCompte {
 			<!--  CONTENT -->
 			<div id="content">
 				<div class="container_form">
-					<!--  BLOC ONGLET -->
-
-
-					<!--  BLOC CIVILITE-->
 					<div class="container">
+						<!--  BLOC ONGLET -->
 						<ul class="tabs">
 							<li><a href="#MesRDV">Mes rendez-vous</a></li>
 							<li class="dot"></li>
@@ -48,87 +45,85 @@ class vueCompte {
 								echo "</div>";
 							}
 							?>
-
-
 						</section>
 
 						<section id="MonCompte">
-							<form action="index.php?monCompte=1" method="post" onsubmit="return verifFormInscription(this)" >
+							<form id="formModif" action="index.php?monCompte=1" method="post" >
 								<div id="content">
-										<!--  BLOC CIVILITE-->
-										<div class="block">
-											<label>Civilité :</label>
-											<div>
-												<select name="civilite" >
-													<?php
-													if ($user->getCivilite() == "M.") {
-														$mr = "selected";
-													} else if ($user->getCivilite() == "Mme") {
-														$mme = "selected";
-													} else {
-														$other = "selected";
-													}
-													?>
-													<option name="civilite" <?php if (isset($mr)) echo $mr; ?> value="M.">M.</option>
-													<option name="civilite" <?php if (isset($mme)) echo $mme; ?> value="Mme">Mme</option>
-													<option name="civilite" <?php if (isset($other)) echo $other; ?> value="Autre">Autre</option>
-												</select>
-												<input type="text" name="prenom" placeholder="Prénom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getPrenom()))?>" />
-												<input type="text" name="nom" placeholder="Nom" size="15" onblur="verifString(this,2,25)" required value="<?php echo ucwords(strtolower($user->getNom()))?>" />
-											</div>
+									<!--  BLOC CIVILITE-->
+									<div class="block">
+										<label>Civilité :</label>
+										<div>
+											<select name="civilite" >
+												<?php
+												if ($user->getCivilite() == "M.") {
+													$mr = "selected";
+												} else if ($user->getCivilite() == "Mme") {
+													$mme = "selected";
+												} else {
+													$other = "selected";
+												}
+												?>
+												<option name="civilite" <?php if (isset($mr)) echo $mr; ?> value="M.">M.</option>
+												<option name="civilite" <?php if (isset($mme)) echo $mme; ?> value="Mme">Mme</option>
+												<option name="civilite" <?php if (isset($other)) echo $other; ?> value="Autre">Autre</option>
+											</select>
+											<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required value="<?php echo ucwords(strtolower($user->getPrenom()))?>" />
+											<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required value="<?php echo ucwords(strtolower($user->getNom()))?>" />
 										</div>
-										<hr>
+									</div>
+									<hr>
 
-										<!-- BLOC INFO DE CONNEXION -->
-										<div class="block">
-											<label>Informations de connexion :</label>
-											<div>
-												<input id="mail" class="full" type="email" name="mail" placeholder="Adresse mail" required value="<?php echo $user->getMail()?>"/>
-											</div>
-											<div>
-												<input id="mdp" type="password" name="mdp" placeholder="Nouveau mot de passe" />
-												<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer" />
-											</div>
+									<!-- BLOC INFO DE CONNEXION -->
+									<div class="block">
+										<label>Informations de connexion :</label>
+										<div>
+											<input id="mail" type="email" name="mail" placeholder="Adresse mail" required value="<?php echo $user->getMail()?>"/>
 										</div>
-										<hr>
-
-										<!-- BLOC AUTRES INFOS -->
-										<div class="block">
-											<label name="Birth">Date de Naissance : </label>
-											<div>
-												<input type="date" id="DateBirth" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php echo $user->getDdn()?>" />
-											</div>
-											<label>N° de téléphone mobile : </label>
-											<div>
-												<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" value="<?php echo $user->getTelephone()?>" />
-											</div>
+										<div>
+											<input id="mdp" type="password" name="mdp" placeholder="Nouveau mot de passe" />
+											<input id="mdpConfirm" type="password" name="MdpConfirm" placeholder="Confirmer" />
 										</div>
-										<hr>
+									</div>
+									<hr>
 
-										<!-- BLOC ADRESSE -->
-										<div class="block">
-											<label>Adresse : </label>
-											<div>
-												<input class="full" type="text" name="adresse" placeholder="Adresse" onblur="verifString(this,2,50)" required value="<?php echo ucwords(strtolower($user->getAdresse()))?>"/>
-											</div>
-
-											<div>
-												<input type="text" name="cp" placeholder="Code Postal" required maxlength="5" onblur="verifCodePostal(this)" value="<?php echo $user->getCp()?>"/>
-												<input type="text" name="ville" placeholder="Ville" onblur="verifString(this,2,50)" required value="<?php echo ucwords(strtolower($user->getVille()))?>"/>
-											</div>
-
-											<div style="display:none">
-												<input id="location" type="text" name="location" value="<?php echo $user->getLocation()?>" readonly="readonly">
-											</div>
+									<!-- BLOC AUTRES INFOS -->
+									<div class="block">
+										<label name="Birth">Date de Naissance : </label>
+										<div>
+											<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php echo $user->getDdn()?>" />
 										</div>
-										<hr>
-
-										<!--  BLOC SUBMIT -->
-										<div class="block">
-											<div>
-												<input name="send" class="submit-btn" type="submit" value="Modifier" />
-											</div>
+										<label>N° de téléphone mobile : </label>
+										<div>
+											<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" value="<?php echo $user->getTelephone()?>" />
 										</div>
+									</div>
+									<hr>
+
+									<!-- BLOC ADRESSE -->
+									<div class="block">
+										<label>Adresse : </label>
+										<div>
+											<input id="adresse" type="text" name="adresse" placeholder="Adresse" required value="<?php echo ucwords(strtolower($user->getAdresse()))?>"/>
+										</div>
+
+										<div>
+											<input id="cp" type="text" name="cp" placeholder="Code Postal" required maxlength="5"	 value="<?php echo $user->getCp()?>"/>
+											<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php echo ucwords(strtolower($user->getVille()))?>"/>
+										</div>
+
+										<div style="display:none">
+											<input id="location" type="text" name="location" value="<?php echo $user->getLocation()?>" readonly="readonly">
+										</div>
+									</div>
+									<hr>
+
+									<!--  BLOC SUBMIT -->
+									<div class="block">
+										<div>
+											<input name="send" class="submit-btn" type="submit" value="Modifier" />
+										</div>
+									</div>
 								</div>
 							</form>
 						</section>
@@ -136,65 +131,65 @@ class vueCompte {
 						<section id="MesProches">
 							<button id="ajout" onclick="afficher_cacher('ajouter')">Ajouter un proche</button>
 							<div id="ajouter" style="visibility:hidden;">
-								<div class="content">
-										<!--  BLOC CIVILITE-->
-										<div class="block">
-											<label>Civilité :</label>
-											<div>
-												<select name="civilite" >
-													<option disabled selected>C'est...</option>
-													<option name="civilite" value="M." <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "M.") { echo "selected";}?>>Un homme</option>
-													<option name="civilite" value="Mme" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Mme") { echo "selected";}?>>Une femme</option>
-													<option name="civilite" value="Autre" <?php if(isset($_POST['civilite'])&& $_POST['civilite'] == "Autre") { echo "selected";}?>>Autre</option>
-												</select>
-												<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required value="<?php if(isset($_POST['prenom'])) { echo htmlspecialchars($_POST['prenom']);}?>"/>
-												<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required value="<?php if(isset($_POST['nom'])) { echo htmlspecialchars($_POST['nom']);}?>"/>
-											</div>
+								<form method="post" action="index.php?proche=1" class="content">
+									<!--  BLOC CIVILITE-->
+									<div class="block">
+										<label>Civilité :</label>
+										<div>
+											<select name="civilite" >
+												<option disabled selected>C'est...</option>
+												<option name="civilite" value="M.">Un homme</option>
+												<option name="civilite" value="Mme">Une femme</option>
+												<option name="civilite" value="Autre">Autre</option>
+											</select>
+											<input id="prenom" type="text" name="prenom" placeholder="Prénom" size="15" required />
+											<input id="nom" type="text" name="nom" placeholder="Nom" size="15" required />
 										</div>
-										<hr>
+									</div>
+									<hr>
 
-										<!-- BLOC AUTRES INFOS -->
-										<div class="block">
-											<label name="Birth">Date de Naissance : </label>
-											<div>
-												<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" value="<?php if(isset($_POST['ddn'])) { echo htmlspecialchars($_POST['ddn']);}?>" />
-											</div>
-											<label>N° de téléphone mobile : </label>
-											<div>
-												<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" value="<?php if(isset($_POST['tel'])) { echo htmlspecialchars($_POST['tel']);}?>" />
-											</div>
+									<!-- BLOC AUTRES INFOS -->
+									<div class="block">
+										<label name="Birth">Date de Naissance : </label>
+										<div>
+											<input type="date" id="ddn" name="ddn" placeholder="DD/MM/YYYY"  maxlength="10" />
 										</div>
-										<hr>
-
-										<!-- BLOC ADRESSE -->
-										<div class="block">
-											<label>Adresse : </label>
-											<div>
-												<input id="adresse" type="text" name="adresse" placeholder="Adresse" required value="<?php if(isset($_POST['adresse'])) { echo htmlspecialchars($_POST['adresse']);}?>"/>
-											</div>
-
-											<div>
-												<input id="cp" type="text" name="cp" placeholder="Code Postal" required maxlength="5" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
-												<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php if(isset($_POST['ville'])) { echo htmlspecialchars($_POST['ville']);}?>"/>
-											</div>
-
-											<div style="display:none">
-												<input id="location" type="text" name="location" value="" readonly="readonly">
-											</div>
+										<label>N° de téléphone mobile : </label>
+										<div>
+											<input id="tel" type="tel" name="tel" placeholder="N° tel" maxlength="10" />
 										</div>
-										<hr>
-										<!--  BLOC SUBMIT -->
-										<div class="block">
-											<div>
-												<input name="send" class="submit-btn" type="submit" value="Ajouter le proche" />
-											</div>
+									</div>
+									<hr>
+
+									<!-- BLOC ADRESSE -->
+									<div class="block">
+										<label>Adresse : </label>
+										<div>
+											<input id="adresse" type="text" name="adresse" placeholder="Adresse" required />
 										</div>
-								</div>
+
+										<div>
+											<input id="cp" type="text" name="cp" placeholder="Code Postal" required maxlength="5"/>
+											<input id="ville" type="text" name="ville" placeholder="Ville" required />
+										</div>
+
+										<div style="display:none">
+											<input id="location" type="text" name="location" value="" readonly="readonly">
+										</div>
+									</div>
+									<hr>
+									<!--  BLOC SUBMIT -->
+									<div class="block">
+										<div>
+											<input name="send" class="submit-btn" type="submit" value="Ajouter le proche" />
+										</div>
+									</div>
+								</form>
 							</div>
 						</section>
 					</div>
-					</div>
-					</div>
+				</div>
+			</div>
 
 			<!--  FOOTER -->
 			<?php  include 'includes/footer.php' ?>
