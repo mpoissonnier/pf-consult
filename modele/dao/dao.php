@@ -504,12 +504,12 @@
       try {
         if ($this->estInscrit($_SESSION['id'])) {
           // Suppression de ses rendez-vous
-          $user = $this->connexion->getInfosProche($_GET['suppr']);
-          $stmt = $this->connexion->delRdv($user['id'], $user['nom'], $user['prenom']);
+          $user = $this->getInfosProche($_GET['suppr']);
+          $this->delRdv($user['idliaisut'], $user['nom'], $user['prenom']);
           // Suppression du proche
-          // $stmt = $this->connexion->prepare('delete from Proche where id = ?');
-          // $stmt->bindParam(1,$_GET['suppr']);
-          // $stmt->execute();
+          $stmt = $this->connexion->prepare('delete from Proche where id = ?');
+          $stmt->bindParam(1,$_GET['suppr']);
+          $stmt->execute();
         }
       } catch (PDOException $e) {
         $this->destroy();
@@ -726,17 +726,15 @@
 
     public function delRdv($idUser, $nomUser, $prenomUser) {
       try {
-        $stmt = $this->connexion->prepare('update Utilisateurs SET idpatient = NULL, nom = NULL, prenom = NULL where idpatient= ? and nom=? and prenom=?');
+        $stmt = $this->connexion->prepare('update Rdv SET idpatient = NULL, nom = NULL, prenom = NULL where idpatient= ? and nom=? and prenom=?');
         $stmt->bindParam(1,$idUser);
-        $stmt->bindParam(1,$nomUser);
-        $stmt->bindParam(1,$prenomUser);
+        $stmt->bindParam(2,$nomUser);
+        $stmt->bindParam(3,$prenomUser);
         $stmt->execute();
-        return $stmt->fetchAll();
       } catch (PDOException $e) {
         $this->destroy();
         throw new PDOException("Erreur d'accès à la table Rdv");
       }
-
     }
 
     public function getIdUser($mail) {
