@@ -2,30 +2,49 @@ $(document).ready(function() {
   // Verification du formulaire d'inscription
   // if ($(location).attr('href') == "http://infoweb/~pf-consult/index.php?inscription=user" || $(location).attr('href') == "http://infoweb/~pf-consult/index.php?inscription=pro") {
   // AutoCompletion du code postal
-  $('#ville').autocomplete({
-    source : function(request,response){
-      $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: "./modele/dao/codePostalComplete.php",
-        data: 'commune=' + $('#ville').val() + '&maxRows=10',
-        success: function(data){
-          response($.map(data, function(item){
-            return{
-              value : item.Ville,
-              codePostal : item.CodePostal,
-              label : item.Ville + " " + item.CodePostal,
+  $("#cp, #ville").autocomplete({
+        source: function (request, response)
+        {
+            var objData = {};
+            if ($(this.element).attr('id') == 'cp')
+            {
+                objData = { codePostal: request.term,  maxRows: 10 };
             }
-          }));
+            else
+            {
+                objData = { commune: request.term, maxRows: 10 };
+            }
+            $.ajax({
+                url: "./modele/dao/codePostalComplete.php",
+                dataType: "json",
+                data: objData,
+                type: 'GET'}).done(function (data)
+                {
+                    response($.map(data, function (item)
+                    {
+                        console.log(data);
+                        return {
+                            label: item.CodePostal + ", " + item.Ville,
+                            value: function ()
+                            {
+                                if ($(this).attr('id') == 'cp')
+                                {
+                                    $('#ville').val(item.Ville);
+                                    return item.CodePostal;
+                                }
+                                else
+                                {
+                                    $('#cp').val(item.CodePostal);
+                                    return item.Ville;
+                                }
+                            }
+                        }
+                    }));
+                })
         },
-      });
-    },
-    minLength : 3,
-
-    select : function(event, ui){
-      $('#cp').attr('value', ui.item.codePostal);
-    }
-  });
+        minLength: 3,
+        delay: 600
+    });
 
 
   // Validation du formulaire d'inscription
