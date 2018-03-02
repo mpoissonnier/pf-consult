@@ -81,8 +81,13 @@
     }
 
     public function suppressionProche() {
-      $this->modele->delProche();
+      $this->modele->delProche($_GET['suppr']);
       $this->pageMonCompte();
+    }
+
+    public function suppressionCompte() {
+      $this->modele->delUser();
+      session_destroy();
     }
   }
 ?>

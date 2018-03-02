@@ -103,6 +103,13 @@
           $this->ctrlCompte->suppressionProche();
           return;
         }
+    // SUPPRESSION DE SON COMPTE
+        if ($_GET['monCompte'] == 4) {
+          $this->ctrlCompte->suppressionCompte();
+          $this->ctrlAuthentification->accueil();
+          return;
+        }
+
         $this->ctrlCompte->pageMonCompte();
         return;
       }

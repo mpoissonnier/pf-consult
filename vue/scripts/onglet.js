@@ -2,7 +2,7 @@ $(document).ready(function(){
   // Gestion des onglets
   $('ul.tabs').each(function(){
     var $active, $content, $links = $(this).find('a');
-    $active = $($links.filter('[href="'+location.hash+'"]')[2] || $links[2]);
+    $active = $($links.filter('[href="'+location.hash+'"]')[1] || $links[1]);
     $active.addClass('active');
     $content = $($active[0].hash);
 

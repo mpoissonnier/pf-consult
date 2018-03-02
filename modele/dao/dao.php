@@ -484,14 +484,20 @@
     /** Méthode qui permet de supprimer un utilisateur  */
     public function delUser() {
       try {
-        if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {
+        if ($this->estInscrit($_SESSION['id'])) {
+          // Recuperation de l'utilisateur
+          $user = $this->getInfosUser($_SESSION['id']);
           // Suppression de ses proches
-
+          $proches = $this->getProches($user[0]->getId());
+          $_SESSION['debug'] = $proches;
+          foreach ($proches as $unProche) {
+            $this->delProche($unProche['id']);
+          }
           // Suppression de ses rendez-vous
-
+          $this->delRdv($user[0]->getId(), $user[0]->getNom(), $user[0]->getPrenom());
           // Suppression de son compte
           $stmt = $this->connexion->prepare('delete from Utilisateurs where mail = ?;');
-          $stmt->bindParam(1,$_POST['login']);
+          $stmt->bindParam(1,$_SESSION['id']);
           $stmt->execute();
         }
       } catch (PDOException $e) {
@@ -500,15 +506,15 @@
       }
     }
 
-    public function delProche() {
+    public function delProche($id) {
       try {
         if ($this->estInscrit($_SESSION['id'])) {
           // Suppression de ses rendez-vous
-          $user = $this->getInfosProche($_GET['suppr']);
+          $user = $this->getInfosProche($id);
           $this->delRdv($user['idliaisut'], $user['nom'], $user['prenom']);
           // Suppression du proche
           $stmt = $this->connexion->prepare('delete from Proche where id = ?');
-          $stmt->bindParam(1,$_GET['suppr']);
+          $stmt->bindParam(1,$id);
           $stmt->execute();
         }
       } catch (PDOException $e) {

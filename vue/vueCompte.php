@@ -43,6 +43,7 @@ class vueCompte {
 										<h3><?php echo ucwords(strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h3>
 										<p><?php echo $row['horaire'] ;?></p>
 										<p><?php echo $row['jour'] ;?></p>
+										<a href="index.php?monCompte=3&suppr=<?php echo $row['id']?>"><button class="suppression" type="button">Supprimer</button></a>
 									</div>
 									<?php
 								}
@@ -129,6 +130,11 @@ class vueCompte {
 									</div>
 								</div>
 							</form>
+							<div class="block">
+								<div>
+									<a href="index.php?monCompte=4&suppr=<?php echo $user->getId()?>"><input class="suppression submit-btn" type="submit" style="cursor:pointer" value="Supprimer mon compte"></a>
+								</div>
+							</div>
 						</section>
 
 						<section id="MesProches">
