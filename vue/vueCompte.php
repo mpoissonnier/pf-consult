@@ -40,9 +40,9 @@ class vueCompte {
 								foreach ($listeRDV as $row) {
 									?>
 									<div>
-										<h3><?php echo ucwords(strtolower($row['prenom'])) . " " . $row['nom']; ?> :</h3>
-										<p><?php echo $row['horaire'] ;?></p>
-										<p><?php echo $row['jour'] ;?></p>
+										<h3>Vous avez rendez-vous avec <?php echo ucwords(strtolower($row['prenom'])) . " " . $row['nom']; ?></h3>
+										<p>Le <?php echo $row['jour'] ;?> à <?php echo $row['horaire'] ;?></p>
+										<p>Ce rendez-vous concerne <?php echo ucwords(strtolower($row['prenomPa'])) . " " . $row['nomPa']; ?></p>
 										<a href="index.php?monCompte=3&suppr=<?php echo $row['id']?>"><button class="suppression" type="button">Supprimer</button></a>
 									</div>
 									<?php

@@ -720,7 +720,7 @@
 
     public function getRdv($idUser){
       try {
-        $stmt = $this->connexion->prepare('select u.nom, u.prenom, horaire, jour from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
+        $stmt = $this->connexion->prepare('select u.nom, u.prenom, horaire, jour, nomPa, prenomPa from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
         $stmt->bindParam(1,$idUser);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -732,7 +732,7 @@
 
     public function delRdv($idUser, $nomUser, $prenomUser) {
       try {
-        $stmt = $this->connexion->prepare('update Rdv SET idpatient = NULL, nom = NULL, prenom = NULL where idpatient= ? and nom=? and prenom=?');
+        $stmt = $this->connexion->prepare('update Rdv SET idpatient = NULL, nomPa = NULL, prenomPa = NULL where idpatient= ? and nomPa=? and prenomPa=?');
         $stmt->bindParam(1,$idUser);
         $stmt->bindParam(2,$nomUser);
         $stmt->bindParam(3,$prenomUser);

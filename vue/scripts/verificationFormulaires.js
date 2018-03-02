@@ -173,6 +173,18 @@ $(document).ready(function() {
         });
       }
 
+      //https://www.developpez.net/forums/d1345076/webmasters-developpement-web/javascript-ajax-typescript-dart/javascript/script-calcul-d-age/
+      // Verification de la ddn
+      var dateDuJour = new Date();
+		  var ddn = new Date( 1944, 1, 19 ), // 19 février 1994
+		  var monAge = maintenant.getFullYear() - maDateNaissance.getFullYear();
+      if ( maDateNaissance.getMonth() > maintenant.getMonth() ) {
+		    monAge += 1;
+	    } else if ( maintenant.getMonth() == maDateNaissance.getMonth() && maDateNaissance.getDate() >= maintenant.getDate() ) {
+		    monAge += 1;
+	    }
+	    $( "#age" ).html( '<p>' + monAge + ' ans</p>' );
+
       // Complétion du champ coordonnées
       var adresse = $("#adresse").val() + " " + $("#cp").val() + " " + $("#ville").val();
       var geocoder = new google.maps.Geocoder();

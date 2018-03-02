@@ -6,7 +6,7 @@ RESET
 html, body { height: 100%; width: 100%;}
 body {display : table; }
 #content { margin-top: 25px; margin-bottom: 25px;}
-h3 { font-size: 16px; color: #4d4959; }
+h3 { font-size: 20px; color: #4d4959; text-align: center;}
 /* ==========================================================================
 HEADER
 ========================================================================== */
