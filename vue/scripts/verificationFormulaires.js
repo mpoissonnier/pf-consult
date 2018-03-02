@@ -12,7 +12,9 @@ $(document).ready(function() {
         url: "./modele/dao/codePostalComplete.php",
         dataType: "json",
         data: objData,
-        type: 'GET'}).done(function (data) {
+        type: 'GET'
+      })
+        .done(function (data) {
           response($.map(data, function (item) {
             console.log(data);
             return {

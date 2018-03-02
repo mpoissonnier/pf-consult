@@ -21,12 +21,13 @@ try {
 	throw new PDOException("Erreur de connexion");
 }
 //Construction de la requete
-$strQuery = "SELECT CP CodePostal, VILLE Ville FROM CP WHERE ";
-if (isset($_GET["cp"])) {
+$strQuery = "SELECT CP CodePostal, VILLE Ville FROM cp_autocomplete WHERE ";
+if (isset($_GET["codePostal"])) {
 	$strQuery .= "CP LIKE :codePostal ";
 } else {
 	$strQuery .= "VILLE LIKE :ville ";
 }
+$strQuery .= "AND CODEPAYS = 'FR' ";
 //Limite
 if (isset($_GET["maxRows"])) {
 	$strQuery .= "LIMIT 0, :maxRows";
@@ -40,8 +41,7 @@ if (isset($_POST["codePostal"])) {
 	$query->bindParam(":ville", $value, PDO::PARAM_STR);
 }
 //Limite
-if (isset($_GET["maxRows"]))
-{
+if (isset($_GET["maxRows"])) {
 	$valueRows = intval($_GET["maxRows"]);
 	$query->bindParam(":maxRows", $valueRows, PDO::PARAM_INT);
 }

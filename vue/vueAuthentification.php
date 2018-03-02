@@ -179,7 +179,8 @@ class vueAuthentification {
 							</div>
 
 							<div>
-								<input id="cp" type="text" name="cp" placeholder="Code Postal" required maxlength="5" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
+								<input id="cp" class="ui-autocomplete-input" type="text" name="cp" placeholder="Code Postal" required maxlength="5" value="<?php if(isset($_POST['cp'])) { echo htmlspecialchars($_POST['cp']);}?>"/>
+								<ul class="ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all" role="listbox" aria-activedescendant="ui-active-menuitem" style="z-index: 1; top: 0px; left: 0px; display: none;"></ul>
 								<input id="ville" type="text" name="ville" placeholder="Ville" required value="<?php if(isset($_POST['ville'])) { echo htmlspecialchars($_POST['ville']);}?>"/>
 							</div>
 
