@@ -16,6 +16,10 @@
 
     /* Fonction permettant l'affichage des specialistes demandes */
     public function rechercheSpe($domaine) {
+      // Recupere le specialiste avec sa specialite
+      // SELECT civilite, prenom, u.nom, mail, mdp, ddn, tel, adresse, ville, cp, location, s.nom from Utilisateurs u, Sous_Specialite s where type = 2 and u.specialite = s.id
+
+
       // TODO Faire la recherche
       $this->vue->genereVueRecherche($domaine);
     }

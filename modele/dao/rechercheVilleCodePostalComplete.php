@@ -24,23 +24,12 @@
 	}
 
 	//Construction de la requete
-	$strQuery = "select CP CodePostal, VILLE Ville from cp_autocomplete where ";
-
-	if (isset($_GET["codePostal"])) {
-		$strQuery .= "CP like :codePostal ";
-	} else {
-		$strQuery .= "VILLE like :ville ";
-	}
-	$strQuery .= "and CODEPAYS = 'FR' ";
+	$strQuery = "select CP CodePostal, VILLE Ville from cp_autocomplete where CP like :codePostal or VILLE like :ville and CODEPAYS = 'FR' ";
 
 	$query = $db->prepare($strQuery);
-	if (isset($_GET["codePostal"])) {
-		$value = $_GET["codePostal"]."%";
-		$query->bindParam(":codePostal", $value, PDO::PARAM_STR);
-	} else {
-		$value = $_GET["commune"]."%";
-		$query->bindParam(":ville", $value, PDO::PARAM_STR);
-	}
+	$value = $_GET["element"]."%";
+	$query->bindParam(":codePostal", $value, PDO::PARAM_STR);
+	$query->bindParam(":ville", $value, PDO::PARAM_STR);
 
 	$query->execute();
 
