@@ -27,7 +27,7 @@
 	$strQuery = "select nom Nom, prenom Prenom from Utilisateurs where nom like :nom or prenom like :prenom and type = 2 ";
 
 	$query = $db->prepare($strQuery);
-	$value = $_GET["element"]."%";
+	$value = "%".$_GET["element"]."%";
 	$query->bindParam(":nom", $value, PDO::PARAM_STR);
 	$query->bindParam(":prenom", $value, PDO::PARAM_STR);
 
@@ -37,7 +37,7 @@
 	// Verification que ce soit une specialité
 	$strQuery = "select s1.nom Nom from Sous_Specialite s1, Specialite s2, Domaine d where d.nom = :domaine and s2.domaine = d.id and s1.sousDomaine = s2.id and s1.nom like :nom ";
 	$query = $db->prepare($strQuery);
-	$value = $_GET["element"]."%";
+	$value = "%".$_GET["element"]."%";
 	$query->bindParam(":domaine", $_SESSION['domaine'], PDO::PARAM_STR);
 	$query->bindParam(":nom", $value, PDO::PARAM_STR);
 
@@ -46,7 +46,7 @@
 
 	$strQuery = "select s2.nom Nom from Specialite s2, Domaine d where d.nom = :domaine and s2.domaine = d.id and s2.nom like :nom ";
 	$query = $db->prepare($strQuery);
-	$value = $_GET["element"]."%";
+	$value = "%".$_GET["element"]."%";
 	$query->bindParam(":domaine", $_SESSION['domaine'], PDO::PARAM_STR);
 	$query->bindParam(":nom", $value, PDO::PARAM_STR);
 

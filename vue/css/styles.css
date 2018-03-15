@@ -123,10 +123,19 @@ DOMAINE
 /* ==========================================================================
 AFFICHAGE DES SPECIALISTES
 ========================================================================== */
-.recherche { border: solid black 2px; width: 75%; margin: auto; display: flex; justify-content: space-around; }
-.recherche .listeSpecialistes { border: solid red 2px; width: 50%;}
+.recherche { width: 100%; margin: auto; display: flex; justify-content: space-around; margin: 10px 0px 10px 0px;}
+.recherche .listeSpecialistes { width: 50%;}
+.recherche .listeSpecialistes .pro { margin: 10px; background: #EEEEEE; padding: 20px; display: flex; justify-content: space-around; border-radius: 5px; border: solid #EEEEEE 2px;}
+.recherche .listeSpecialistes .pro:hover { border: solid orange 2px;}
+.pro .coordonnes { display: flex; flex-direction: column; width: 50%; }
+.pro .coordonnes .adresse { display: flex; align-items: center; margin-top: 10px;}
+.pro .coordonnes .tel { display: flex; align-items: center; margin-top: 10px;}
+.pro i { color : orange; margin-right: 10px;}
+.pro .coordonnes .entete h4 { color: #4d4959; font-weight: bold;}
+.pro .coordonnes .entete p { font-style: italic; }
+.pro .dispo { border: solid red 2px; width: 50%; display: flex;justify-content: center; align-items: center;}
 .recherche .listeSpecialistes p { text-align: left;}
-.recherche #map {border: solid blue 2px; width: 50%;}
+.recherche #map { width: 30%; height: 500px; position: fixed;}
 /* ==========================================================================
 MON COMPTE
 ========================================================================== */

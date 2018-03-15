@@ -107,14 +107,18 @@ class vueDomaine {
 										<p><?php echo ucwords($row['sous_specialite']) ?></p>
 									</div>
 									<div class="adresse">
-										<h6><i class="material-icons">&#xE7F1;</i></h6>
-										<p><?php echo ucwords(strtolower($row['adresse']));?></p>
-										<p><?php echo ucwords($row['cp'] . " " . $row['ville']); ?></p>
+										<div>
+											<h6><i class="material-icons">&#xE7F1;</i></h6>
+										</div>
+										<div>
+											<p><?php echo ucwords(strtolower($row['adresse']));?></p>
+											<p><?php echo ucwords($row['cp'] . " " . $row['ville']); ?></p>
+										</div>
 									</div>
-									<p><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
+									<p class="tel"><i class="material-icons">&#xE0CD;</i><?php echo $row['tel'] ;?></p>
 								</div>
 								<div class="dispo">
-									<!-- Inserer le calendrier -->
+									// calendrier
 								</div>
 							</div>
 							<?php
@@ -122,7 +126,7 @@ class vueDomaine {
 						?>
 					</div>
 					<div id="map">
-
+						<!-- Carte Google maps gérée par le script maps.js -->
 					</div>
 				</div>
 			</div>

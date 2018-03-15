@@ -10,6 +10,9 @@
 <!-- Scripts JS -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrYTn9B2brDJ5EZCrwjvU3QgukcZrDyyM"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrYTn9B2brDJ5EZCrwjvU3QgukcZrDyyM&callback=initMap"></script>
 <script src="vue/scripts/verificationFormulaires.js"></script>
 <script type="text/javascript" src="vue/scripts/onglet.js" ></script>
+<script type="text/javascript" src="vue/scripts/maps.js">
+
+</script>
