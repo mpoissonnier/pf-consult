@@ -1,12 +1,15 @@
 <?php
   require_once PATH_VUE."/vueDomaine.php";
+  require_once PATH_MODELE."/dao/dao.php";
 
   class ControleurDomaine {
     private $vue;
+    private $modele;
 
     /* Constructeur de la classe. */
     public function __construct(){
       $this->vue = new vueDomaine();
+      $this->modele = new dao();
     }
 
     /* Fonction permettant l'affichage de la vue domaine. */
@@ -16,12 +19,8 @@
 
     /* Fonction permettant l'affichage des specialistes demandes */
     public function rechercheSpe($domaine) {
-      // Recupere le specialiste avec sa specialite
-      // SELECT civilite, prenom, u.nom, mail, mdp, ddn, tel, adresse, ville, cp, location, s.nom from Utilisateurs u, Sous_Specialite s where type = 2 and u.specialite = s.id
-
-
-      // TODO Faire la recherche
-      $this->vue->genereVueRecherche($domaine);
+      $listeSpecialistes = $this->modele->rechercheSpe($domaine);
+      $this->vue->genereVueRecherche($domaine, $listeSpecialistes);
     }
 
 }
