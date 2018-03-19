@@ -59,7 +59,7 @@
     // INSCRIPTION UTILISATEUR
         if ($_GET['inscription'] == "1" || $_GET['inscription'] == "2") {
           if ($this->ctrlAuthentification->inscriptionUser($_GET['inscription'])) {
-            $this->ctrlMail->envoiMailInscription();
+            // $this->ctrlMail->envoiMailInscription();
             $this->ctrlAuthentification->accueil();
           }
           return;

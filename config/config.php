@@ -11,11 +11,11 @@
 // DONNEES BASE DE DONNEE
   define("HOST","localhost");
 
-  // define("BD","info2-2017-pfcon-db");
-  // define("LOGIN","info2-2017-pc");
-  // define("PASSWORD","pfconsult");
+  define("BD","info2-2017-pfcon-db");
+  define("LOGIN","info2-2017-pc");
+  define("PASSWORD","pfconsult");
 
-  define("BD","PFCONSULT");
-  define("LOGIN","root");
-  define("PASSWORD","root");
+  // define("BD","PFCONSULT");
+  // define("LOGIN","root");
+  // define("PASSWORD","root");
 ?>
