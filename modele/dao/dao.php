@@ -436,7 +436,9 @@
               } else if ($_POST['domaine'] == "JURIDIQUE") {
                 $idSpe = $this->getIdSpecialite(strtolower($_POST['speJuridique']));
               }
-              $this->insertSousSpecialite(strtolower($_POST['newSpe']), $idSpe['id']);
+              if ($this->getIdSousSpecialite(strtolower($_POST['newSpe'])) == NULL) {
+                $this->insertSousSpecialite(strtolower($_POST['newSpe']), $idSpe['id']);
+              }
               $spe = strtolower($_POST['newSpe']);
             } else {
               $spe = strtolower($_POST['sous_specialite']);

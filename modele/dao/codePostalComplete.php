@@ -1,14 +1,9 @@
 <?php
 	require_once "../../config/config.php";
+	require_once PATH_MODELE."/bean/AutoCompletionCPVille.php";
 
 	header('Content-type: application/json');
 	header("Access-Control-Allow-Origin: *");
-
-	// Classe Autocompletion du code postal
-	class AutoCompletionCPVille {
-		public $CodePostal;
-		public $Ville;
-	}
 
 	// Requete SQL
 	//Initialisation de la liste

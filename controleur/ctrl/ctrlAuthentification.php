@@ -79,9 +79,5 @@
       $this->vue->genereVueAccueil();
     }
 
-    public function suppressionCompte() {
-      $this->modele->delUser();
-      $this->deconnexionUser();
-    }
   }
 ?>

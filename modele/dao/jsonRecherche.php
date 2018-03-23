@@ -1,22 +1,10 @@
 <?php
 	require_once "../../config/config.php";
+	require_once PATH_MODELE."/bean/jsonRechercheSpecialiste.php";
+
 	session_start();
 	header('Content-type: application/json');
 	header("Access-Control-Allow-Origin: *");
-
-	// Classe Autocompletion du code postal
-	class jsonRechercheSpecialiste {
-		public $civilite;
-		public $prenom;
-    public $nom;
-    public $mail;
-    public $tel;
-    public $adresse;
-    public $cp;
-    public $location;
-    public $specialite;
-    public $sous_specialite;
-	}
 
 	// Requete SQL
 	//Initialisation de la liste

@@ -1,14 +1,10 @@
 <?php
 	require_once "../../config/config.php";
+	require_once PATH_MODELE."/bean/AutoCompletionSpeSpecialiste.php";
+
 	session_start();
 	header('Content-type: application/json');
 	header("Access-Control-Allow-Origin: *");
-
-	// Classe Autocompletion du code postal
-	class AutoCompletionSpeSpecialiste {
-		public $Nom;
-		public $Prenom;
-	}
 
 	// Requete SQL
 	//Initialisation de la liste
