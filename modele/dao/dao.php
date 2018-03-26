@@ -431,13 +431,15 @@
           } else {
             $stmt->bindValue(12,2);
             if ($_POST['sous_specialite'] == "autre") {
-              if ($_POST['domaine'] == "MEDICAL") {
-                $idSpe = $this->getIdSpecialite(strtolower($_POST['speMedecine']));
-              } else if ($_POST['domaine'] == "JURIDIQUE") {
-                $idSpe = $this->getIdSpecialite(strtolower($_POST['speJuridique']));
-              }
-              if ($this->getIdSousSpecialite(strtolower($_POST['newSpe'])) == NULL) {
-                $this->insertSousSpecialite(strtolower($_POST['newSpe']), $idSpe['id']);
+              if ($this->getIdSousSpecialite($_POST['newSpe']) == NULL) {
+                if ($_POST['domaine'] == "MEDICAL") {
+                  $idSpe = $this->getIdSpecialite(strtolower($_POST['speMedecine']));
+                } else if ($_POST['domaine'] == "JURIDIQUE") {
+                  $idSpe = $this->getIdSpecialite(strtolower($_POST['speJuridique']));
+                }
+                if ($this->getIdSousSpecialite(strtolower($_POST['newSpe'])) == NULL) {
+                  $this->insertSousSpecialite(strtolower($_POST['newSpe']), $idSpe['id']);
+                }
               }
               $spe = strtolower($_POST['newSpe']);
             } else {
@@ -772,7 +774,7 @@
     public function rechercheSpe() {
       try {
         $elements = explode(" ",htmlspecialchars($_POST['specialiste']));
-        $chaine = "select civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from Utilisateurs u, Specialite s1, Sous_Specialite s2, Domaine d where type = 2 and u.specialite = s2.id and s2.sousDomaine = s1.id and s1.domaine = d.id and (specialite like :element1 or s2.nom like :element1 or u.nom like :element1 or prenom like :element1 or specialite like :element2 or s2.nom like :element2 or u.nom like :element2 or prenom like :element2 and ville like :ville)";
+        $chaine = "select civilite, prenom, u.nom, mail, tel, adresse, ville, cp, location, s1.nom specialite, s2.nom sous_specialite from Utilisateurs u, Specialite s1, Sous_Specialite s2, Domaine d where type = 2 and u.specialite = s2.id and s2.sousDomaine = s1.id and s1.domaine = d.id and (specialite like :element1 or s2.nom like :element1 or u.nom like :element1 or prenom like :element1 or specialite like :element2 or s2.nom like :element2 or u.nom like :element2 or prenom like :element2) and ville like :ville";
         $stmt = $this->connexion->prepare($chaine);
         $stmt->bindParam(":element1", $elements[0]);
         $stmt->bindParam(":element2", $elements[1]);

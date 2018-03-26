@@ -75,9 +75,9 @@ input[type="submit"] { height: 35px; cursor: ppi}
 .block { margin: 10px 0 10px 0;}
 .block div { display: flex; justify-content: center; }
 .block .onglet { display: flex; justify-content: space-around; }
-.onglet_on { border-bottom: solid 2px #00A5E2;}
+.onglet_on { border-bottom: solid 2px orange;}
 .onglet a:hover { opacity: 0.5; text-decoration: none;}
-.lien_visible { text-decoration: underline #00A5E2; }
+.lien_visible { text-decoration: underline orange; }
 hr { width: 50%; margin: auto; border-bottom: 2px solid #EEEEEE; color: #EEEEEE; }
 /* Responsive */
 @media screen and (min-width: 700px) {
@@ -123,19 +123,24 @@ DOMAINE
 /* ==========================================================================
 AFFICHAGE DES SPECIALISTES
 ========================================================================== */
-.recherche { width: 100%; margin: auto; display: flex; justify-content: space-around; margin: 10px 0px 10px 0px;}
-.recherche .listeSpecialistes { width: 50%;}
-.recherche .listeSpecialistes .pro { margin: 10px; background: #EEEEEE; padding: 20px; display: flex; justify-content: space-around; border-radius: 5px; border: solid #EEEEEE 2px;}
-.recherche .listeSpecialistes .pro:hover { border: solid orange 2px;}
-.pro .coordonnes { display: flex; flex-direction: column; width: 50%; }
+.recherche { width: 100%; margin: auto; display: flex; justify-content: space-around; margin: 10px 0px 10px 0px; }
+.recherche .listeSpecialistes .pro { margin: 10px; background: #EEEEEE; padding: 20px; display: flex; flex-direction: column; justify-content: space-around; border-radius: 5px; border: solid #EEEEEE 2px;}
+.pro .coordonnes { display: flex; flex-direction: column; width: 100%; }
 .pro .coordonnes .adresse { display: flex; align-items: center; margin-top: 10px;}
 .pro .coordonnes .tel { display: flex; align-items: center; margin-top: 10px;}
 .pro i { color : orange; margin-right: 10px;}
 .pro .coordonnes .entete h4 { color: #4d4959; font-weight: bold;}
 .pro .coordonnes .entete p { font-style: italic; }
-.pro .dispo { border: solid red 2px; width: 50%; display: flex;justify-content: center; align-items: center;}
+.pro .dispo { border: solid red 2px; width: 100%; display: flex;justify-content: center; align-items: center;}
 .recherche .listeSpecialistes p { text-align: left;}
-.recherche #map { width: 30%; height: 500px; position: fixed;}
+@media screen and (min-width: 700px) {
+  .pro .dispo { width: 50%; }
+  .pro .coordonnes { width: 50%;}
+  .recherche .listeSpecialistes .pro { flex-direction: row;}
+  .recherche .listeSpecialistes { width: 50%;}
+  .recherche .listeSpecialistes .pro:hover { border: solid orange 2px;}
+  .recherche #map { width: 30%; height: 500px; position: fixed;}
+}
 /* ==========================================================================
 MON COMPTE
 ========================================================================== */
