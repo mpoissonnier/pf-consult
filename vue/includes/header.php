@@ -1,3 +1,4 @@
+// Mise en place du menu responsive
 <script>
 function setResponsive() {
   var x = document.getElementsByClassName("nav");
@@ -11,9 +12,10 @@ function setResponsive() {
 }
 </script>
 
+<!-- Utilisateur non connecté -->
 <?php
-if (!isset($_SESSION['user']) || $_SESSION['user'] == 'ko') {
-  ?>
+  if (!isset($_SESSION['user']) || $_SESSION['user'] == 'ko') {
+?>
   <header>
     <div class="nav">
       <ul>
@@ -32,9 +34,11 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] == 'ko') {
     </div>
     <a href="javascript:void(0);" class="icon" onclick="setResponsive()">&#9776;</a>
   </header>
-  <?php
-} else {
-  ?>
+
+<!-- Utilisateur connecté -->
+<?php
+  } else {
+?>
   <header>
     <div class="nav">
       <ul>
@@ -53,14 +57,16 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] == 'ko') {
     </div>
     <a href="javascript:void(0);" class="icon" onclick="setResponsive()">&#9776;</a>
   </header>
-  <?php
-}
-if (isset($_SESSION['message'])) {
-  ?>
+
+<!-- Affichage des messages d'informations -->
+<?php
+  }
+  if (isset($_SESSION['message'])) {
+?>
   <div id="msg" class="<?php echo $_SESSION['validite']; ?>">
     <p><?php echo $_SESSION['message']; ?></p>
   </div>
-  <?php
+<?php
   unset($_SESSION['message']);
 }
 ?>

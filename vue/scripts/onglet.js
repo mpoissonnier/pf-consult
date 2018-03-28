@@ -1,15 +1,18 @@
 $(document).ready(function(){
   // Gestion des onglets
   $('ul.tabs').each(function(){
+    // Récupération de l'onglet actif
     var $active, $content, $links = $(this).find('a');
     $active = $($links.filter('[href="'+location.hash+'"]')[1] || $links[1]);
     $active.addClass('active');
     $content = $($active[0].hash);
 
+    // Cacher les onglets non actifs
     $links.not($active).each(function () {
       $(this.hash).hide();
     });
 
+    // Changement d'onglet
     $(this).on('click', 'a', function(e){
       $active.removeClass('active');
       $content.hide();

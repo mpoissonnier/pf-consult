@@ -15,7 +15,4 @@
   define("LOGIN","info2-2017-pc");
   define("PASSWORD","pfconsult");
 
-  // define("BD","PFCONSULT");
-  // define("LOGIN","root");
-  // define("PASSWORD","root");
 ?>

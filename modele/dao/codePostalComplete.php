@@ -5,7 +5,6 @@
 	header('Content-type: application/json');
 	header("Access-Control-Allow-Origin: *");
 
-	// Requete SQL
 	//Initialisation de la liste
 	$list = array();
 
@@ -37,8 +36,8 @@
 		$query->bindParam(":ville", $value, PDO::PARAM_STR);
 	}
 
+	// Récupération des données
 	$query->execute();
-
 	$list = $query->fetchAll(PDO::FETCH_CLASS, "AutoCompletionCPVille");;
 
 	echo json_encode($list);

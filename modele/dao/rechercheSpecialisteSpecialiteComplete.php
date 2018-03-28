@@ -6,7 +6,6 @@
 	header('Content-type: application/json');
 	header("Access-Control-Allow-Origin: *");
 
-	// Requete SQL
 	//Initialisation de la liste
 	$list = array();
 
@@ -49,6 +48,7 @@
 	$query->execute();
 	$list3 = $query->fetchAll(PDO::FETCH_CLASS, "AutoCompletionSpeSpecialiste");
 
+	// Fusion des listes obtenues
 	$list = array_merge($list1, $list2, $list3);
 	echo json_encode($list);
 ?>

@@ -1,13 +1,9 @@
 <?php
 
-/**
-* Classe permettant de gérer la vue d'un compte d'un utilisateur du site.
-*/
+// Gestion du compte utilisateur
 class vueCompte {
 
-	/**
-	* Fonction permettant de générer la vue d'accueil du site.
-	*/
+	// Affichage du compte utilisateur
 	public function afficherProfil($user, $listeRDV, $listeProches){
 		?>
 		<!DOCTYPE html>
@@ -222,6 +218,8 @@ class vueCompte {
 		</html>
 		<?php
 	}
+
+	// Affichage de la page de reset du mot de passe
 	public function afficherPageReset() {
 		?>
 		<!DOCTYPE html>

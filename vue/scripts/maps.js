@@ -35,8 +35,7 @@ function initMap() {
         bounds.extend(latLng);
       })
     })
-    // Ajout des limites à la carte
+    // Modification des limites à la carte pour la centrer sur les pointeurs
     map.fitBounds(bounds);
-
   });
 }

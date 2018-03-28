@@ -1,11 +1,7 @@
 <?php
-
-/**
-* Classe Autocompletion du code postal
-*/
-class AutoCompletionSpeSpecialiste {
-  public $Nom;
-  public $Prenom;
-}
-
+  // Classe Autocompletion de la spécialité ou du spécialiste
+  class AutoCompletionSpeSpecialiste {
+    public $Nom;
+    public $Prenom;
+  }
 ?>

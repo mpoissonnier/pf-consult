@@ -1,8 +1,9 @@
 <?php
 
+// Gestion de l'accueil, de l'inscription et de la connexion
 class vueAuthentification {
 
-	/* Fonction permettant de générer la vue d'accueil du site. */
+	/* Vue d'accueil du site. */
 	public function genereVueAccueil(){
 		?>
 		<!DOCTYPE html>
@@ -38,7 +39,7 @@ class vueAuthentification {
 
 		<?php
 	}
-	/* Fonction permettant de générer la vue de connexion du site */
+	/* Vue de connexion du site */
 	public function genereVueConnexion(){
 		?>
 		<!DOCTYPE html>
@@ -88,7 +89,7 @@ class vueAuthentification {
 		</html>
 		<?php
 	}
-	/* Fonction permettant de générer la vue d'inscription du site */
+	/* Vue d'inscription du site */
 	public function genereVueInscription($listeDomaine, $listeSpecialite, $listeSousSpecialite){
 		?>
 		<!DOCTYPE html>

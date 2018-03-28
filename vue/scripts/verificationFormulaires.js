@@ -1,39 +1,5 @@
 $(document).ready(function() {
-  // AutoCompletion du code postal
-  $("#cp, #ville").autocomplete({
-    source: function (request, response) {
-      var objData = {};
-      if ($(this.element).attr('id') == 'cp') {
-        objData = { codePostal: request.term };
-      } else {
-        objData = { commune: request.term };
-      }
-      $.ajax({
-        url: "./modele/dao/codePostalComplete.php",
-        dataType: "json",
-        data: objData,
-        type: 'GET'
-      })
-      .done(function (data) {
-        response($.map(data, function (item) {
-          return {
-            label: item.CodePostal + ", " + item.Ville,
-            value: function () {
-              if ($(this).attr('id') == 'cp') {
-                $('#ville').val(item.Ville);
-                return item.CodePostal;
-              } else {
-                $('#cp').val(item.CodePostal);
-                return item.Ville;
-              }
-            }
-          }
-        }));
-      })
-    },
-    minLength: 3
-  });
-
+// VERIFICATIONS FORMULAIRES
   // Validation du formulaire d'inscription
   var validForm = false;
   $("#formInscription").on('submit', function(event) {
@@ -169,18 +135,6 @@ $(document).ready(function() {
         border : "solid green 2px"
       });
     }
-
-    // //https://www.developpez.net/forums/d1345076/webmasters-developpement-web/javascript-ajax-typescript-dart/javascript/script-calcul-d-age/
-    // // Verification de la ddn
-    // var dateDuJour = new Date();
-    // var ddn = new Date( 1944, 1, 19 ), // 19 février 1994
-    // var monAge = maintenant.getFullYear() - maDateNaissance.getFullYear();
-    // if ( maDateNaissance.getMonth() > maintenant.getMonth() ) {
-    //   monAge += 1;
-    // } else if ( maintenant.getMonth() == maDateNaissance.getMonth() && maDateNaissance.getDate() >= maintenant.getDate() ) {
-    //   monAge += 1;
-    // }
-    // $( "#age" ).html( '<p>' + monAge + ' ans</p>' );
 
     // Complétion du champ coordonnées
     var adresse = $("#adresse").val() + " " + $("#cp").val() + " " + $("#ville").val();
@@ -474,8 +428,43 @@ $(document).ready(function() {
     }
   });
 
-  // Recherche
-  // AutoCompletion code postal/ville
+// AUTOCOMPLETION
+  // AutoCompletion du code postal et de la ville
+  $("#cp, #ville").autocomplete({
+    source: function (request, response) {
+      var objData = {};
+      if ($(this.element).attr('id') == 'cp') {
+        objData = { codePostal: request.term };
+      } else {
+        objData = { commune: request.term };
+      }
+      $.ajax({
+        url: "./modele/dao/codePostalComplete.php",
+        dataType: "json",
+        data: objData,
+        type: 'GET'
+      })
+      .done(function (data) {
+        response($.map(data, function (item) {
+          return {
+            label: item.CodePostal + ", " + item.Ville,
+            value: function () {
+              if ($(this).attr('id') == 'cp') {
+                $('#ville').val(item.Ville);
+                return item.CodePostal;
+              } else {
+                $('#cp').val(item.CodePostal);
+                return item.Ville;
+              }
+            }
+          }
+        }));
+      })
+    },
+    minLength: 3
+  });
+
+  // AutoCompletion de la ville
   $("#ville").autocomplete({
     source: function (request, response) {
       var objData = {};

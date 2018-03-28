@@ -1,11 +1,9 @@
 <?php
 
-/**
-* Classe permettant de gérer la vue d'accueil du site.
-*/
+// Gestion de la recherche
 class vueDomaine {
 
-	/* Fonction permettant de générer la vue du domaine. */
+	// Affichage de la page de recherche
 	public function genereVueDomaine($domaine){
 		?>
 		<!DOCTYPE html>
@@ -55,7 +53,8 @@ class vueDomaine {
 		</html>
 		<?php
 	}
-	/* Fonction permettant de générer la vue de recherche des spécialistes. */
+
+	// Affichage des spécialistes recherchés
 	public function genereVueRecherche($domaine, $listeSpecialistes){
 		?>
 		<!DOCTYPE html>

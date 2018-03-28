@@ -6,7 +6,7 @@
     private $connexion;
 
 ///////// BASE DE DONNEES
-    /* Constucteur de la classe, se connecte à la base de données */
+    /* Connexion à la base de données */
     public function __construct(){
       try {
         $chaine = "mysql:host=".HOST.";dbname=".BD.";charset=UTF8";
@@ -17,13 +17,13 @@
       }
     }
 
-    /* Methode qui permet de se deconnecter de la base */
+    /* Deconnexion de la base de données */
     public function destroy(){
       $this->connexion = NULL;
     }
 /////////
 ///////// CHECK
-    /* Méthode qui permet de voir si un utilisateur est deja inscrit */
+    /* Méthode permettant de voir si un utilisateur est deja inscrit */
     public function estInscrit($mail){
       try {
         $stmt = $this->connexion->prepare("select * from Utilisateurs where mail = ?;");
@@ -41,7 +41,7 @@
       }
     }
 
-    /* Méthode qui permet de vérifier le mot de passe */
+    /* Méthode permettant de vérifier le mot de passe */
     public function checkMdp($mail, $mdp) {
       try {
         if ($this->estInscrit($mail)) {
@@ -62,6 +62,7 @@
       }
     }
 
+    /* Méthode permettant la connexion d'un utilisateur */
     public function connexion() {
       try {
         if ($this->checkMdp($_POST['login'],$_POST['mdp'])) {
@@ -80,6 +81,7 @@
       }
     }
 
+    /* Méthode permettant de vérifier le formulaire d'inscription et formater les données envoyées par l'utilisateur */
     public function checkFormInscription() {
       // Verification civilite
       if (!isset($_POST['civilite']) || ($_POST['civilite'] != "M." && $_POST['civilite'] != "Mme" && $_POST['civilite'] != "Autre")) {
@@ -204,6 +206,7 @@
       return true;
     }
 
+    /* Méthode permettant de vérifier le formulaire de modifications et formater les données envoyées par l'utilisateur */
     public function checkFormModifications() {
       // Verification civilite
       if (!isset($_POST['civilite']) || ($_POST['civilite'] != "M." && $_POST['civilite'] != "Mme" && $_POST['civilite'] != "Autre")) {
@@ -317,6 +320,7 @@
       return true;
     }
 
+    /* Méthode permettant de vérifier le formulaire d'inscription de proche et formater les données envoyées par l'utilisateur */
     public function checkFormProche() {
       // Verification civilite
       if (!isset($_POST['civiliteP']) || ($_POST['civiliteP'] != "M." && $_POST['civiliteP'] != "Mme" && $_POST['civiliteP'] != "Autre")) {
@@ -409,7 +413,7 @@
     }
 /////////
 ///////// AJOUT / SUPPRESSION
-    /** Méthode qui permet d'ajouter un utilisateur lambda */
+    /** Méthode permettant d'ajouter un utilisateur */
     public function addUser($categorie) {
       try {
         if (!$this->estInscrit($_POST['mail'])) {
@@ -425,11 +429,14 @@
           $stmt->bindParam(9,$_POST['cp']);
           $stmt->bindParam(10,strtoupper($_POST['ville']));
           $stmt->bindParam(11,$_POST['location']);
+          // Utilisateur simple
           if ($categorie == 1) {
             $stmt->bindValue(12,1);
             $stmt->bindValue(13,NULL);
+          // Specialiste
           } else {
             $stmt->bindValue(12,2);
+            // Sous spécialite autre
             if ($_POST['sous_specialite'] == "autre") {
               if ($this->getIdSousSpecialite($_POST['newSpe']) == NULL) {
                 if ($_POST['domaine'] == "MEDICAL") {
@@ -437,11 +444,13 @@
                 } else if ($_POST['domaine'] == "JURIDIQUE") {
                   $idSpe = $this->getIdSpecialite(strtolower($_POST['speJuridique']));
                 }
+                // Vérification qu'elle n'existe pas déjà
                 if ($this->getIdSousSpecialite(strtolower($_POST['newSpe'])) == NULL) {
                   $this->insertSousSpecialite(strtolower($_POST['newSpe']), $idSpe['id']);
                 }
               }
               $spe = strtolower($_POST['newSpe']);
+            // Sous spécialite existante
             } else {
               $spe = strtolower($_POST['sous_specialite']);
             }
@@ -458,6 +467,7 @@
       }
     }
 
+    /** Méthode permettant d'ajouter un proche */
     public function addProche() {
       try {
         if ($this->estInscrit($_SESSION['id'])) {
@@ -485,13 +495,13 @@
       }
     }
 
-    /** Méthode qui permet de supprimer un utilisateur  */
+    /** Méthode permettant de supprimer un utilisateur  */
     public function delUser() {
       try {
         if ($this->estInscrit($_SESSION['id'])) {
           // Recuperation de l'utilisateur
           $user = $this->getInfosUser($_SESSION['id']);
-          // Suppression de ses proches
+          // Suppression de ses proches et des rendez-vous des proches
           $proches = $this->getProches($user[0]->getId());
           $_SESSION['debug'] = $proches;
           foreach ($proches as $unProche) {
@@ -510,6 +520,7 @@
       }
     }
 
+    /** Méthode permettant de supprimer un proche */
     public function delProche($id) {
       try {
         if ($this->estInscrit($_SESSION['id'])) {
@@ -528,6 +539,19 @@
     }
 /////////
 ///////// GESTION COMPTE
+    /* Méthode permettant de récuper l'id d'un utilisateur */
+    public function getIdUser($mail) {
+      try {
+        $stmt = $this->connexion->prepare('select * from Utilisateurs where mail = ?');
+        $stmt->bindParam(1, $mail);
+        $stmt->execute();
+        return $stmt->fetch();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Utilisateurs");
+      }
+    }
+
     /* Méthode permettant de récuperer les informations d'un utilisateur */
     public function getInfosUser() {
       try {
@@ -543,6 +567,20 @@
       }
     }
 
+    /* Méthode permettant de réupérer les proches d'un utilisateur */
+    public function getProches($idUser){
+      try {
+        $stmt = $this->connexion->prepare('select * from Proche where idliaisut = ?');
+        $stmt->bindParam(1,$idUser);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+    }
+
+    /* Méthode permettant de récuperer les informations d'un proche */
     public function getInfosProche($idProche) {
       try {
         if ($this->estInscrit($_SESSION['id'])) {
@@ -557,7 +595,7 @@
       }
     }
 
-    /* Méthode permettant de modifier les informations d'un compte utilisateur*/
+    /* Méthode permettant de modifier les informations d'un compte utilisateur */
     public function modifInfosCompte($mdp) {
       try {
         if ($this->estInscrit($_SESSION['id'])) {
@@ -615,7 +653,7 @@
           $stmt->bindParam(2,$_SESSION['id']);
           $stmt->execute();
 
-          // modif mdp
+          // modif mdp si modification
           if ($mdp == 1) {
             $stmt = $this->connexion->prepare('update Utilisateurs SET mdp = ? where mail = ?');
             $stmt->bindParam(1,crypt($_POST['mdp']));
@@ -637,11 +675,41 @@
         throw new PDOException("Erreur d'accès à la table Utilisateurs");
       }
     }
+
+    /* Méthode permettant de récupérer les rendez-vous dun utilisateur */
+    public function getRdv($idUser){
+      try {
+        $stmt = $this->connexion->prepare('select u.nom, u.prenom, horaire, jour, nomPa, prenomPa from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
+        $stmt->bindParam(1,$idUser);
+        $stmt->execute();
+        return $stmt->fetchAll();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+    }
+
+    /* Méthode permettant de supprimer un rendez-vous */
+    public function delRdv($idUser, $nomUser, $prenomUser) {
+      try {
+        $stmt = $this->connexion->prepare('update Rdv SET idpatient = NULL, nomPa = NULL, prenomPa = NULL where idpatient= ? and nomPa=? and prenomPa=?');
+        $stmt->bindParam(1,$idUser);
+        $stmt->bindParam(2,$nomUser);
+        $stmt->bindParam(3,$prenomUser);
+        $stmt->execute();
+      } catch (PDOException $e) {
+        $this->destroy();
+        throw new PDOException("Erreur d'accès à la table Rdv");
+      }
+    }
+
+
 /////////
-///////// GESTION DOMAINE // SPECIALITE
+///////// GESTION DOMAINE // SPECIALITE // SOUS SPECIALITE
+    /* Méthode permettant de récupérer les domaines trié par nom */
     public function getDomaine(){
       try {
-        $stmt = $this->connexion->prepare('select * from Domaine');
+        $stmt = $this->connexion->prepare('select * from Domaine order by nom');
         $stmt->execute();
         return $stmt->fetchAll();
       } catch (PDOException $e) {
@@ -650,6 +718,7 @@
       }
     }
 
+    /** Méthode permettant de récuperer les specialité triée par nom */
     public function getSpecialite() {
       try {
         $stmt = $this->connexion->prepare('select * from Specialite order by nom');
@@ -661,6 +730,7 @@
       }
     }
 
+    /** Méthode permettant de récuperer les sous specialité triée par nom */
     public function getSousSpecialite() {
       try {
         $stmt = $this->connexion->prepare('select * from Sous_Specialite order by nom');
@@ -672,6 +742,7 @@
       }
     }
 
+    /* Méthode permettant de récupérer l'id d'un domaine */
     public function getIdDomaine($nomDomaine){
         try {
           $stmt = $this->connexion->prepare('select id from Domaine where nom = ?');
@@ -721,56 +792,9 @@
           throw new PDOException("Erreur d'accès à la table Sous_Specialite");
         }
     }
-
-    public function getRdv($idUser){
-      try {
-        $stmt = $this->connexion->prepare('select u.nom, u.prenom, horaire, jour, nomPa, prenomPa from Rdv as r, Utilisateurs as u where idpracticien = u.id and idpatient = ?');
-        $stmt->bindParam(1,$idUser);
-        $stmt->execute();
-        return $stmt->fetchAll();
-      } catch (PDOException $e) {
-        $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Rdv");
-      }
-    }
-
-    public function delRdv($idUser, $nomUser, $prenomUser) {
-      try {
-        $stmt = $this->connexion->prepare('update Rdv SET idpatient = NULL, nomPa = NULL, prenomPa = NULL where idpatient= ? and nomPa=? and prenomPa=?');
-        $stmt->bindParam(1,$idUser);
-        $stmt->bindParam(2,$nomUser);
-        $stmt->bindParam(3,$prenomUser);
-        $stmt->execute();
-      } catch (PDOException $e) {
-        $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Rdv");
-      }
-    }
-
-    public function getIdUser($mail) {
-      try {
-        $stmt = $this->connexion->prepare('select * from Utilisateurs where mail = ?');
-        $stmt->bindParam(1, $mail);
-        $stmt->execute();
-        return $stmt->fetch();
-      } catch (PDOException $e) {
-        $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Utilisateurs");
-      }
-    }
-
-    public function getProches($idUser){
-      try {
-        $stmt = $this->connexion->prepare('select * from Proche where idliaisut = ?');
-        $stmt->bindParam(1,$idUser);
-        $stmt->execute();
-        return $stmt->fetchAll();
-      } catch (PDOException $e) {
-        $this->destroy();
-        throw new PDOException("Erreur d'accès à la table Rdv");
-      }
-    }
-
+/////////
+///////// RECHERCHE
+    /* Méthode permettant la recherche d'un spécialiste, d'une spécialité ou d'une sous-spécialité */
     public function rechercheSpe() {
       try {
         $elements = explode(" ",htmlspecialchars($_POST['specialiste']));

@@ -5,7 +5,6 @@
 	header('Content-type: application/json');
 	header("Access-Control-Allow-Origin: *");
 
-	// Requete SQL
 	//Initialisation de la liste
 	$list = array();
 
@@ -18,7 +17,7 @@
 		throw new PDOException("Erreur de connexion");
 	}
 
-	//Construction de la requete
+	// Construction de la requete
 	$strQuery = "select CP CodePostal, VILLE Ville from cp_autocomplete where CP like :codePostal or VILLE like :ville and CODEPAYS = 'FR' ";
 
 	$query = $db->prepare($strQuery);
@@ -26,8 +25,8 @@
 	$query->bindParam(":codePostal", $value, PDO::PARAM_STR);
 	$query->bindParam(":ville", $value, PDO::PARAM_STR);
 
+	// Récupération des données
 	$query->execute();
-
 	$list = $query->fetchAll(PDO::FETCH_CLASS, "AutoCompletionCPVille");;
 
 	echo json_encode($list);

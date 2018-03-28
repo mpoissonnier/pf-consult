@@ -2,6 +2,7 @@
   require_once PATH_VUE."/vueAuthentification.php";
   require_once PATH_MODELE."/dao/dao.php";
 
+/* CONTROLEUR AUTHENTIFICATION : gestion de l'inscription, connexion et deonnexion */
   class ControleurAuthentification {
     private $vue;
     private $modele;
@@ -12,17 +13,22 @@
       $this->modele = new dao();
     }
 
-    /* Fonction permettant l'affichage de la vue d'accueil. */
+    /* Affichage de la vue d'accueil. */
     public function accueil() {
       $this->vue->genereVueAccueil();
     }
 
-    /* Fonction permettant l'affichage de la vue de la page d'inscription. */
+    /* Affichage de page d'inscription. */
     public function inscription() {
       $this->vue->genereVueInscription($this->modele->getDomaine(), $this->modele->getSpecialite(), $this->modele->getSousSpecialite());
     }
 
-    /* Fonction permettant l'inscription d'un utilisateur. */
+    /* Affichage de la vue de connexion. */
+    public function connexion() {
+      $this->vue->genereVueConnexion();
+    }
+
+    /* Inscription d'un utilisateur. */
     public function inscriptionUser($categorie) {
       // Verification des infos envoyées
       if ($this->modele->checkFormInscription()) {
@@ -52,12 +58,7 @@
       $this-> inscription();
     }
 
-    /* Fonction permettant l'affichage de la vue de connexion. */
-    public function connexion() {
-      $this->vue->genereVueConnexion();
-    }
-
-    /* Fonction permettant la connexion d'un utilisateur. */
+    /* Connexion d'un utilisateur. */
     public function connexionUser() {
       $_SESSION['user'] = $this->modele->connexion();
       if ($_SESSION['user'] != "ko") { // connexion réussi
@@ -72,12 +73,11 @@
       }
     }
 
-    /* Fonction permettant la deconnexion d'un utilisateur. */
+    /* Deconnexion d'un utilisateur. */
     public function deconnexionUser() {
       unset($_SESSION['user']);
       session_destroy();
       $this->vue->genereVueAccueil();
     }
-
   }
 ?>

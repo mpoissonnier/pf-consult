@@ -13,6 +13,4 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrYTn9B2brDJ5EZCrwjvU3QgukcZrDyyM&callback=initMap"></script>
 <script src="vue/scripts/verificationFormulaires.js"></script>
 <script type="text/javascript" src="vue/scripts/onglet.js" ></script>
-<script type="text/javascript" src="vue/scripts/maps.js">
-
-</script>
+<script type="text/javascript" src="vue/scripts/maps.js"></script>

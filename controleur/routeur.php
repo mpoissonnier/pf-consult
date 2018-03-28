@@ -1,12 +1,12 @@
 <?php
 
-// REQUIRE TOUS LES CONTROLEURS
+// CHARGEMENT DES CONTROLEURS
   require_once 'ctrl/ctrlAuthentification.php';
   require_once 'ctrl/ctrlMail.php';
   require_once 'ctrl/ctrlCompte.php';
   require_once 'ctrl/ctrlDomaine.php';
 
-
+/* ROUTEUR : redirection des requêtes vers les contrôleurs */
   class Routeur {
     private $ctrlAuthentification;
     private $ctrlMail;
@@ -131,7 +131,5 @@
       $this->ctrlAuthentification->accueil();
       return;
     }
-
-
   }
 ?>
