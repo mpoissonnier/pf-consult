@@ -1,4 +1,4 @@
-// Mise en place du menu responsive
+<!-- Mise en place du menu responsive -->
 <script>
 function setResponsive() {
   var x = document.getElementsByClassName("nav");
